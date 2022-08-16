@@ -1,9 +1,4 @@
-import {
-  DefineFunction,
-  DefineWorkflow,
-  Manifest,
-  Schema,
-} from "deno-slack-sdk/mod.ts";
+import { Manifest } from "deno-slack-sdk/mod.ts";
 
 import { TestReverseWorkflow } from "./workflows/reverse_wf.ts";
 
