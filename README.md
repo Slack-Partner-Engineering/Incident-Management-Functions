@@ -1,35 +1,17 @@
-# Next-gen Slack platform project template - Reverse String
+# Incident-Management-Functions
 
-This repo contains a sample project and embedded lightweight SDK of a Typescript
-based project for the new Deno runtime.
-
-The main file that handles the generation of your app's manifest is the
-`manifest.ts` file. So far it supports defining `functions`, `types`, and
-`datastores`. To define the runtime logic for functions, the `source_file`
-parameter should be set as a relative path from your project root to the file
-where that logic is defined and exported as default. The `functions/reverse.ts`
-file has a simple sample. After you create a new function, make sure you add it
-to the `Manifest` object in `manifest.ts` and point to your new function runtime
-log file.
-
-## Setup
-
-Create a new project using this as repo as a template.
-
-```bash
-slack create -t slackapi/deno-reverse-string
-```
+These functions are currently a work in progress!
 
 ## Running it locally
 
 ```bash
-slack run
+hermes run
 ```
 
 ## Deploying to Slack's Hosting
 
 ```bash
-slack deploy
+hermes deploy
 ```
 
 ## Seeing it in action
@@ -38,11 +20,19 @@ After creating your app, you'll need to create a new trigger that will start the
 workflow.
 
 ```bash
-slack trigger create --trigger-def ./trigger.ts
+hermes trigger create --trigger-def triggers/trigger.ts
 ```
 
 This provides a URL that you can now paste into your slack workspace to run the
 workflow! You can also add the url to the bookmarks bar of a channel!
+
+You will need to now run `hermes run` to be able to use the workflow.
+
+## Building the App
+
+To test new changes before pushing, you can use the `build.sh` script to format,
+lint, and test the code. Once all checks pass, feel free to add your pull
+request.
 
 ## Testing
 
@@ -53,5 +43,3 @@ run:
 ```bash
 slack deno test
 ```
-
-# Incident-Management-Functions
