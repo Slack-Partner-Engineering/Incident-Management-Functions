@@ -1,6 +1,6 @@
 import { SlackFunctionTester } from "deno-slack-sdk/mod.ts";
 import { assertEquals } from "https://deno.land/std@0.99.0/testing/asserts.ts";
-import ReverseString from "./reverse.ts";
+import ReverseString from "./mod.ts";
 
 const { createContext } = SlackFunctionTester("reverse");
 
