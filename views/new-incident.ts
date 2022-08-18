@@ -1,6 +1,11 @@
-import { BlockActionsRouter } from "https://deno.land/x/deno_slack_sdk@0.1.0/mod.ts";
-
-const newIncident = (incidentObject: any) => {
+const newIncident = (
+  incidentObject: {
+    incident_trigger: any;
+    short_description: any;
+    incident_participants: any;
+    incident_dri: any;
+  },
+) => { //anoying type workaround, guess I will have to add the incident object as a type, creating a jira.
   const blocks = [
     {
       type: "section",

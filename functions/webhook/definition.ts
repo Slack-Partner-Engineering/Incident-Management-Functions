@@ -8,32 +8,12 @@ export const parseWebhook = DefineFunction({
   source_file: "functions/webhook/module.ts",
   input_parameters: {
     properties: {
-      short_description: {
+      body: {
         type: Schema.types.string,
-        description: "Short Description",
-      },
-      severity: {
-        type: Schema.types.string,
-        description: "Severity",
-      },
-      long_description: {
-        type: Schema.types.string,
-        description: "Long Description",
-      },
-      incident_participants: {
-        type: Schema.types.string,
-        description: "Incident Participants",
-      },
-      incident_dri: {
-        type: Schema.types.string,
-        description: "Incident DRI",
-      },
-      incident_start_time: {
-        type: Schema.types.string,
-        description: "Start Time",
+        description: "Stringified JSON body from the Apex Function.",
       },
     },
-    required: ["short_description", "severity"],
+    required: ["body"],
   },
   output_parameters: {
     properties: {
@@ -69,3 +49,34 @@ export const parseWebhook = DefineFunction({
     required: ["short_description", "severity", "incident_trigger"],
   },
 });
+
+//ideal input params but can't get hermes to work quite yet.
+// input_parameters: {
+//   properties: {
+//     short_description: {
+//       type: Schema.types.string,
+//       description: "Short Description",
+//     },
+//     severity: {
+//       type: Schema.types.string,
+//       description: "Severity",
+//     },
+//     long_description: {
+//       type: Schema.types.string,
+//       description: "Long Description",
+//     },
+//     incident_participants: {
+//       type: Schema.types.string,
+//       description: "Incident Participants",
+//     },
+//     incident_dri: {
+//       type: Schema.types.string,
+//       description: "Incident DRI",
+//     },
+//     incident_start_time: {
+//       type: Schema.types.string,
+//       description: "Start Time",
+//     },
+//   },
+//   required: ["short_description", "severity"],
+// },
