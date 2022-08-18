@@ -23,15 +23,19 @@ workflow.
 hermes trigger create --trigger-def triggers/trigger.ts
 ```
 
-This provides a URL that you can now paste into your slack workspace to run the workflow! You can also add the url to the bookmarks bar of a channel!
+This provides a URL that you can now paste into your slack workspace to run the
+workflow! You can also add the url to the bookmarks bar of a channel!
 
 You will need to now run `hermes run` to be able to use the workflow.
 
-To run the external Webhook trigger you will need to create the trigger in the same way but pass in the JSON version of trigger creation. This can also be done with a Typescript file. 
+To run the external Webhook trigger you will need to create the trigger in the
+same way but pass in the JSON version of trigger creation. This can also be done
+with a Typescript file.
 
 ```bash
 hermes trigger create --trigger-def  "./triggers/trigger_webhook.json"
 ```
+
 You will see something like:
 
 ```bash
