@@ -46,7 +46,8 @@ You will see something like:
    Webhook URL:  https://hooks.slack.com/triggers/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
 ```
 
-The `Webhook URL` is what you will want to use to trigger an incident from outside of Slack. 
+The `Webhook URL` is what you will want to use to trigger an incident from
+outside of Slack.
 
 Sample API Call
 
