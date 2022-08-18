@@ -4,7 +4,6 @@
 //sends the incident management object then to the new incident send to slack function to post the details in channel.
 //it will in the future call the inident orchestrator function too to kick off the new incident process.
 import { DefineWorkflow, Schema } from "deno-slack-sdk/mod.ts";
-
 import { postNewIncident } from "../functions/send_to_slack/new_incident/definition.ts";
 import { parseWebhook } from "../functions/webhook/definition.ts";
 
@@ -15,17 +14,27 @@ export const runFromExternalWebhook = DefineWorkflow({
     "Create an incident from a webhook called by an external platform",
   input_parameters: {
     properties: {
-      body: {
-        description: "JSON string body for parsing.",
+      short_description: {
+        description: "Short description of the incident",
+        type: Schema.types.string,
+      },
+      severity: {
+        description: "Severity of the incident",
+        type: Schema.types.string,
+      },
+      external_incident_id: {
+        description: "External platform's ticket id",
         type: Schema.types.string,
       },
     },
-    required: ["body"],
+    required: ["short_description", "severity", "external_incident_id"],
   },
 });
 
 const parseBodyStep = runFromExternalWebhook.addStep(parseWebhook, {
-  body: runFromExternalWebhook.inputs.body,
+  short_description: runFromExternalWebhook.inputs.short_description,
+  severity: runFromExternalWebhook.inputs.severity,
+  external_incident_id: runFromExternalWebhook.inputs.external_incident_id,
 });
 
 runFromExternalWebhook.addStep(postNewIncident, {
@@ -36,4 +45,5 @@ runFromExternalWebhook.addStep(postNewIncident, {
   incident_dri: parseBodyStep.outputs.incident_dri,
   incident_start_time: parseBodyStep.outputs.incident_start_time,
   incident_trigger: parseBodyStep.outputs.incident_trigger,
+  external_incident_id: parseBodyStep.outputs.external_incident_id,
 });

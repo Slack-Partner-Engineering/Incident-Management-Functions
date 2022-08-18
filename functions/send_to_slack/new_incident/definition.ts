@@ -4,7 +4,7 @@ export const postNewIncident = DefineFunction({
   callback_id: "postNewIncident",
   title: "Post New Incident",
   description: "Posts a new incident to the incident channel",
-  source_file: "functions/send_to_slack/new_incident/module.ts",
+  source_file: "functions/send_to_slack/new_incident/new-incident.ts",
   input_parameters: {
     properties: {
       short_description: {
@@ -32,6 +32,10 @@ export const postNewIncident = DefineFunction({
         description: "Start Time",
       },
       incident_trigger: {
+        type: Schema.types.string,
+        description: "Incident Trigger",
+      },
+      external_incident_id: {
         type: Schema.types.string,
         description: "Incident Trigger",
       },
