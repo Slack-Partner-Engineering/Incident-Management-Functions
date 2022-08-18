@@ -1,0 +1,19 @@
+{
+  "type": "shortcut",
+  "name": "Create an Incident",
+  "workflow": "#/workflows/createIncidentFromButtonWF",
+  "inputs": {
+    "currentUser": {
+      "value": "{{data.user_id}}"
+    },
+    "currentChannel": {
+      "value": "{{data.channel_id}}"
+    },
+    "currentTime": {
+      "value": "{{data.trigger_ts}}"
+    },
+    "interactivity_context": {
+      "value": "{{data.interactivity}}"
+    }
+  }
+}
