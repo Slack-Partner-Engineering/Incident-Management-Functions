@@ -5,15 +5,23 @@ export const parseWebhook = DefineFunction({
   title: "Parse the incoming webhook data",
   description:
     "Take incoming webhook data normalizes it and builds the incident object",
-  source_file: "functions/webhook/module.ts",
+  source_file: "functions/webhook/webhook.ts",
   input_parameters: {
     properties: {
-      body: {
+      short_description: {
+        description: "Short description of the incident",
         type: Schema.types.string,
-        description: "Stringified JSON body from the Apex Function.",
+      },
+      severity: {
+        description: "Severity of the incident",
+        type: Schema.types.string,
+      },
+      external_incident_id: {
+        description: "External platform's ticket id",
+        type: Schema.types.string,
       },
     },
-    required: ["body"],
+    required: ["short_description", "severity", "external_incident_id"],
   },
   output_parameters: {
     properties: {
@@ -44,6 +52,10 @@ export const parseWebhook = DefineFunction({
       incident_start_time: {
         type: Schema.types.string,
         description: "Start Time",
+      },
+      external_incident_id: {
+        type: Schema.types.string,
+        description: "External Id for the incident",
       },
     },
     required: ["short_description", "severity", "incident_trigger"],
@@ -77,6 +89,10 @@ export const parseWebhook = DefineFunction({
 //       type: Schema.types.string,
 //       description: "Start Time",
 //     },
+//external_incident_id: {
+//description: "External platform's ticket id",
+///type: Schema.types.string,
+//},
 //   },
 //   required: ["short_description", "severity"],
 // },

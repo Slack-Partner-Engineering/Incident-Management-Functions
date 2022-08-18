@@ -3,6 +3,7 @@
 //output, the standard incident object
 import type { SlackFunctionHandler } from "deno-slack-sdk/types.ts";
 import type { parseWebhook } from "./definition.ts";
+import type { Incident } from "../../types/incident-object.ts";
 
 const normalizeData: SlackFunctionHandler<typeof parseWebhook.definition> =
   async (
@@ -11,11 +12,15 @@ const normalizeData: SlackFunctionHandler<typeof parseWebhook.definition> =
     console.log(inputs);
     console.log(token);
 
-    const payload = JSON.parse(inputs.body);
-    console.log(payload);
+    const payload = <Incident> inputs;
+
+    console.log(payload.severity);
 
     const incident = {
       slack_reporter: "",
+      external_incident_id: payload.external_incident_id
+        ? payload.external_incident_id
+        : "",
       incident_start_time: payload.incident_start_time
         ? payload.incident_start_time
         : JSON.stringify(Date.now()),
