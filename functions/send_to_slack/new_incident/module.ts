@@ -4,25 +4,23 @@
 import type { SlackFunctionHandler } from "deno-slack-sdk/types.ts";
 import { SlackAPI } from "deno-slack-api/mod.ts";
 import type { postNewIncident } from "./definition.ts";
+import { newIncident } from "../../../views/new-incident.ts";
 
-const reverse: SlackFunctionHandler<typeof postNewIncident.definition> = async (
-  { inputs, token, env },
-) => {
-  const client = SlackAPI(token, {});
-  await client.apiCall("chat.postMessage", {
-    channel: "C03TPA85LLE", //this will change to an env variable or setting
-    text: `
-*Title*: ${inputs.short_description} \n
-*Severity*: ${inputs.severity} \n
-*Description*: ${inputs.long_description} \n
-*Incident Participants*: ${inputs.incident_participants} \n
-*Incident DRI*: ${inputs.incident_dri} \n
-*Incident Triggered From*:  ${inputs.incident_trigger}
-    `,
-  });
-  return await {
-    outputs: {},
+const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
+  async (
+    { inputs, token, env },
+  ) => {
+    console.log(env);
+
+    const client = SlackAPI(token, {});
+    await client.apiCall("chat.postMessage", {
+      channel: "C03TPA85LLE", //this will change to an env variable or setting
+      text: "New Incident",
+      blocks: newIncident(inputs),
+    });
+    return await {
+      outputs: {},
+    };
   };
-};
 
-export default reverse;
+export default postIncident;
