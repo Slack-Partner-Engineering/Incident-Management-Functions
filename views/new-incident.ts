@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-// deno-lint-ignore-file
-const newIncident = (incidentObject: any) => { //anoying type workaround, guess I will have to add the incident object as a type, creating a jira.
+import type { Incident } from "../types/incident-object.ts";
+
+const newIncident = (incidentObject: Incident) => {
   const blocks = [
     {
       type: "section",
