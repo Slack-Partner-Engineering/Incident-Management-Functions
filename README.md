@@ -23,8 +23,7 @@ workflow.
 hermes trigger create --trigger-def triggers/trigger.ts
 ```
 
-This provides a URL that you can now paste into your slack workspace to run the
-workflow! You can also add the url to the bookmarks bar of a channel!
+This provides a URL that you can now paste into your slack workspace to run the workflow! You can also add the url to the bookmarks bar of a channel!
 
 You will need to now run `hermes run` to be able to use the workflow.
 
