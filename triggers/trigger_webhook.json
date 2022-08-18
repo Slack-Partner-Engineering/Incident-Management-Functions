@@ -1,7 +1,7 @@
 {
   "type": "webhook",
   "name": "Create Incident From External Source via Webhook",
-  "workflow": "#/workflows/runFromExternalWebhook",
+  "workflow": "#/workflows/createIncidentExternalWebhook",
   "inputs": {
     "body": {
       "value": "{{data.body}}"

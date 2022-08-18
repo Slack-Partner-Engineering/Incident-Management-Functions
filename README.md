@@ -28,6 +28,32 @@ workflow! You can also add the url to the bookmarks bar of a channel!
 
 You will need to now run `hermes run` to be able to use the workflow.
 
+To run the external Webhook trigger you will need to create the trigger in the same way but pass in the JSON version of trigger creation. This can also be done with a Typescript file. 
+
+```bash
+hermes trigger create --trigger-def  "./triggers/trigger_webhook.json"
+```
+You will see something like:
+
+```bash
+⚡ Trigger created
+   Trigger ID:   Ft03UTJ9BYBA
+   Trigger Type: webhook
+   Trigger Name: Create Incident From External Source via Webhook
+   Webhook URL:  https://hooks.slack.com/triggers/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
+```
+
+The `Webhook URL` is what you will want to use to trigger an incident from outside of Slack. 
+
+Sample API Call
+
+```bash
+curl --location --request POST 'https://hooks.slack.com/triggers/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' \
+--header 'Content-Type: application/json' \
+--data-raw '{ "body": "{\n\t\"short_description\": \"Service Down!\",\n\t\"long_description\": \"Multiple reports that service is down this morning\",\n\t\"severity\": \"High\"\n}"
+}
+```
+
 ## Building the App
 
 To test new changes before pushing, you can use the `build.sh` script to format,

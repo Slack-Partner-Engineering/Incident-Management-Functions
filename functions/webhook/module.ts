@@ -11,7 +11,7 @@ const normalizeData: SlackFunctionHandler<typeof parseWebhook.definition> =
     console.log(inputs);
     console.log(token);
 
-    const payload = inputs;
+    const payload = JSON.parse(inputs.body);
     console.log(payload);
 
     const incident = {
@@ -28,7 +28,7 @@ const normalizeData: SlackFunctionHandler<typeof parseWebhook.definition> =
       severity: payload.severity ? payload.severity : "",
       incident_participants: "",
       incident_dri: "",
-      incident_trigger: "External Service",
+      incident_trigger: "an External Service",
     };
 
     console.log(incident);
@@ -39,3 +39,7 @@ const normalizeData: SlackFunctionHandler<typeof parseWebhook.definition> =
   };
 
 export default normalizeData;
+
+// Sample API call
+// { "body": "{\n\t\"short_description\": \"Service Down!\",\n\t\"long_description\": \"Multiple reports that service is down this morning\",\n\t\"severity\": \"High\"\n}"
+// }
