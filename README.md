@@ -52,10 +52,13 @@ outside of Slack.
 Sample API Call
 
 ```bash
-curl --location --request POST 'https://hooks.slack.com/triggers/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' \
+curl --location --request POST 'https://hooks.slack.com/triggers/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' \
 --header 'Content-Type: application/json' \
---data-raw '{ "body": "{\n\t\"short_description\": \"Service Down!\",\n\t\"long_description\": \"Multiple reports that service is down this morning\",\n\t\"severity\": \"High\"\n}"
-}
+--data-raw '{
+"short_description": "Many reports that site is down!",
+"severity": "High",
+"external_incident_id": "XX-2345"
+}'
 ```
 
 ## Building the App
