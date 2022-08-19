@@ -2,10 +2,10 @@
 //input: standard incident object
 //output: none
 import type { SlackFunctionHandler } from "deno-slack-sdk/types.ts";
-import { SlackAPI } from "deno-slack-api/mod.ts";
 import type { postNewIncident } from "./definition.ts";
 import { newIncident } from "../../../views/new-incident.ts";
 import type { Incident } from "../../../types/incident-object.ts";
+import { postMessage } from "../../../utils/slack_apis/post-message.ts";
 
 const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
   async (
@@ -13,12 +13,10 @@ const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
   ) => {
     console.log(env);
 
-    const client = SlackAPI(token, {});
-    await client.apiCall("chat.postMessage", {
-      channel: "C03TPA85LLE", //this will change to an env variable or setting
-      text: "New Incident",
-      blocks: newIncident(<Incident> inputs),
-    });
+    const blocks = await newIncident(<Incident> inputs);
+
+    await postMessage(token, "C03TPA85LLE", blocks); //this channel should be configurable, env variable or something.
+
     return await {
       outputs: {},
     };
