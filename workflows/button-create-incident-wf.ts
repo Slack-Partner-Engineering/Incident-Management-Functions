@@ -6,7 +6,7 @@
 import { DefineWorkflow, Schema } from "deno-slack-sdk/mod.ts";
 import { createIncident } from "../functions/create_incident/button/definition.ts";
 import { postNewIncident } from "../functions/send_to_slack/post_incident/definition.ts";
-import postIncident from "../functions/send_to_slack/new_incident/new-incident";
+// import postIncident from "../functions/send_to_slack/new_incident/new-incident";
 
 export const createIncidentWF = DefineWorkflow({
   callback_id: "createIncidentFromButtonWF",
@@ -87,7 +87,6 @@ const CreateIncidentStep1 = createIncidentWF
     },
   );
 
-
 createIncidentWF
   .addStep(createIncident, {
     short_description: CreateIncidentStep1.outputs.fields.short_description,
@@ -100,18 +99,3 @@ createIncidentWF
     incident_trigger: createIncidentWF.inputs.currentUser,
     incident_channel: createIncidentWF.inputs.currentChannel,
   });
-
-// createIncidentWF1
-//   .addStep(postNewIncident, {
-//     // short_description: CreateIncidentStep1.outputs.fields.short_description,
-//     // severity: CreateIncidentStep1.outputs.fields.severity,
-//     // long_description: CreateIncidentStep1.outputs.fields.long_description,
-//     // incident_participants:
-//     //   CreateIncidentStep1.outputs.fields.incident_participants,
-//     // incident_dri: CreateIncidentStep1.outputs.fields.incident_dri,
-//     // incident_start_time: createIncidentWF.inputs.currentTime,
-//     // incident_trigger: createIncidentWF.inputs.currentUser,
-//     // incident_channel: createIncidentWF.inputs.currentChannel,
-//   });
-
-  // after create incident, call post to slack
