@@ -6,8 +6,9 @@ export type Incident = {
   incident_dri?: string | undefined;
   incident_start_time: string | undefined;
   incident_trigger?: string;
-  incident_id?: string;
+  incident_id?: string | undefined;
   external_incident_id?: string;
   slack_reporter?: string | undefined;
   incident_channel?: string | undefined;
+  incident_channel_url?: string | undefined;
 };
