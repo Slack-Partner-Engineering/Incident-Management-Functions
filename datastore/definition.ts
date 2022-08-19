@@ -54,7 +54,7 @@ const AuditIncidents = DefineDatastore({
       type: Schema.types.string,
     },
     incident_object: {
-      type: Schema.types.object,
+      type: Schema.types.string,
     },
   },
 });
