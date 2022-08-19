@@ -2,11 +2,13 @@
 //input: standard incident object
 //output: none
 import type { SlackFunctionHandler } from "deno-slack-sdk/types.ts";
-import type { createIncident } from "./definition.ts";
+import { createIncident } from "./definition.ts";
 import { newIncident } from "./../../../views/new-incident.ts";
 import type { Incident } from "./../../../types/incident-object.ts";
 import { postMessage } from "../../../utils/slack_apis/post-message.ts";
 import { saveNewIncident } from "../../../utils/database/create-incident.ts";
+
+import { BlockActionsRouter } from "deno-slack-sdk/mod.ts";
 
 const create_incident: SlackFunctionHandler<typeof createIncident.definition> =
   async (
@@ -23,9 +25,21 @@ const create_incident: SlackFunctionHandler<typeof createIncident.definition> =
 
     await postMessage(token, <string> inputs.incident_channel, blocks);
 
-    return await {
-      outputs: {},
+    return {
+      completed: false,
     };
   };
 
 export default create_incident;
+
+const router = BlockActionsRouter(createIncident);
+
+export const blockActions = router.addHandler(
+  ['close_incident'],
+  async ({ action, body, token }) => {
+
+    console.log('testing the block actions router')
+
+
+  });
+
