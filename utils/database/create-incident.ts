@@ -1,10 +1,13 @@
 import type { Incident } from "../../types/incident-object.ts";
 import { SlackAPI } from "deno-slack-api/mod.ts";
+import { saveAuditRecord } from "./save-audit.ts";
 
 const saveNewIncident = async (token: string, incident: Incident) => {
   const client = SlackAPI(token, {});
 
-  incident.incident_id = "INC-" + (Date.now()); //build in incident increment logic or something here
+  incident.incident_id = "INC-" + (Date.now()); //build in incident increment logic or something here at some point. Pull prefix from env and starting number maybe
+
+  await saveAuditRecord(token, incident);
 
   const response = await client.apps.datastore.put(
     {
@@ -23,7 +26,5 @@ const saveNewIncident = async (token: string, incident: Incident) => {
     return response.item;
   }
 };
-
-//call to database to save audit
 
 export { saveNewIncident };

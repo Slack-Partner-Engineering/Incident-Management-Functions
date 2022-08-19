@@ -6,6 +6,7 @@ import type { createIncident } from "./definition.ts";
 import { newIncident } from "./../../../views/new-incident.ts";
 import type { Incident } from "./../../../types/incident-object.ts";
 import { postMessage } from "../../../utils/slack_apis/post-message.ts";
+import { saveNewIncident } from "../../../utils/database/create-incident.ts";
 
 const create_incident: SlackFunctionHandler<typeof createIncident.definition> =
   async (
@@ -14,11 +15,11 @@ const create_incident: SlackFunctionHandler<typeof createIncident.definition> =
     console.log(inputs, token, env);
     console.log(inputs.currentUser);
 
-    //call to database to get incident # and increment
-    //call to database to save incident
-    //call to database to save audit
+    const incident = <Incident> inputs;
+    //call to database to save incident and assign incident id
+    incident.incident_id = (await saveNewIncident(token, incident)).incident_id;
 
-    const blocks = await newIncident(<Incident> inputs);
+    const blocks = await newIncident(incident);
 
     await postMessage(token, <string> inputs.incident_channel, blocks);
 
