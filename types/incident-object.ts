@@ -13,4 +13,5 @@ export type Incident = {
   incident_channel_msg_ts?: string | undefined;
   incident_swarming_channel_id?: string | undefined;
   incident_swarming_channel_url?: string | undefined;
+  incident_closed_ts?: string | undefined;
 };
