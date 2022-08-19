@@ -4,14 +4,13 @@
 //sends the incident management object then to the new incident send to slack function to post the details in channel.
 //it will in the future call the inident orchestrator function too to kick off the new incident process.
 import { DefineWorkflow, Schema } from "deno-slack-sdk/mod.ts";
-import { createIncident } from "../functions/create_incident/button/definition.ts";
-import { postNewIncident } from "../functions/send_to_slack/post_incident/definition.ts";
+import { postNewIncident } from "../functions/send_to_slack/post_incident/definition.ts"
 // import postIncident from "../functions/send_to_slack/new_incident/new-incident";
 
-export const createIncidentWF = DefineWorkflow({
-  callback_id: "createIncidentFromButtonWF",
+export const postIncidentFromButtonWF = DefineWorkflow({
+  callback_id: "postIncidentButtonWF",
   title: "Create Incident",
-  description: "Create an incident by starting a workflow from a link trigger.",
+  description: "Create an incident",
   input_parameters: {
     properties: {
       currentUser: {
@@ -28,17 +27,17 @@ export const createIncidentWF = DefineWorkflow({
         description: "Interactivity context",
       },
     },
-    required: ["currentUser", "currentChannel"],
+    required: ["currentUser", "currentChannel", "currentTime"],
   },
 });
 
-const CreateIncidentStep1 = createIncidentWF
+const postIncidentStep1 = postIncidentFromButtonWF
   .addStep(
     Schema.slack.functions.OpenForm,
     {
       title: "Create an Incident",
       submit_label: "Submit",
-      interactivity: createIncidentWF.inputs.interactivity_context,
+      interactivity: postIncidentFromButtonWF.inputs.interactivity_context,
       description: "Incident Form",
       fields: {
         elements: [
@@ -87,15 +86,14 @@ const CreateIncidentStep1 = createIncidentWF
     },
   );
 
-createIncidentWF
-  .addStep(createIncident, {
-    short_description: CreateIncidentStep1.outputs.fields.short_description,
-    severity: CreateIncidentStep1.outputs.fields.severity,
-    long_description: CreateIncidentStep1.outputs.fields.long_description,
-    incident_participants:
-      CreateIncidentStep1.outputs.fields.incident_participants,
-    incident_dri: CreateIncidentStep1.outputs.fields.incident_dri,
-    incident_start_time: createIncidentWF.inputs.currentTime,
-    incident_trigger: createIncidentWF.inputs.currentUser,
-    incident_channel: createIncidentWF.inputs.currentChannel,
+  postIncidentFromButtonWF
+  .addStep(postNewIncident, {
+    short_description: postIncidentStep1.outputs.fields.short_description,
+    severity: postIncidentStep1.outputs.fields.severity,
+    long_description: postIncidentStep1.outputs.fields.long_description,
+    incident_participants: postIncidentStep1.outputs.fields.incident_participants,
+    incident_dri: postIncidentStep1.outputs.fields.incident_dri,
+    incident_start_time: postIncidentFromButtonWF.inputs.currentTime,
+    incident_trigger: postIncidentFromButtonWF.inputs.currentUser,
+    incident_channel: postIncidentFromButtonWF.inputs.currentChannel,
   });
