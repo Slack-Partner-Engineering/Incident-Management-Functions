@@ -1,10 +1,10 @@
 import { DefineFunction, Schema } from "deno-slack-sdk/mod.ts";
 
-export const createIncident = DefineFunction({
-  callback_id: "createIncident",
-  title: "Create a New Incident",
-  description: "Creates a new incident and posts to incident channel",
-  source_file: "functions/create_incident/create-incident.ts",
+export const postNewIncident = DefineFunction({
+  callback_id: "postNewIncident",
+  title: "Post New Incident",
+  description: "Posts a new incident to the incident channel",
+  source_file: "functions/send_to_slack/post_incident/post-incident.ts",
   input_parameters: {
     properties: {
       short_description: {
@@ -35,15 +35,9 @@ export const createIncident = DefineFunction({
         type: Schema.types.string,
         description: "Incident Trigger",
       },
-      currentUser: {
-        type: Schema.slack.types.user_id,
-        description: "User who created the incident",
-      },
-      incident_channel: {
-        type: Schema.slack.types.channel_id,
-      },
-      currentTime: {
-        type: Schema.slack.types.timestamp,
+      external_incident_id: {
+        type: Schema.types.string,
+        description: "Incident Trigger",
       },
     },
     required: ["short_description", "severity", "incident_trigger"],

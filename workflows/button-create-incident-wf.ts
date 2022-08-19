@@ -4,7 +4,7 @@
 //sends the incident management object then to the new incident send to slack function to post the details in channel.
 //it will in the future call the inident orchestrator function too to kick off the new incident process.
 import { DefineWorkflow, Schema } from "deno-slack-sdk/mod.ts";
-import { createIncident } from "../functions/create_incident/definition.ts";
+import { createIncident } from "../functions/create_incident/button/definition.ts";
 
 export const createIncidentWF = DefineWorkflow({
   callback_id: "createIncidentFromButtonWF",
@@ -37,7 +37,7 @@ const CreateIncidentStep1 = createIncidentWF
       title: "Create an Incident",
       submit_label: "Submit",
       interactivity: createIncidentWF.inputs.interactivity_context,
-      description:"Incident Form",
+      description: "Incident Form",
       fields: {
         elements: [
           {
@@ -85,14 +85,15 @@ const CreateIncidentStep1 = createIncidentWF
     },
   );
 
-  createIncidentWF
-    .addStep(createIncident, {
-      short_description: CreateIncidentStep1.outputs.fields.short_description,
-      severity: CreateIncidentStep1.outputs.fields.severity,
-      long_description: CreateIncidentStep1.outputs.fields.long_description,
-      incident_participants: CreateIncidentStep1.outputs.fields.incident_participants,
-      incident_dri: CreateIncidentStep1.outputs.fields.incident_dri,
-      incident_start_time: createIncidentWF.inputs.currentTime,
-      incident_trigger: createIncidentWF.inputs.currentUser,
-      incident_channel: createIncidentWF.inputs.currentChannel,
-});
+createIncidentWF
+  .addStep(createIncident, {
+    short_description: CreateIncidentStep1.outputs.fields.short_description,
+    severity: CreateIncidentStep1.outputs.fields.severity,
+    long_description: CreateIncidentStep1.outputs.fields.long_description,
+    incident_participants:
+      CreateIncidentStep1.outputs.fields.incident_participants,
+    incident_dri: CreateIncidentStep1.outputs.fields.incident_dri,
+    incident_start_time: createIncidentWF.inputs.currentTime,
+    incident_trigger: createIncidentWF.inputs.currentUser,
+    incident_channel: createIncidentWF.inputs.currentChannel,
+  });

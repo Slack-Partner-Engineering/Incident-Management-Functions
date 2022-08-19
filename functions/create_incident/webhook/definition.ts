@@ -5,7 +5,7 @@ export const parseWebhook = DefineFunction({
   title: "Parse the incoming webhook data",
   description:
     "Take incoming webhook data normalizes it and builds the incident object",
-  source_file: "functions/webhook/webhook.ts",
+  source_file: "functions/create_incident/webhook/webhook.ts",
   input_parameters: {
     properties: {
       short_description: {

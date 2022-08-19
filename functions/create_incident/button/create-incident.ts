@@ -3,20 +3,20 @@
 //output: none
 import type { SlackFunctionHandler } from "deno-slack-sdk/types.ts";
 import type { createIncident } from "./definition.ts";
-import { newIncident } from "./../../views/new-incident.ts";
-import type { Incident } from "./../../types/incident-object.ts";
-import { postMessage } from "./../../utils/slack-helpers.ts";
+import { newIncident } from "./../../../views/new-incident.ts";
+import type { Incident } from "./../../../types/incident-object.ts";
+import { postMessage } from "./../../../utils/slack-helpers.ts";
 
 const create_incident: SlackFunctionHandler<typeof createIncident.definition> =
   async (
     { inputs, token, env },
   ) => {
     console.log(inputs, token, env);
-    console.log(inputs.currentUser)
+    console.log(inputs.currentUser);
 
-    const blocks = await newIncident(<Incident> inputs)
+    const blocks = await newIncident(<Incident> inputs);
 
-    await postMessage(token, inputs.incident_channel, blocks)
+    await postMessage(token, <string> inputs.incident_channel, blocks);
 
     return await {
       outputs: {},

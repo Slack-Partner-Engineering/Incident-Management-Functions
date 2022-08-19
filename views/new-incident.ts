@@ -1,8 +1,6 @@
 import type { Incident } from "../types/incident-object.ts";
 
 const newIncident = (incidentObject: Incident) => {
-  console.log('incidentObject')
-  console.log(incidentObject)
   const blocks = [
     {
       type: "section",
