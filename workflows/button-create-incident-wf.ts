@@ -6,7 +6,7 @@
 import { DefineWorkflow, Schema } from "deno-slack-sdk/mod.ts";
 import { createIncident } from "../functions/create_incident/button/definition.ts";
 import { postNewIncident } from "../functions/send_to_slack/post_incident/definition.ts";
-import postIncident from "../functions/send_to_slack/new_incident/new-incident";
+// import postIncident from "../functions/send_to_slack/new_incident/new-incident";
 
 export const createIncidentWF = DefineWorkflow({
   callback_id: "createIncidentFromButtonWF",
