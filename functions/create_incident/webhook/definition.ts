@@ -57,6 +57,10 @@ export const parseWebhook = DefineFunction({
         type: Schema.types.string,
         description: "External Id for the incident",
       },
+      incident_id: {
+        type: Schema.types.string,
+        description: "Slack Id for the incident",
+      },
     },
     required: ["short_description", "severity", "incident_trigger"],
   },

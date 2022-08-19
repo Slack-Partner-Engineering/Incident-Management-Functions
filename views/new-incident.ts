@@ -7,7 +7,7 @@ const newIncident = (incidentObject: Incident) => {
       text: {
         type: "mrkdwn",
         text:
-          `*A new incident has been created by ${incidentObject.incident_trigger}*\n\n*Title*: ${incidentObject.short_description}\n*Severity*: ${incidentObject.severity}\n*Description*: ${incidentObject.long_description}\n*Incident Participants*: ${incidentObject.incident_participants}\n*Incident Start Time*: ${incidentObject.incident_start_time}\n*DRI*: ${incidentObject.incident_dri}\n*External Id*: ${incidentObject.external_incident_id}`,
+          `*A new incident has been created by ${incidentObject.incident_trigger}*\n\n*Title*: ${incidentObject.short_description}\n*Severity*: ${incidentObject.severity}\n*Description*: ${incidentObject.long_description}\n*Incident Participants*: ${incidentObject.incident_participants}\n*Incident Start Time*: ${incidentObject.incident_start_time}\n*DRI*: ${incidentObject.incident_dri}\n*External Id*: ${incidentObject.external_incident_id}\n*Incident Id*: ${incidentObject.incident_id}`,
       },
     },
     {

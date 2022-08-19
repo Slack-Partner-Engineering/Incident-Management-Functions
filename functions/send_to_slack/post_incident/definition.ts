@@ -37,7 +37,11 @@ export const postNewIncident = DefineFunction({
       },
       external_incident_id: {
         type: Schema.types.string,
-        description: "Incident Trigger",
+        description: "External Id",
+      },
+      incident_id: {
+        type: Schema.types.string,
+        description: "Slack Incident Id",
       },
     },
     required: ["short_description", "severity", "incident_trigger"],

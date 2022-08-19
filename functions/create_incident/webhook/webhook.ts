@@ -2,17 +2,13 @@
 import type { SlackFunctionHandler } from "deno-slack-sdk/types.ts";
 import type { parseWebhook } from "./definition.ts";
 import type { Incident } from "../../../types/incident-object.ts";
+import { saveNewIncident } from "../../../utils/database/create-incident.ts";
 
 const normalizeData: SlackFunctionHandler<typeof parseWebhook.definition> =
   async (
     { inputs, token },
   ) => {
-    console.log(inputs);
-    console.log(token);
-
     const payload = <Incident> inputs;
-
-    console.log(payload.severity);
 
     const incident = {
       slack_reporter: "",
@@ -32,17 +28,16 @@ const normalizeData: SlackFunctionHandler<typeof parseWebhook.definition> =
       incident_participants: "",
       incident_dri: "",
       incident_trigger: "an External Service",
+      incident_id: "",
     };
 
-    console.log(incident);
+    //call to database to save incident and assign incident id
+    incident.incident_id = (await saveNewIncident(token, incident)).incident_id;
 
+    //incident now has a incident number
     return await {
       outputs: incident,
     };
   };
 
 export default normalizeData;
-
-// Sample API call
-// { "body": "{\n\t\"short_description\": \"Service Down!\",\n\t\"long_description\": \"Multiple reports that service is down this morning\",\n\t\"severity\": \"High\"\n}"
-// }

@@ -13,7 +13,5 @@ export async function postMessage(
     blocks: blocks,
     unfurl_links: false,
   });
-  console.log(resp);
-
   return resp;
 }
