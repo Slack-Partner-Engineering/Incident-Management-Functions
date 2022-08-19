@@ -1,7 +1,7 @@
 {
   "type": "shortcut",
   "name": "Create an Incident",
-  "workflow": "#/workflows/post_incident_from_button_wf",
+  "workflow": "#/workflows/postIncidentButtonWF",
   "inputs": {
     "currentUser": {
       "value": "{{data.user_id}}"

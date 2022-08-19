@@ -8,9 +8,9 @@ import { postNewIncident } from "../functions/send_to_slack/post_incident/defini
 // import postIncident from "../functions/send_to_slack/new_incident/new-incident";
 
 export const postIncidentFromButtonWF = DefineWorkflow({
-  callback_id: "post_incident_from_button_wf",
+  callback_id: "postIncidentButtonWF",
   title: "Create Incident",
-  description: "Create an incident by starting a workflow from a link trigger.",
+  description: "Create an incident",
   input_parameters: {
     properties: {
       currentUser: {
@@ -91,10 +91,9 @@ const postIncidentStep1 = postIncidentFromButtonWF
     short_description: postIncidentStep1.outputs.fields.short_description,
     severity: postIncidentStep1.outputs.fields.severity,
     long_description: postIncidentStep1.outputs.fields.long_description,
-    incident_participants:
-    postIncidentStep1.outputs.fields.incident_participants,
+    incident_participants: postIncidentStep1.outputs.fields.incident_participants,
     incident_dri: postIncidentStep1.outputs.fields.incident_dri,
     incident_start_time: postIncidentFromButtonWF.inputs.currentTime,
     incident_trigger: postIncidentFromButtonWF.inputs.currentUser,
-    incident_channel: postIncidentFromButtonWF.inputs.currentChannel
+    incident_channel: postIncidentFromButtonWF.inputs.currentChannel,
   });

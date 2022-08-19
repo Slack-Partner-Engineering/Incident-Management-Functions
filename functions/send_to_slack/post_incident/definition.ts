@@ -35,12 +35,20 @@ export const postNewIncident = DefineFunction({
         type: Schema.types.string,
         description: "Incident Trigger",
       },
+      incident_channel: {
+        type: Schema.slack.types.channel_id,
+      },
+      external_incident_id: {
+        type: Schema.types.string,
+        description: "External Id",
+      },
+      incident_id: {
+        type: Schema.types.string,
+        description: "Slack Incident Id",
+      },
       currentUser: {
         type: Schema.slack.types.user_id,
         description: "User who created the incident",
-      },
-      incident_channel: {
-        type: Schema.slack.types.channel_id,
       },
       currentTime: {
         type: Schema.slack.types.timestamp,
@@ -52,10 +60,10 @@ export const postNewIncident = DefineFunction({
         type: Schema.slack.types.string,
       },
     },
-    required: ["short_description", "severity", "incident_trigger"],
-  },
-  output_parameters: {
-    properties: {},
-    required: [],
-  },
-});
+      required: ["short_description", "severity", "incident_trigger"],
+    },
+    output_parameters: {
+      properties: {},
+      required: [],
+    },
+  });
