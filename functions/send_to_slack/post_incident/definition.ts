@@ -57,13 +57,13 @@ export const postNewIncident = DefineFunction({
         type: Schema.slack.types.timestamp,
       },
       incident_close_notes: {
-        type: Schema.slack.types.string,
+        type: Schema.types.string,
       },
     },
-      required: ["short_description", "severity", "incident_trigger"],
-    },
-    output_parameters: {
-      properties: {},
-      required: [],
-    },
-  });
+    required: ["short_description", "severity", "incident_trigger"],
+  },
+  output_parameters: {
+    properties: {},
+    required: [],
+  },
+});
