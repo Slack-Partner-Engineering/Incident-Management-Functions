@@ -9,4 +9,5 @@ export type Incident = {
   incident_id?: string;
   external_incident_id?: string;
   slack_reporter?: string | undefined;
+  incident_channel?: string | undefined;
 };

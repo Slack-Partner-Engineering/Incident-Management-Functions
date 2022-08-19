@@ -1,7 +1,7 @@
 //This function should normalize the incoming data from a webhook to build the standard incident object.
 import type { SlackFunctionHandler } from "deno-slack-sdk/types.ts";
 import type { parseWebhook } from "./definition.ts";
-import type { Incident } from "../../types/incident-object.ts";
+import type { Incident } from "../../../types/incident-object.ts";
 
 const normalizeData: SlackFunctionHandler<typeof parseWebhook.definition> =
   async (

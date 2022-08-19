@@ -1,4 +1,4 @@
 #!/bin/sh
 deno fmt --check
 deno lint
-deno test
+#deno test --add this once we write tests

@@ -4,8 +4,8 @@
 //sends the incident management object then to the new incident send to slack function to post the details in channel.
 //it will in the future call the inident orchestrator function too to kick off the new incident process.
 import { DefineWorkflow, Schema } from "deno-slack-sdk/mod.ts";
-import { postNewIncident } from "../functions/send_to_slack/new_incident/definition.ts";
-import { parseWebhook } from "../functions/webhook/definition.ts";
+import { postNewIncident } from "../functions/send_to_slack/post_incident/definition.ts";
+import { parseWebhook } from "../functions/create_incident/webhook/definition.ts";
 
 export const runFromExternalWebhook = DefineWorkflow({
   callback_id: "createIncidentExternalWebhook",
