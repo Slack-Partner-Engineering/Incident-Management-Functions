@@ -1,11 +1,11 @@
 // deno-lint-ignore-file no-explicit-any
 export const closeIncidentModal = (
-  issueKey: any,
+  issueKey: string,
 ) => {
   const view = {
     "type": "modal",
     "callback_id": "close_incident_modal",
-    // "private_metadata": issueKey,
+    "private_metadata": issueKey,
     "title": {
       "type": "plain_text",
       "text": "Close Incident",
@@ -33,10 +33,10 @@ export const closeIncidentModal = (
         "label": {
           "type": "plain_text",
           "text": "Add Close Notes",
-          "emoji": true
-        }
-      }
-    ]
+          "emoji": true,
+        },
+      },
+    ],
   };
 
   return view;
