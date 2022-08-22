@@ -9,6 +9,14 @@ export async function callPostIncident(
   body: any,
   inputs: any,
 ) {
+
+  console.log("view")
+  console.log(view)
+  console.log("body")
+  console.log(body)
+  console.log("inputs")
+  console.log(inputs)
+
   const statusValue =
     view.state.values.update_status_block.update_status_action.selected_option
       .value;

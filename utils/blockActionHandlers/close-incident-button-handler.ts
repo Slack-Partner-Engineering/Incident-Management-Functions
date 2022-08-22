@@ -27,9 +27,3 @@ export const closeIncidentHandler = router.addHandler(
   },
 );
 
-export const viewSubmission = async ({ body, view, inputs, token }: any) => {
-  if (view.callback_id === "close_incident_modal") {
-    console.log("inside close incident modal");
-    await callPostIncident(view, token, body, inputs);
-  }
-};
