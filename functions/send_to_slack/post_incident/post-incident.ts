@@ -6,20 +6,25 @@ import type { postNewIncident } from "./definition.ts";
 import { newIncident } from "../../../views/new-incident.ts";
 import type { Incident } from "../../../types/incident-object.ts";
 import { postMessage } from "../../../utils/slack_apis/post-message.ts";
+import { closeIncidentHandler } from "../../../utils/blockActionHandlers/close-incident-button-handler.ts";
 
 const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
   async (
     { inputs, token, env },
   ) => {
     console.log(env);
+    console.log(inputs)
 
     const blocks = await newIncident(<Incident> inputs);
+    console.log(blocks)
 
-    await postMessage(token, "C03TPA85LLE", blocks); //this channel should be configurable, env variable or something.
-
-    return await {
-      outputs: {},
+    const resp = await postMessage(token, inputs.incident_channel, blocks); //this channel should be configurable, env variable or something.
+    console.log(resp)
+    return {
+      completed: false,
     };
   };
 
 export default postIncident;
+
+export const blockActions = closeIncidentHandler;
