@@ -24,13 +24,6 @@ export async function callPostIncident(
 
   const client = SlackAPI(token, {});
 
-  await client.apiCall("functions.run", {
-    function_reference: body.api_app_id +
-      "#/functions/postNewIncident",
-    inputs: {
-      issueKey: issueKey,
-      status: statusValue,
-      currentUser: inputs.currentUser,
-    },
-  });
+  // call chat.update and update the incident status to Closed
+
 }
