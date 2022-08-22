@@ -13,13 +13,17 @@ const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
     { inputs, token, env },
   ) => {
     console.log(env);
-    console.log(inputs)
+    console.log(inputs);
 
     const blocks = await newIncident(<Incident> inputs);
-    console.log(blocks)
+    console.log(blocks);
 
-    const resp = await postMessage(token, inputs.incident_channel, blocks); //this channel should be configurable, env variable or something.
-    console.log(resp)
+    const resp = await postMessage(
+      token,
+      inputs.incident_channel || "C03TPA85LLE",
+      blocks,
+    ); //this channel should be configurable, env variable or something.
+    console.log(resp);
     return {
       completed: false,
     };
