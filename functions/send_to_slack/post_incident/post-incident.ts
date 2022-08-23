@@ -7,32 +7,27 @@ import type { postNewIncident } from "./definition.ts";
 import { newIncident } from "../../../views/new-incident.ts";
 import type { Incident } from "../../../types/incident-object.ts";
 import { postMessage } from "../../../utils/slack_apis/post-message.ts";
-import { closeIncidentHandler } from "../../../utils/blockActionHandlers/close-incident-button-handler.ts";
-import { callPostIncident } from "../../../utils/scripts/call-post-incident.ts"
-import { saveNewIncident } from "../../../utils/database/create-incident.ts"
+import { incidentHandler } from "../../../utils/blockActionHandlers/incident-buttons-handler.ts";
+import { callPostIncident } from "../../../utils/scripts/call-post-incident.ts";
+import { saveNewIncident } from "../../../utils/database/create-incident.ts";
 
 const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
   async (
     { inputs, token, env },
   ) => {
-    
     const incidentChannel = env["INCIDENT_CHANNEL"];
-    console.log(env);
-    console.log(inputs);
 
     const incident = <Incident> inputs;
     //call to database to save incident and assign incident id
     incident.incident_id = (await saveNewIncident(token, incident)).incident_id;
 
     const blocks = await newIncident(incident);
-    console.log(blocks);
 
-    const resp = await postMessage(
+    await postMessage(
       token,
       incidentChannel,
       blocks,
     ); //this channel should be configurable, env variable or something.
-    console.log(resp);
     return {
       completed: false,
     };
@@ -40,7 +35,7 @@ const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
 
 export default postIncident;
 
-export const blockActions = closeIncidentHandler;
+export const blockActions = incidentHandler;
 
 export const viewSubmission = async ({ body, view, inputs, token }: any) => {
   if (view.callback_id === "close_incident_modal") {

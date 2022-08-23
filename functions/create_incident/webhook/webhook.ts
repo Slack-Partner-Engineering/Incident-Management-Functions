@@ -27,7 +27,7 @@ const normalizeData: SlackFunctionHandler<typeof parseWebhook.definition> =
       severity: payload.severity ? payload.severity : "",
       incident_participants: "",
       incident_dri: "",
-      incident_trigger: "an External Service",
+      incident_trigger: "an External Service (PagerDuty)",
       incident_id: "",
     };
 
