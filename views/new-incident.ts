@@ -1,6 +1,7 @@
 import type { Incident } from "../types/incident-object.ts";
 
 const newIncident = (incidentObject: Incident) => {
+  //check whether it was triggered by a person or a service
   const incident_creator = incidentObject.external_incident_id
     ? incidentObject.incident_trigger
     : `<@${incidentObject.incident_trigger}>?`;

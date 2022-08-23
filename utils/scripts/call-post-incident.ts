@@ -1,3 +1,4 @@
+// deno-lint-ignore-file
 // deno-lint-ignore-file no-explicit-any
 import { SlackAPI } from "deno-slack-api/mod.ts";
 
@@ -9,13 +10,12 @@ export async function callPostIncident(
   body: any,
   inputs: any,
 ) {
-
-  console.log("view")
-  console.log(view)
-  console.log("body")
-  console.log(body)
-  console.log("inputs")
-  console.log(inputs)
+  console.log("view");
+  console.log(view);
+  console.log("body");
+  console.log(body);
+  console.log("inputs");
+  console.log(inputs);
 
   const statusValue =
     view.state.values.update_status_block.update_status_action.selected_option
@@ -25,5 +25,4 @@ export async function callPostIncident(
   const client = SlackAPI(token, {});
 
   // call chat.update and update the incident status to Closed
-
 }

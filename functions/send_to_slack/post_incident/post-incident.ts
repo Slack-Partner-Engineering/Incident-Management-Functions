@@ -23,7 +23,7 @@ const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
 
     const blocks = await newIncident(incident);
 
-    const resp = await postMessage(
+    await postMessage(
       token,
       incidentChannel,
       blocks,
