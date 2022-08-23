@@ -3,7 +3,7 @@ import { createIncident } from "./../../functions/create_incident/button/definit
 import { SlackAPI } from "deno-slack-api/mod.ts";
 //import { callPostIncident } from "../scripts/call-post-incident.ts";
 
-import { closeIncidentModal } from "../../views/close-incident-modal.ts";
+import { closeIncidentHandler } from "./close-incident-button-handler.ts";
 
 const router = BlockActionsRouter(createIncident);
 
@@ -24,17 +24,9 @@ export const incidentHandler = router.addHandler(
         console.log("hit create channel statement");
         break;
 
-      case "close_incident": {
-        console.log("hit close incident statement");
-        //get the modal view from the views folder
-        const ModalView = await closeIncidentModal(action.value);
-        //open the modal with the view which we created above
-        await client.views.open({
-          trigger_id: body.trigger_id,
-          view: ModalView,
-        });
+      case "close_incident":
+        await closeIncidentHandler(client, action, body, token);
         break;
-      }
 
       case "escalate":
         console.log("hit escalate statement");

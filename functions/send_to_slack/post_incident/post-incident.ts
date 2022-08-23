@@ -7,7 +7,7 @@ import type { postNewIncident } from "./definition.ts";
 import { newIncident } from "../../../views/new-incident.ts";
 import type { Incident } from "../../../types/incident-object.ts";
 import { postMessage } from "../../../utils/slack_apis/post-message.ts";
-import { incidentHandler } from "../../../utils/blockActionHandlers/incident-buttons-handler.ts";
+import { incidentHandler } from "../../../utils/blockActionHandlers/incident-buttons-router.ts";
 import { callPostIncident } from "../../../utils/scripts/call-post-incident.ts";
 import { saveNewIncident } from "../../../utils/database/create-incident.ts";
 
