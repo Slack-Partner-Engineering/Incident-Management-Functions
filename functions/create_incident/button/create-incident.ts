@@ -9,6 +9,7 @@ import type { Incident } from "./../../../types/incident-object.ts";
 import { postMessage } from "../../../utils/slack_apis/post-message.ts";
 import { saveNewIncident } from "../../../utils/database/create-incident.ts";
 import { closeIncidentHandler } from "../../../utils/blockActionHandlers/close-incident-button-handler.ts";
+import { createIssue } from "../../../utils/externalAPIs/atlassian/createIssue.ts";
 
 const create_incident: SlackFunctionHandler<typeof createIncident.definition> =
   async (
@@ -24,6 +25,9 @@ const create_incident: SlackFunctionHandler<typeof createIncident.definition> =
     const blocks = await newIncident(incident);
 
     await postMessage(token, <string> inputs.incident_channel, blocks);
+    console.log("before create issue");
+    await createIssue(env, token, incident);
+    console.log("after create issue");
 
     return {
       completed: false,

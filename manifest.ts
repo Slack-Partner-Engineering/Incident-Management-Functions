@@ -16,5 +16,8 @@ export default Manifest({
     "chat:write.public",
     "datastore:read",
     "datastore:write",
+    "channels:manage",
+    "calls:write",
+    "triggers:write",
   ],
 });
