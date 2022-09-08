@@ -1,13 +1,13 @@
 // deno-lint-ignore-file no-explicit-any
 import type { Incident } from "../../../types/incident-object.ts";
-import { getBasicAuth } from "../../auth/getBasicAuth.ts";
+import { getBasicAuthJira } from "../../auth/getBasicAuthJira.ts";
 
 export async function createIssue(env: any, incident: Incident) {
   console.log("create issue called");
   console.log(incident);
   const projectKey = env["JIRA_PROJECT"];
   const instance = env["JIRA_INSTANCE"];
-  const basicAuth = await getBasicAuth(env);
+  const basicAuth = await getBasicAuthJira(env);
   const issueURL = "/rest/api/2/issue/";
 
   const url = "https://" + instance + issueURL;

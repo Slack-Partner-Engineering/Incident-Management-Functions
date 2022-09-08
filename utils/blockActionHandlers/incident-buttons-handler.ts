@@ -1,5 +1,5 @@
 import { BlockActionsRouter } from "deno-slack-sdk/mod.ts";
-import { createIncident } from "./../../functions/create_incident/button/definition.ts";
+import { postNewIncident } from "../../functions/send_to_slack/post_incident/definition.ts";
 import { SlackAPI } from "deno-slack-api/mod.ts";
 import { createZoomMeeting } from "../externalAPIs/zoom/createMeeting.ts";
 import { createChannel } from "../slack_apis/create-channel.ts";
@@ -11,7 +11,9 @@ import { postMessage, postReply } from "../slack_apis/post-message.ts";
 
 import { closeIncidentModal } from "../../views/close-incident-modal.ts";
 
-const router = BlockActionsRouter(createIncident);
+const router = BlockActionsRouter(postNewIncident);
+
+console.log("hitttt");
 
 export const incidentHandler = router.addHandler(
   [
@@ -22,7 +24,9 @@ export const incidentHandler = router.addHandler(
     "assign_dri",
     "add_members",
   ],
-  async ({ action, body, token, env }) => {
+  async ({ action, body, token, env, inputs }) => {
+    console.log(inputs.severity);
+
     const client = SlackAPI(token);
 
     switch (action.action_id) {
@@ -60,7 +64,6 @@ export const incidentHandler = router.addHandler(
           trigger_id: body.trigger_id,
           view: ModalView,
         });
-
         break;
       }
 

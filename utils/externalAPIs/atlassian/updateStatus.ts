@@ -1,5 +1,5 @@
 // deno-lint-ignore-file no-explicit-any
-import { getBasicAuth } from "../../auth/getBasicAuth.ts";
+import { getBasicAuthJira } from "../../auth/getBasicAuthJira.ts";
 
 /** This function lets a user in Slack update the status of an issue
  * @see https://developer.atlassian.com/server/jira/platform/jira-rest-api-example-add-comment-8946422/
@@ -7,7 +7,7 @@ import { getBasicAuth } from "../../auth/getBasicAuth.ts";
 export async function updateStatus(env: any, issueKey: string) {
   console.log("updateStatus issue called");
   const instance = env["JIRA_INSTANCE"];
-  const basicAuth = await getBasicAuth(env);
+  const basicAuth = await getBasicAuthJira(env);
   const issueURL = "/rest/api/2/issue/";
 
   console.log("issueKey");
