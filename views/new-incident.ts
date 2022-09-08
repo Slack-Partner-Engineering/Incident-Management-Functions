@@ -1,10 +1,12 @@
 import type { Incident } from "../types/incident-object.ts";
 
-const newIncident = (incidentObject: Incident) => {
+const newIncident = async (incidentObject: Incident) => {
   //check whether it was triggered by a person or a service
   const incident_creator = incidentObject.external_incident_id
     ? incidentObject.incident_trigger
     : `<@${incidentObject.incident_trigger}>`;
+
+  const incidentStr = await JSON.stringify(incidentObject);
 
   const blocks = [
     {
@@ -29,6 +31,7 @@ const newIncident = (incidentObject: Incident) => {
             "text": "Create Channel",
             "emoji": true,
           },
+          "value": incidentStr,
         },
         {
           "type": "button",
@@ -38,6 +41,7 @@ const newIncident = (incidentObject: Incident) => {
             "text": "Close Incident",
             "emoji": true,
           },
+          "value": incidentStr,
         },
         {
           "type": "button",
@@ -47,6 +51,7 @@ const newIncident = (incidentObject: Incident) => {
             "text": "Escalate",
             "emoji": true,
           },
+          "value": incidentStr,
         },
         {
           "type": "button",
@@ -56,6 +61,7 @@ const newIncident = (incidentObject: Incident) => {
             "text": "De-escalate",
             "emoji": true,
           },
+          "value": incidentStr,
         },
         {
           "type": "button",
@@ -65,6 +71,7 @@ const newIncident = (incidentObject: Incident) => {
             "text": "Assign DRI",
             "emoji": true,
           },
+          "value": incidentStr,
         },
         {
           "type": "button",
@@ -74,6 +81,7 @@ const newIncident = (incidentObject: Incident) => {
             "text": "Add Members",
             "emoji": true,
           },
+          "value": incidentStr,
         },
       ],
     },

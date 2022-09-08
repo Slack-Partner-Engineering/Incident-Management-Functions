@@ -17,12 +17,13 @@ export async function callPostIncident(
   console.log("inputs");
   console.log(inputs);
 
-  const statusValue =
-    view.state.values.update_status_block.update_status_action.selected_option
-      .value;
-  const issueKey = view.private_metadata;
+  const closeNotes =
+    view.state.values.add_comment_block.close_incident_action.value;
+
+  console.log(closeNotes);
 
   const client = SlackAPI(token, {});
 
   // call chat.update and update the incident status to Closed
+  // call addComment to add a comment with the close notes in Atlassian
 }
