@@ -49,14 +49,18 @@ export const incidentHandler = router.addHandler(
       }
 
       case "close_incident": {
-        console.log("hit close incident statement");
-        //get the modal view from the views folder
-        const ModalView = await closeIncidentModal(action.value);
+        console.log("action value");
+        console.log(action.value);
+        const issueKey = await JSON.parse(action.value).incident_jira_isse_key;
+        console.log("issueKey");
+        console.log(issueKey);
+        const ModalView = await closeIncidentModal(issueKey);
         //open the modal with the view which we created above
         await client.views.open({
           trigger_id: body.trigger_id,
           view: ModalView,
         });
+
         break;
       }
 

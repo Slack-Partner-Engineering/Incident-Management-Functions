@@ -24,11 +24,16 @@ export const postIncidentFromButtonWF = DefineWorkflow({
         type: Schema.slack.types.timestamp,
       },
       interactivity_context: {
-        type: "slack#/types/interactivity",
+        type: Schema.slack.types.interactivity,
         description: "Interactivity context",
       },
     },
-    required: ["currentUser", "currentChannel", "currentTime"],
+    required: [
+      "currentUser",
+      "currentChannel",
+      "currentTime",
+      "interactivity_context",
+    ],
   },
 });
 
