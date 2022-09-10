@@ -5,18 +5,12 @@ import { getBasicAuthJira } from "../../auth/getBasicAuthJira.ts";
  * @see https://developer.atlassian.com/server/jira/platform/jira-rest-api-example-add-comment-8946422/
  */
 export async function updateStatus(env: any, issueKey: string) {
-  console.log("updateStatus issue called");
   const instance = env["JIRA_INSTANCE"];
   const basicAuth = await getBasicAuthJira(env);
   const issueURL = "/rest/api/2/issue/";
 
-  console.log("issueKey");
-  console.log(issueKey);
-
   // API call to transition
   const url = "https://" + instance + issueURL + issueKey + "/transitions";
-  console.log("url: ");
-  console.log(url);
   // // const link = "https://" + instance + "/browse/" + issueKey;
 
   //41 is the internal Jira code for moving the status to "Done"
@@ -38,8 +32,6 @@ export async function updateStatus(env: any, issueKey: string) {
     },
   )
     .then((updateStatusResp) => updateStatusResp.toString());
-  console.log("updateStatusResp: ");
-  console.log(updateStatusResp);
 
   return updateStatusResp;
 }

@@ -1,6 +1,8 @@
+//this view is for when an incident gets its own channel. The incident blocks should no longer have a create channel block and potentially there will
+//be different treatments also for this type of incident.
 import type { Incident } from "../types/incident-object.ts";
 
-const newIncident = async (incidentObject: Incident) => {
+const swarmIncident = async (incidentObject: Incident) => {
   //check whether it was triggered by a person or a service
   const incident_creator = incidentObject.external_incident_id
     ? incidentObject.incident_trigger
@@ -23,16 +25,6 @@ const newIncident = async (incidentObject: Incident) => {
       "type": "actions",
       "block_id": "incident_management_block",
       "elements": [
-        {
-          "type": "button",
-          "action_id": "create_channel",
-          "text": {
-            "type": "plain_text",
-            "text": "Create Channel",
-            "emoji": true,
-          },
-          "value": incidentStr,
-        },
         {
           "type": "button",
           "action_id": "close_incident",
@@ -90,4 +82,4 @@ const newIncident = async (incidentObject: Incident) => {
   return blocks;
 };
 
-export { newIncident };
+export { swarmIncident };
