@@ -7,7 +7,7 @@ export const openView = async (
 ) => {
   const client = SlackAPI(token);
   try {
-    const res = await client.views.open({
+    await client.views.open({
       trigger_id: trigger_id,
       view: modalView,
     });

@@ -1,5 +1,4 @@
 export function getZoomBlock(
-  zoomURL: any,
   callBlockId: string,
 ) {
   const blocks = [

@@ -57,21 +57,20 @@ export default postIncident;
 export const blockActions = incidentHandler;
 
 export const viewSubmission = async (
-  { body, view, inputs, env }: any,
+  { view, env }: any,
 ) => {
   if (view.callback_id === "close_incident_modal") {
     // save the currentTime so that we know what time the incident was closed
-    const currentTime = Date.now();
     const issueKey = view.private_metadata;
     const comment =
       view.state.values.add_comment_block.close_incident_action.value;
-    const addCommentResp = await addJiraComment(
+    await addJiraComment(
       env,
       issueKey,
       comment,
     );
 
-    const updateStatusResp = await updateStatus(env, issueKey);
+    await updateStatus(env, issueKey);
 
     //update the DB wit the close notes
     // update the incident close time
