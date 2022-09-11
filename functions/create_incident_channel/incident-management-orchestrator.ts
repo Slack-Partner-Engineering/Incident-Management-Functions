@@ -79,7 +79,6 @@ export const newSwarmChannel = async (
   );
   const callBlockId = await addCall(meetingResp.join_url, Date.now(), token);
   const zoomBlocks = await getZoomBlock(
-    meetingResp.join_url,
     callBlockId.call.id,
   );
   await postMessage(
