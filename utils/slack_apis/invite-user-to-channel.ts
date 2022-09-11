@@ -5,9 +5,8 @@ export const inviteUserToChannel = async (
   channel_id: string,
   token: string,
 ) => {
-  console.log(user_id, channel_id);
-
   const client = SlackAPI(token);
+
   try {
     await client.conversations.invite({
       token: token,

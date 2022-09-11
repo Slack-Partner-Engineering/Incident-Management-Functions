@@ -8,6 +8,10 @@ const swarmIncident = async (incidentObject: Incident) => {
     ? incidentObject.incident_trigger
     : `<@${incidentObject.incident_trigger}>`;
 
+  const incidentDRI = incidentObject.incident_dri
+    ? `<@${incidentObject.incident_dri}>`
+    : "";
+
   const incidentStr = await JSON.stringify(incidentObject);
 
   const blocks = [
@@ -16,7 +20,7 @@ const swarmIncident = async (incidentObject: Incident) => {
       text: {
         type: "mrkdwn",
         text:
-          `*A new incident has been created by ${incident_creator} *\n\n*Title*: ${incidentObject.short_description}\n*Severity*: ${incidentObject.severity}\n*Description*: ${incidentObject.long_description}\n*Incident Start Time*: ${incidentObject.incident_start_time}\n*DRI*: <@${incidentObject.incident_dri}>\n*External Id*: ${
+          `*A new incident has been created by ${incident_creator} *\n\n*Title*: ${incidentObject.short_description}\n*Severity*: ${incidentObject.severity}\n*Description*: ${incidentObject.long_description}\n*Incident Start Time*: ${incidentObject.incident_start_time}\n*DRI*: ${incidentDRI}\n*External Id*: ${
             incidentObject.external_incident_id || ""
           }\n*Incident Id*: ${incidentObject.incident_id}\n*INCIDENT STATUS*: ${incidentObject.incident_status}`,
       },

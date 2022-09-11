@@ -8,11 +8,14 @@ export const updateMessage = async (
 ) => {
   const client = SlackAPI(token, {});
 
-  const resp = await client.apiCall("chat.update", {
-    channel: channel,
-    ts: ts,
-    blocks: blocks,
-  });
-
-  return resp;
+  try {
+    const resp = await client.apiCall("chat.update", {
+      channel: channel,
+      ts: ts,
+      blocks: blocks,
+    });
+    return resp;
+  } catch (error) {
+    return error;
+  }
 };
