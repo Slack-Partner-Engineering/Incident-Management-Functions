@@ -13,7 +13,6 @@ export const addCall = async (
       external_unique_id: external_unique_id,
       token: token,
     });
-    console.log(res);
     return res;
   } catch (error) {
     console.log(error);

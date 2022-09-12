@@ -11,8 +11,6 @@ export const addBookmark = async (
 ) => {
   const client = SlackAPI(token);
 
-  console.log();
-
   try {
     const res = await client.bookmarks.add({
       channel_id: channel,
@@ -21,7 +19,6 @@ export const addBookmark = async (
       link: link,
       emoji: emoji,
     });
-    console.log(res);
   } catch (error) {
     console.log(error);
   }
