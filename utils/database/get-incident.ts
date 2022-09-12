@@ -1,13 +1,12 @@
-import type { Incident } from "../../types/incident-object.ts";
 import { SlackAPI } from "deno-slack-api/mod.ts";
 
-const getIncident = async (token: string, incident: Incident) => {
+const getIncident = async (token: string, incident_id: string) => {
   const client = SlackAPI(token, {});
 
   try {
     const response = await client.apiCall("apps.datastore.get", {
       datastore: "Incidents",
-      id: incident.incident_id,
+      id: incident_id,
     });
 
     if (!response.ok) {
