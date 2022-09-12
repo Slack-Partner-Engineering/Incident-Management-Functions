@@ -3,9 +3,9 @@ export function jiraIssueBlocks(
   env: any,
   issueInfo: any,
 ) {
-  console.log(" inside get jiraIssueBlocks blocks");
-  console.log(issueInfo);
-  const issueKey = issueInfo.key;
+  const issueKey = issueInfo.key
+    ? issueInfo.key
+    : issueInfo.incident_jira_issue_key;
   const instance = env["JIRA_INSTANCE"];
 
   const link = "https://" + instance + "/browse/" + issueKey;
@@ -19,8 +19,9 @@ export function jiraIssueBlocks(
       block_id: "jira_issue_block",
       text: {
         type: "mrkdwn",
-        text: "Jira Issue: " + "<" + `${link}` + "|" + issueKey + ">" +
-          " created!",
+        text: " :atlassian: Jira Issue: " + "<" + `${link}` + "|" + issueKey +
+          ">" +
+          " created.",
       },
     },
   ];

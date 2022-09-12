@@ -1,19 +1,10 @@
 import { BlockActionsRouter } from "deno-slack-sdk/mod.ts";
 import { postNewIncident } from "../../functions/send_to_slack/post_incident/definition.ts";
-import { SlackAPI } from "deno-slack-api/mod.ts";
-import { createZoomMeeting } from "../externalAPIs/zoom/createMeeting.ts";
-import { createChannel } from "../slack_apis/create-channel.ts";
-import {
-  getIncidentChannelBlocks,
-  getZoomBlock,
-} from "../../views/get-channel-blocks.ts";
-import { postMessage, postReply } from "../slack_apis/post-message.ts";
-
+import { openView } from "../slack_apis/open-view.ts";
 import { closeIncidentModal } from "../../views/close-incident-modal.ts";
+import { newSwarmChannel } from "../../functions/create_incident_channel/incident-management-orchestrator.ts";
 
 const router = BlockActionsRouter(postNewIncident);
-
-console.log("hitttt");
 
 export const incidentHandler = router.addHandler(
   [
@@ -24,46 +15,24 @@ export const incidentHandler = router.addHandler(
     "assign_dri",
     "add_members",
   ],
-  async ({ action, body, token, env, inputs }) => {
-    console.log(inputs.severity);
-
-    const client = SlackAPI(token);
+  async ({ action, body, token, env }) => {
+    const incident = JSON.parse(body.actions[0].value);
 
     switch (action.action_id) {
       case "create_channel": {
-        console.log("hit create channel statement");
-        const shortDescription = body.function_data.inputs.short_description;
-        const meetingResp = await createZoomMeeting(env);
-        const createChannelResp = await createChannel(token, shortDescription);
-        console.log(createChannelResp);
-        const channelBlocks = await getIncidentChannelBlocks(createChannelResp);
-        await postReply(
-          token,
-          body.container.channel_id,
-          channelBlocks,
-          body.container.message_ts,
-        );
-        const zoomBlocks = await getZoomBlock(meetingResp.join_url);
-        await postMessage(
-          token,
-          createChannelResp.channel.id,
-          zoomBlocks,
-        );
+        await newSwarmChannel(incident, env, token, body);
         break;
       }
 
       case "close_incident": {
-        console.log("action value");
-        console.log(action.value);
-        const issueKey = await JSON.parse(action.value).incident_jira_isse_key;
-        console.log("issueKey");
-        console.log(issueKey);
-        const ModalView = await closeIncidentModal(issueKey);
-        //open the modal with the view which we created above
-        await client.views.open({
-          trigger_id: body.trigger_id,
-          view: ModalView,
-        });
+        const issueJiraKey = JSON.parse(action.value)
+          .incident_jira_isse_key;
+        const ModalView = await closeIncidentModal(issueJiraKey);
+        await openView(
+          token,
+          ModalView,
+          body.interactivity.interactivity_pointer,
+        );
         break;
       }
 

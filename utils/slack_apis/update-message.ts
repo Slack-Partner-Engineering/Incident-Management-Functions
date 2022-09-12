@@ -1,16 +1,21 @@
-// deno-lint-ignore-file no-explicit-any
 import { SlackAPI } from "deno-slack-api/mod.ts";
 
-export async function updateMessage(
+export const updateMessage = async (
   token: string,
   channel: string,
   ts: any,
-) {
+  blocks: any,
+) => {
   const client = SlackAPI(token, {});
 
-  const resp = await client.apiCall("chat.update", {
-    channel: channel,
-    ts: ts,
-  });
-  return resp;
-}
+  try {
+    const resp = await client.apiCall("chat.update", {
+      channel: channel,
+      ts: ts,
+      blocks: blocks,
+    });
+    return resp;
+  } catch (error) {
+    return error;
+  }
+};

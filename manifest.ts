@@ -4,7 +4,7 @@ import { postIncidentFromButtonWF } from "./workflows/button-create-incident-wf.
 import { AuditIncidents, Incident } from "./datastore/definition.ts";
 
 export default Manifest({
-  name: "Incident-Management-Functions",
+  name: "Incident Response Bot",
   description: "Reverse a string",
   icon: "assets/icon.png",
   workflows: [runFromExternalWebhook, postIncidentFromButtonWF],
@@ -19,5 +19,6 @@ export default Manifest({
     "channels:manage",
     "calls:write",
     "triggers:write",
+    "bookmarks:write",
   ],
 });

@@ -29,6 +29,7 @@ const normalizeData: SlackFunctionHandler<typeof parseWebhook.definition> =
       incident_dri: "",
       incident_trigger: "an External Service (PagerDuty)",
       incident_id: "",
+      incident_status: "OPEN",
     };
 
     //call to database to save incident and assign incident id

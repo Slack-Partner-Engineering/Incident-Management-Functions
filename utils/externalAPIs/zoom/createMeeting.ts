@@ -2,7 +2,6 @@
 
 export async function createZoomMeeting(env: any) {
   const bt = "Bearer " + env["ZOOM_JWT_TOKEN"];
-  console.log("inside zoom meeting");
 
   const zoomResponse = await fetch(
     "https://api.zoom.us/v2/users/me/meetings",

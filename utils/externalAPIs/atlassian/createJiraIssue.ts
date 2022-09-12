@@ -2,9 +2,7 @@
 import type { Incident } from "../../../types/incident-object.ts";
 import { getBasicAuthJira } from "../../auth/getBasicAuthJira.ts";
 
-export async function createIssue(env: any, incident: Incident) {
-  console.log("create issue called");
-  console.log(incident);
+export async function createJiraIssue(env: any, incident: Incident) {
   const projectKey = env["JIRA_PROJECT"];
   const instance = env["JIRA_INSTANCE"];
   const basicAuth = await getBasicAuthJira(env);

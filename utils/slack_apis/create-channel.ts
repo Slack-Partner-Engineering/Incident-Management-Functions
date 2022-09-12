@@ -4,12 +4,11 @@ import { SlackAPI } from "deno-slack-api/mod.ts";
 export async function createChannel(
   token: string,
   incidentDescription: string,
+  incident_id: string,
 ) {
   const client = SlackAPI(token, {});
 
-  const channelName = await createChannelName(incidentDescription);
-  console.log("channelName");
-  console.log(channelName);
+  const channelName = await createChannelName(incidentDescription, incident_id);
 
   const santizedChannelName = await sanitizeChannelName(channelName);
 
@@ -20,12 +19,11 @@ export async function createChannel(
   return resp;
 }
 
-async function createChannelName(
+function createChannelName(
   incidentDescription: string,
+  incident_id: string,
 ) {
-  const currentTimeStamp = await Date.now(); //build in incident increment logic or something here
-
-  const channelName = currentTimeStamp + "-" + incidentDescription;
+  const channelName = incident_id + "-" + incidentDescription;
   return channelName;
 }
 
@@ -38,12 +36,9 @@ async function sanitizeChannelName(
 
   for (let i = 0; i < channelStr.length; i++) {
     if (channelStr[i] === " ") {
-      console.log(typeof (channelStr[i]));
       (channelStr[i] as any) = "-";
     }
   }
   channelStr = channelStr.join("");
-  console.log("channelStr");
-  console.log(channelStr);
   return channelStr;
 }

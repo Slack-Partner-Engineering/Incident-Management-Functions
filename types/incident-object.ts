@@ -15,5 +15,6 @@ export type Incident = {
   incident_swarming_channel_url?: string | undefined;
   incident_closed_ts?: string | undefined;
   incident_close_notes?: string | undefined;
-  incident_jira_isse_key?: string | undefined;
+  incident_jira_issue_key?: string | undefined;
+  incident_status: string;
 };

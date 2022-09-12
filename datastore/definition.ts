@@ -43,6 +43,9 @@ const Incident = DefineDatastore({
     incident_channel_url: {
       type: Schema.types.string,
     },
+    incident_status: {
+      type: Schema.types.string,
+    },
   },
 });
 

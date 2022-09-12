@@ -10,17 +10,8 @@ export async function callPostIncident(
   body: any,
   inputs: any,
 ) {
-  console.log("view");
-  console.log(view);
-  console.log("body");
-  console.log(body);
-  console.log("inputs");
-  console.log(inputs);
-
   const closeNotes =
     view.state.values.add_comment_block.close_incident_action.value;
-
-  console.log(closeNotes);
 
   const client = SlackAPI(token, {});
 
