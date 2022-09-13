@@ -16,7 +16,7 @@ const postIncidentReport: SlackFunctionHandler<
 
   const blocks = newIncidentReport(incidentReport);
 
-  const res = await postEphemeralMessage(
+  await postEphemeralMessage(
     token,
     incidentChannel,
     blocks,
