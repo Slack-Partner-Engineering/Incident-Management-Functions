@@ -10,7 +10,25 @@ const swarmIncident = async (incidentObject: Incident) => {
 
   const incidentDRI = incidentObject.incident_dri
     ? `<@${incidentObject.incident_dri}>`
+    : "No one Assigned Currently";
+
+  const dateTime = new Date(<any> incidentObject.incident_start_time * 1000);
+
+  const externalId = incidentObject.external_incident_id
+    ? `*External Id*: ${incidentObject.external_incident_id} \n`
     : "";
+
+  let incidentText = "";
+  incidentText = incidentText
+    .concat(`*A new incident has been created by ${incident_creator} *\n\n`)
+    .concat(`*Title*: ${incidentObject.short_description}\n`)
+    .concat(`*Severity*: ${incidentObject.severity}\n`)
+    .concat(`*Description*: ${incidentObject.long_description}\n`)
+    .concat(`*Incident Start Time*: ${dateTime}\n`)
+    .concat(`*DRI*: ${incidentDRI}\n`)
+    .concat(externalId)
+    .concat(`*Incident Id*: ${incidentObject.incident_id}\n`)
+    .concat(`*INCIDENT STATUS*: ${incidentObject.incident_status}`);
 
   const incidentStr = await JSON.stringify(incidentObject);
 
@@ -19,10 +37,7 @@ const swarmIncident = async (incidentObject: Incident) => {
       type: "section",
       text: {
         type: "mrkdwn",
-        text:
-          `*A new incident has been created by ${incident_creator} *\n\n*Title*: ${incidentObject.short_description}\n*Severity*: ${incidentObject.severity}\n*Description*: ${incidentObject.long_description}\n*Incident Start Time*: ${incidentObject.incident_start_time}\n*DRI*: ${incidentDRI}\n*External Id*: ${
-            incidentObject.external_incident_id || ""
-          }\n*Incident Id*: ${incidentObject.incident_id}\n*INCIDENT STATUS*: ${incidentObject.incident_status}`,
+        text: incidentText,
       },
     },
     {

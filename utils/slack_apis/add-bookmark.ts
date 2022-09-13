@@ -12,7 +12,7 @@ export const addBookmark = async (
   const client = SlackAPI(token);
 
   try {
-    const res = await client.bookmarks.add({
+    await client.bookmarks.add({
       channel_id: channel,
       title: title,
       type: type,
