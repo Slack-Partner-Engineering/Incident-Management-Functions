@@ -10,9 +10,12 @@ import { incidentHandler } from "../../../utils/blockActionHandlers/incident-but
 import { saveNewIncident } from "../../../utils/database/create-incident.ts";
 import { createJiraIssue } from "../../../utils/externalAPIs/atlassian/createJiraIssue.ts";
 import { postReply } from "../../../utils/slack_apis/post-message.ts";
-import { jiraIssueBlocks } from "../../../views/jira-issue-blocks.ts";
+import { closeIncidentBlocks } from "../../../views/close-incident-blocks.ts";
 import { addJiraComment } from "../../../utils/externalAPIs/atlassian/addJiraComment.ts";
-import { updateStatus } from "../../../utils/externalAPIs/atlassian/updateStatus.ts";
+import { updateJiraPriorityToLow } from "../../../utils/externalAPIs/atlassian/updateJiraPriority.ts";
+import { jiraIssueBlocks } from "../../../views/jira-issue-blocks.ts";
+import { getIncident } from "../../../utils/database/get-incident.ts";
+import { updateIncident } from "../../../utils/database/update-incident.ts";
 
 const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
   async (
@@ -22,10 +25,12 @@ const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
 
     const incident = <Incident> inputs;
     const createIssueResp = await createJiraIssue(env, incident);
-    //call to database to save incident and assign incident id
-    incident.incident_id = (await saveNewIncident(token, incident)).incident_id;
     incident.incident_jira_issue_key = createIssueResp.key;
     incident.incident_status = "OPEN";
+    //call to database to save incident and assign incident id
+    incident.incident_id = (await saveNewIncident(token, incident)).incident_id;
+
+    console.log(incident);
 
     const blocks = await newIncident(incident);
 
@@ -35,9 +40,12 @@ const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
       blocks,
     );
 
-    //this channel should be configurable, env variable or something.
-    //TODO: check if we need to save the ticket associated with this incident in the DB,
-    // Might need to query for it later in the viewSubmission handler
+    console.log(postMsgResp);
+
+    incident.incident_channel_msg_ts = await postMsgResp.ts;
+    console.log("incident before saving the 2nd time");
+    console.log(incident);
+    await updateIncident(token, incident);
 
     const jiraIssueMessage = await jiraIssueBlocks(env, createIssueResp);
 
@@ -57,27 +65,45 @@ export default postIncident;
 export const blockActions = incidentHandler;
 
 export const viewSubmission = async (
-  { view, env }: any,
+  { view, body, token, env }: any,
 ) => {
   if (view.callback_id === "close_incident_modal") {
     // save the currentTime so that we know what time the incident was closed
-    const issueKey = view.private_metadata;
+    let incident = await JSON.parse(view.private_metadata);
+    console.log("incident: ");
+    console.log(incident);
+    incident.incident_status = "CLOSED";
+    const incidentJiraKey = incident.incident_jira_issue_key;
     const comment =
       view.state.values.add_comment_block.close_incident_action.value;
+
     await addJiraComment(
       env,
-      issueKey,
+      incidentJiraKey,
       comment,
     );
 
-    await updateStatus(env, issueKey);
+    await updateJiraPriorityToLow(env, incidentJiraKey);
+    const closeBlocks = await closeIncidentBlocks(incident);
+    console.log("body: ");
+    console.log(body);
+    const incidentChannel = env["INCIDENT_CHANNEL"];
+    const curIncident = await getIncident(token, incident.incident_id);
+    console.log("cur inc");
+    console.log(curIncident);
+
+    // call getIncident
+    // need body.message.ts
+
+    // await updateMessage(
+    //   token,
+    //   incidentChannel,
+    //   body.message.ts,
+    //   closeBlocks,
+    // );
+    // call calls.end
 
     //update the DB wit the close notes
     // update the incident close time
-
-    // at this point, we should actually just call //addComment in here,
-    //since we have the view.inputs now
-
-    // await callPostIncident(view, token, body, inputs);
   }
 };

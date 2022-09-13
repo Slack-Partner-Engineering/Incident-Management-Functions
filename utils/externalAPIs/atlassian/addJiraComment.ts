@@ -3,14 +3,14 @@ import { getBasicAuthJira } from "../../auth/getBasicAuthJira.ts";
 
 export async function addJiraComment(
   env: any,
-  incidentKey: string,
+  jiraIssueKey: string,
   closeNotes: string,
 ) {
   const instance = env["JIRA_INSTANCE"];
   const basicAuth = await getBasicAuthJira(env);
   const issueURL = "/rest/api/2/issue/";
 
-  const url = "https://" + instance + issueURL + incidentKey + "/comment";
+  const url = "https://" + instance + issueURL + jiraIssueKey + "/comment";
 
   const requestBody: any = {
     "body": "Closing incident with the following close notes: " + closeNotes,
@@ -27,6 +27,7 @@ export async function addJiraComment(
       body: JSON.stringify(requestBody),
     },
   );
-  const addCommentRespJson = await addCommentResp.json();
-  return addCommentRespJson;
+  console.log(addCommentResp);
+  // const addCommentRespJson = await addCommentResp.json();
+  return addCommentResp;
 }
