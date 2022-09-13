@@ -18,6 +18,7 @@ import { getBoxRunbook } from "../../views/box-runbok-blocks.ts";
 import { addCall } from "../../utils/slack_apis/add-call.ts";
 import { Incident } from "../../types/incident-object.ts";
 import { updateIncident } from "../../utils/database/update-incident.ts";
+import { setTopic } from "../../utils/slack_apis/set-topic.ts";
 
 export const newSwarmChannel = async (
   incident: Incident,
@@ -108,6 +109,11 @@ export const newSwarmChannel = async (
     body.user.id,
     createChannelResp.channel.id,
     token,
+  );
+  await setTopic(
+    token,
+    createChannelResp.channel.id,
+    `Major Incident Channel: ${incident.long_description?.substring(0, 250)}`,
   );
   await updateMessage(
     token,
