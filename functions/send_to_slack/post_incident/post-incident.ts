@@ -30,8 +30,6 @@ const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
     //call to database to save incident and assign incident id
     incident.incident_id = (await saveNewIncident(token, incident)).incident_id;
 
-    console.log(incident);
-
     const blocks = await newIncident(incident);
 
     const postMsgResp = await postMessage(
@@ -40,11 +38,7 @@ const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
       blocks,
     );
 
-    console.log(postMsgResp);
-
     incident.incident_channel_msg_ts = await postMsgResp.ts;
-    console.log("incident before saving the 2nd time");
-    console.log(incident);
     await updateIncident(token, incident);
 
     const jiraIssueMessage = await jiraIssueBlocks(env, createIssueResp);
