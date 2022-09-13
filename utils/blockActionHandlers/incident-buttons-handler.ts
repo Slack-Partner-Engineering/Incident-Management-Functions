@@ -27,8 +27,6 @@ export const incidentHandler = router.addHandler(
       case "close_incident": {
         //pass in whole incident obj to view, so we can update the original incident obj later
         const incident = action.value;
-        console.log("incident: ");
-        console.log(incident);
         const ModalView = await closeIncidentModal(incident);
         await openView(
           token,

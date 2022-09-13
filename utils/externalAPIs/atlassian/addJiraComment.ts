@@ -27,7 +27,6 @@ export async function addJiraComment(
       body: JSON.stringify(requestBody),
     },
   );
-  console.log(addCommentResp);
   // const addCommentRespJson = await addCommentResp.json();
   return addCommentResp;
 }
