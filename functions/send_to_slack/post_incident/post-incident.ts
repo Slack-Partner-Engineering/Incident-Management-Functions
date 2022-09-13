@@ -78,8 +78,8 @@ export const viewSubmission = async (
     );
 
     await updateJiraPriorityToLow(env, incidentJiraKey);
-    const closeBlocks = await closeIncidentBlocks(incident);
-    const incidentChannel = env["INCIDENT_CHANNEL"];
-    const curIncident = await getIncident(token, incident.incident_id);
+    // const closeBlocks = await closeIncidentBlocks(incident);
+    // const incidentChannel = env["INCIDENT_CHANNEL"];
+    // const curIncident = await getIncident(token, incident.incident_id);
   }
 };

@@ -16,9 +16,11 @@ import { inviteUserToChannel } from "../../utils/slack_apis/invite-user-to-chann
 import { addBookmark } from "../../utils/slack_apis/add-bookmark.ts";
 import { getBoxRunbook } from "../../views/box-runbok-blocks.ts";
 import { addCall } from "../../utils/slack_apis/add-call.ts";
+import { Incident } from "../../types/incident-object.ts";
+import { updateIncident } from "../../utils/database/update-incident.ts";
 
 export const newSwarmChannel = async (
-  incident: any,
+  incident: Incident,
   env: any,
   token: any,
   body: any,
@@ -29,8 +31,9 @@ export const newSwarmChannel = async (
   const createChannelResp = await createChannel(
     token,
     shortDescription,
-    incidenId,
+    <string> incidenId,
   );
+
   const channelBlocks = await getIncidentChannelBlocks(createChannelResp);
   await postReply(
     token,
@@ -39,11 +42,15 @@ export const newSwarmChannel = async (
     body.container.message_ts,
   );
   const updatedIncidentBlocks = await swarmIncident(incident);
-  await postMessage(
+  const initialMessage = await postMessage(
     token,
     createChannelResp.channel.id,
     updatedIncidentBlocks,
   );
+  incident.incident_swarming_channel_id = initialMessage.channel;
+  incident.incident_swarming_msg_ts = initialMessage.message.ts;
+  await updateIncident(token, incident);
+
   await addBookmark(
     token,
     createChannelResp.channel.id,
@@ -52,12 +59,14 @@ export const newSwarmChannel = async (
     `https://gregg.box.com/fakeACcount`,
     ":boxcorp:",
   );
+
   const boxRunbook = await getBoxRunbook();
   await postMessage(
     token,
     createChannelResp.channel.id,
     boxRunbook,
   );
+
   const jiraIssueMessage = await jiraIssueBlocks(
     env,
     incident,
@@ -77,6 +86,7 @@ export const newSwarmChannel = async (
     }/browse/${incident.incident_jira_issue_key}`,
     ":atlassian:",
   );
+
   const callBlockId = await addCall(meetingResp.join_url, Date.now(), token);
   const zoomBlocks = await getZoomBlock(
     callBlockId.call.id,
@@ -101,7 +111,7 @@ export const newSwarmChannel = async (
   );
   await updateMessage(
     token,
-    incident.incident_channel,
+    <string> incident.incident_channel,
     body.message.ts,
     updatedIncidentBlocks,
   );

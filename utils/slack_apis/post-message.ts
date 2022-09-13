@@ -32,3 +32,20 @@ export async function postReply(
   });
   return resp;
 }
+
+export async function postEphemeralMessage(
+  token: string,
+  channel_id: string,
+  blocks: any,
+  user_id: string,
+) {
+  const client = SlackAPI(token, {});
+
+  const resp = await client.apiCall("chat.postEphemeral", {
+    channel: channel_id,
+    blocks: blocks,
+    token: token,
+    user: user_id,
+  });
+  return resp;
+}
