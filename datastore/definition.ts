@@ -28,9 +28,6 @@ const Incident = DefineDatastore({
     incident_trigger: {
       type: Schema.types.string,
     },
-    indident_id: {
-      type: Schema.types.string,
-    },
     external_incident_id: {
       type: Schema.types.string,
     },
@@ -41,6 +38,27 @@ const Incident = DefineDatastore({
       type: Schema.types.string,
     },
     incident_channel_url: {
+      type: Schema.types.string,
+    },
+    incident_channel_msg_ts: {
+      type: Schema.types.string,
+    },
+    incident_swarming_channel_id: {
+      type: Schema.types.string,
+    },
+    incident_swarming_channel_url: {
+      type: Schema.types.string,
+    },
+    incident_swarming_msg_ts: {
+      type: Schema.types.string,
+    },
+    incident_closed_ts: {
+      type: Schema.types.string,
+    },
+    incident_close_notes: {
+      type: Schema.types.string,
+    },
+    incident_jira_issue_key: {
       type: Schema.types.string,
     },
     incident_status: {

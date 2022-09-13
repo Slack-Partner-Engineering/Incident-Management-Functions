@@ -21,7 +21,6 @@ const updateIncident = async (token: string, incident: Incident) => {
       error: response.error,
     };
   } else {
-    console.log("Datastore put successful!");
     return response.item;
   }
 };
