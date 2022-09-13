@@ -49,7 +49,7 @@ const postIncidentStep1 = postIncidentFromButtonWF
         elements: [
           {
             name: "short_description",
-            title: "Summary",
+            title: "Summary (Limit 50 Characters)",
             type: Schema.types.string,
           },
           {

@@ -8,7 +8,10 @@ export async function createChannel(
 ) {
   const client = SlackAPI(token, {});
 
-  const channelName = await createChannelName(incidentDescription, incident_id);
+  const channelName = await createChannelName(
+    incidentDescription.substring(0, 25),
+    incident_id,
+  );
 
   const santizedChannelName = await sanitizeChannelName(channelName);
 
