@@ -69,7 +69,7 @@ export const viewSubmission = async (
 ) => {
   if (view.callback_id === "close_incident_modal") {
     // save the currentTime so that we know what time the incident was closed
-    let incident = await JSON.parse(view.private_metadata);
+    const incident = await JSON.parse(view.private_metadata);
     console.log("incident: ");
     console.log(incident);
     incident.incident_status = "CLOSED";
@@ -85,25 +85,7 @@ export const viewSubmission = async (
 
     await updateJiraPriorityToLow(env, incidentJiraKey);
     const closeBlocks = await closeIncidentBlocks(incident);
-    console.log("body: ");
-    console.log(body);
     const incidentChannel = env["INCIDENT_CHANNEL"];
     const curIncident = await getIncident(token, incident.incident_id);
-    console.log("cur inc");
-    console.log(curIncident);
-
-    // call getIncident
-    // need body.message.ts
-
-    // await updateMessage(
-    //   token,
-    //   incidentChannel,
-    //   body.message.ts,
-    //   closeBlocks,
-    // );
-    // call calls.end
-
-    //update the DB wit the close notes
-    // update the incident close time
   }
 };
