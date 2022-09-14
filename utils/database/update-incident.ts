@@ -21,6 +21,7 @@ const updateIncident = async (token: string, incident: Incident) => {
       error: response.error,
     };
   } else {
+    console.log(response);
     console.log("Item retrieved from DB Successfully");
     return response.item;
   }

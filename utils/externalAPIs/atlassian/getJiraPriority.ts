@@ -25,9 +25,9 @@ export async function getJiraPriority(env: any, issueKey: any) {
     },
   );
   // .then((getTicketResp) => getTicketResp.json());
-  console.log("getTicketResp: ");
+  // console.log("getTicketResp: ");
   const getTicketJson = await getTicketResp.json();
-  console.log(getTicketJson);
+  // console.log(getTicketJson);
   const currentIssuePriority = getTicketJson.fields.priority.id;
 
   return currentIssuePriority;
