@@ -21,7 +21,7 @@ import { updateIncident } from "../../utils/database/update-incident.ts";
 import { setTopic } from "../../utils/slack_apis/set-topic.ts";
 import { increaseJiraPriority } from "../../utils/externalAPIs/atlassian/increaseJiraPriority.ts";
 import { getJiraPriority } from "../../utils/externalAPIs/atlassian/getJiraPriority.ts";
-import { getPriorityChangedBlocks } from "../../views/get-priority-changed-blocks.ts";
+import { getPriorityIncreasedBlocks } from "../../views/get-priority-increased-blocks.ts";
 import { getIncident } from "../../utils/database/get-incident.ts";
 
 export const escalateIncident = async (
@@ -30,40 +30,47 @@ export const escalateIncident = async (
   token: any,
   body: any,
 ) => {
-  const jiraIssueKey = incident.incident_jira_issue_key;
-  const previousPriority = await getJiraPriority(env, jiraIssueKey);
-  console.log("previous priority");
-  console.log(previousPriority);
-  await increaseJiraPriority(env, jiraIssueKey);
-  const newPriority = await getJiraPriority(env, jiraIssueKey);
-  console.log("newPriority priority");
-  console.log(newPriority);
-  console.log("hit escalate statement");
-  console.log("incident");
-  console.log(incident);
-  const priorityBlocks = getPriorityChangedBlocks(
-    previousPriority,
-    newPriority,
-  );
+  const curIncident = await getIncident(token, <string> incident.incident_id);
+  const curSeverity = curIncident.severity;
+  let newSeverity;
+  switch (curSeverity) {
+    case "Low": {
+      newSeverity = "Medium";
+      break;
+    }
+    case "Medium": {
+      newSeverity = "High";
+      break;
+    }
+    case "High": {
+      newSeverity = "Critical";
+      break;
+    }
+  }
 
-  const curIncident = getIncident(token, <string> incident.incident_id);
-  console.log(curIncident);
+  const priorityBlocks = getPriorityIncreasedBlocks(
+    curSeverity,
+    newSeverity,
+  );
 
   if (incident.incident_swarming_channel_id !== undefined) {
     console.log(incident.incident_swarming_channel_id);
-    await postMessage(
+    const reply = await postReply(
       token,
-      incident.incident_swarming_channel_id,
+      <string> curIncident.incident_swarming_channel_id,
       priorityBlocks,
+      curIncident.incident_swarming_msg_ts,
     );
+
     // post to swarming channel (normal chat.postMessage)
   } else {
     console.log("going into post reply");
+    console.log(incident);
     const reply = await postReply(
       token,
-      <string> incident.incident_channel,
+      <string> curIncident.incident_channel,
       priorityBlocks,
-      incident.incident_channel_msg_ts,
+      curIncident.incident_channel_msg_ts,
     );
     console.log(reply);
   }
