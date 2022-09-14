@@ -3,8 +3,8 @@ import { postNewIncident } from "../../functions/send_to_slack/post_incident/def
 import { openView } from "../slack_apis/open-view.ts";
 import { closeIncidentModal } from "../../views/close-incident-modal.ts";
 import { newSwarmChannel } from "../../functions/create_incident_channel/incident-management-orchestrator.ts";
-import { increaseJiraPriority } from "../externalAPIs/atlassian/increaseJiraPriority.ts";
 import { escalateIncident } from "../../functions/escalate/escalateIncident.ts";
+import { deEscalateIncident } from "../../functions/de_escalate/de-escalate-incident.ts";
 
 const router = BlockActionsRouter(postNewIncident);
 
@@ -45,6 +45,7 @@ export const incidentHandler = router.addHandler(
 
       case "de_escalate":
         console.log("hit de_escalate statement");
+        await deEscalateIncident(incident, env, token, body);
         break;
 
       case "assign_dri":

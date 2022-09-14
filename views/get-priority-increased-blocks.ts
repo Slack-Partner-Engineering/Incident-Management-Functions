@@ -1,5 +1,5 @@
 // deno-lint-ignore-file no-explicit-any
-export function getPriorityChangedBlocks(
+export function getPriorityIncreasedBlocks(
   previousPriority: any,
   newPriority: any,
 ) {
@@ -8,10 +8,11 @@ export function getPriorityChangedBlocks(
       type: "section",
       text: {
         type: "mrkdwn",
-        text: "Priority updated from" + "`" + previousPriority + "`" + " " +
+        text: "Priority updated from " + "`" + previousPriority + "`" + " " +
           "→ " + "`" + newPriority + "`",
       },
     },
   ];
+
   return blocks;
 }

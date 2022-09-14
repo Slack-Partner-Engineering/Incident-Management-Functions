@@ -4,7 +4,7 @@ import { getBasicAuthJira } from "../../auth/getBasicAuthJira.ts";
 /** This function lets a user in Slack update the priority of an issue
  * @see https://docs.atlassian.com/software/jira/docs/api/REST/7.6.1/?_ga=2.226925854.2030217466.1525875113-593458345.1525875113#api/2/issue-editIssue
  */
-export async function increaseJiraPriority(env: any, issueKey: any) {
+export async function decreaseJiraPriority(env: any, issueKey: any) {
   console.log("updateStatus issue called");
   const instance = env["JIRA_INSTANCE"];
   console.log(instance);
@@ -26,26 +26,26 @@ export async function increaseJiraPriority(env: any, issueKey: any) {
   );
 
   const getTicketJson = await getTicketResp.json();
-  let currentIssuePriority = getTicketJson.fields.priority.id;
-
-  if (currentIssuePriority <= 1) {
+  let currentIssuePriority = <number> getTicketJson.fields.priority.id;
+  currentIssuePriority;
+  console.log("currentIssuePriority: ");
+  console.log(typeof (currentIssuePriority));
+  if (currentIssuePriority >= 5) {
     console.log(
-      "cannot escalate this any further since it is at the highest priority",
+      "Cannot de escalate this any further since it is at the lowest priority",
     );
   } else {
-    currentIssuePriority -= 1;
+    currentIssuePriority += 1;
   }
-  // Current Mapping for Jira Cloud Priorities
 
-  // Automatically set any priority to "Low" once we call close incident
+  console.log("currentIssuePriority: ");
+  console.log(currentIssuePriority);
 
   const requestBody: any = JSON.stringify({
     "update": {
       "priority": [{ "set": { "id": `${currentIssuePriority}` } }],
     },
   });
-  console.log("requestBody for updatepriority");
-  console.log(requestBody);
 
   const increaseJiraPriorityResp = await fetch(
     url,
