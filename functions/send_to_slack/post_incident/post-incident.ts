@@ -18,6 +18,9 @@ import { getIncident } from "../../../utils/database/get-incident.ts";
 import { updateIncident } from "../../../utils/database/update-incident.ts";
 import { updateMessage } from "../../../utils/slack_apis/update-message.ts";
 import { endCall } from "../../../utils/slack_apis/end-call.ts";
+import { documentOnIncidentClose } from "../../../views/doc-on-incident-close.ts";
+import { addBookmark } from "../../../utils/slack_apis/add-bookmark.ts";
+import { setTopic } from "../../../utils/slack_apis/set-topic.ts";
 
 const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
   async (
@@ -108,6 +111,28 @@ export const viewSubmission = async (
         incident.incident_swarming_channel_id,
         incident.incident_swarming_msg_ts,
         closeBlocks,
+      );
+
+      await setTopic(
+        token,
+        incident.incident_swarming_channel_id,
+        `CLOSED ${incident.long_description?.substring(0, 250)}`,
+      );
+
+      await addBookmark(
+        token,
+        incident.incident_swarming_channel_id,
+        "RCA Template",
+        "link",
+        `https://slack1.box.com/s/r783r9wafmts2ala656l82ol50vo8h2s`,
+        ":boxcorp:",
+      );
+
+      const incidentCloseDocumentBlocks = documentOnIncidentClose();
+      await postMessage(
+        token,
+        incident.incident_swarming_channel_id,
+        incidentCloseDocumentBlocks,
       );
     }
   }
