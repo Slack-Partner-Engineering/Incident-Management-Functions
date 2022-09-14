@@ -11,7 +11,7 @@ export async function postMessage(
   const resp = await client.apiCall("chat.postMessage", {
     channel: channel,
     blocks: blocks,
-    unfurl_links: false,
+    unfurl_links: true,
   });
   return resp;
 }
