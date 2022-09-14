@@ -76,11 +76,11 @@ const postIncidentStep1 = postIncidentFromButtonWF
             title: "Long description",
             type: Schema.types.string,
           },
-          {
-            name: "incident_participants",
-            title: "Participant emails",
-            type: Schema.types.string,
-          },
+          // {
+          //   name: "incident_participants",
+          //   title: "Participant emails",
+          //   type: Schema.types.string,
+          // },
           {
             name: "incident_dri",
             title: "Directly Responsible Individual",
@@ -97,8 +97,8 @@ postIncidentFromButtonWF
     short_description: postIncidentStep1.outputs.fields.short_description,
     severity: postIncidentStep1.outputs.fields.severity,
     long_description: postIncidentStep1.outputs.fields.long_description,
-    incident_participants:
-      postIncidentStep1.outputs.fields.incident_participants,
+    // incident_participants:
+    //   postIncidentStep1.outputs.fields.incident_participants,
     incident_dri: postIncidentStep1.outputs.fields.incident_dri,
     incident_start_time: postIncidentFromButtonWF.inputs.currentTime,
     incident_trigger: postIncidentFromButtonWF.inputs.currentUser,

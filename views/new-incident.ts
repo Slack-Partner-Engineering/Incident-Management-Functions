@@ -97,7 +97,7 @@ const newIncident = async (incidentObject: Incident) => {
           "action_id": "add_members",
           "text": {
             "type": "plain_text",
-            "text": "Add Members",
+            "text": "Add Member",
             "emoji": true,
           },
           "value": incidentStr,

@@ -55,16 +55,16 @@ const closeIncidentBlocks = async (incidentObject: Incident) => {
           },
           "value": incidentStr,
         },
-        {
-          "type": "button",
-          "action_id": "get_incident_summary",
-          "text": {
-            "type": "plain_text",
-            "text": "Incident Summary",
-            "emoji": true,
-          },
-          "value": incidentStr,
-        },
+        // {
+        //   "type": "button",
+        //   "action_id": "get_incident_summary",
+        //   "text": {
+        //     "type": "plain_text",
+        //     "text": "Incident Summary",
+        //     "emoji": true,
+        //   },
+        //   "value": incidentStr,
+        // },
       ],
     },
   ];
