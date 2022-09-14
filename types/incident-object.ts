@@ -19,4 +19,5 @@ export type Incident = {
   incident_close_notes?: string | undefined;
   incident_jira_issue_key?: string | undefined;
   incident_status: string;
+  incident_call_id: string;
 };

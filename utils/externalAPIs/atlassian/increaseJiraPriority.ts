@@ -25,9 +25,9 @@ export async function increaseJiraPriority(env: any, issueKey: any) {
     },
   );
   // .then((getTicketResp) => getTicketResp.json());
-  console.log("getTicketResp: ");
+  // console.log("getTicketResp: ");
   const getTicketJson = await getTicketResp.json();
-  console.log(getTicketJson);
+  // console.log(getTicketJson);
   let currentIssuePriority = getTicketJson.fields.priority.id;
 
   if (currentIssuePriority === 1) {
@@ -35,7 +35,7 @@ export async function increaseJiraPriority(env: any, issueKey: any) {
       "cannot escalate this any further since it is at the highest priority",
     );
   } else {
-    currentIssuePriority--;
+    currentIssuePriority -= 1;
   }
   // Current Mapping for Jira Cloud Priorities
   //     "name": "Highest",
@@ -50,9 +50,15 @@ export async function increaseJiraPriority(env: any, issueKey: any) {
   //     "id": "5"
   // Automatically set any priority to "Low" once we call close incident
 
-  const requestBody: any = await JSON.stringify({
-    "update": { "priority": [{ "set": { "id": currentIssuePriority } }] },
-  });
+  currentIssuePriority = await currentIssuePriority.toString();
+  console.log(" after to string");
+  console.log(currentIssuePriority);
+
+  const requestBody: any = {
+    "update": {
+      "priority": [{ "set": { "id": currentIssuePriority } }],
+    },
+  };
   console.log("requestBody for updatepriority");
   console.log(requestBody);
 
@@ -67,7 +73,7 @@ export async function increaseJiraPriority(env: any, issueKey: any) {
       body: requestBody,
     },
   );
-  console.log("increaseJiraPriorityResp: ");
+  // console.log("increaseJiraPriorityResp: ");
   console.log(increaseJiraPriorityResp);
 
   return increaseJiraPriorityResp;

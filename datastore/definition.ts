@@ -64,6 +64,9 @@ const Incident = DefineDatastore({
     incident_status: {
       type: Schema.types.string,
     },
+    incident_call_id: {
+      type: Schema.types.string,
+    },
   },
 });
 

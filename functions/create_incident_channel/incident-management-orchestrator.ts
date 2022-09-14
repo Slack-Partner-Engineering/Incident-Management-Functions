@@ -51,7 +51,6 @@ export const newSwarmChannel = async (
   );
   incident.incident_swarming_channel_id = initialMessage.channel;
   incident.incident_swarming_msg_ts = initialMessage.message.ts;
-  await updateIncident(token, incident);
 
   await addBookmark(
     token,
@@ -93,6 +92,10 @@ export const newSwarmChannel = async (
   const zoomBlocks = await getZoomBlock(
     callBlockId.call.id,
   );
+  incident.incident_call_id = callBlockId.call.id;
+  await updateIncident(token, incident);
+  console.log("after update incident");
+
   await postMessage(
     token,
     createChannelResp.channel.id,

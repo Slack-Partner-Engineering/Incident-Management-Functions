@@ -21,6 +21,8 @@ import { updateIncident } from "../../utils/database/update-incident.ts";
 import { setTopic } from "../../utils/slack_apis/set-topic.ts";
 import { increaseJiraPriority } from "../../utils/externalAPIs/atlassian/increaseJiraPriority.ts";
 import { getJiraPriority } from "../../utils/externalAPIs/atlassian/getJiraPriority.ts";
+import { getPriorityChangedBlocks } from "../../views/get-priority-changed-blocks.ts";
+import { getIncident } from "../../utils/database/get-incident.ts";
 
 export const escalateIncident = async (
   incident: Incident,
@@ -33,15 +35,36 @@ export const escalateIncident = async (
   console.log("previous priority");
   console.log(previousPriority);
   await increaseJiraPriority(env, jiraIssueKey);
+  const newPriority = await getJiraPriority(env, jiraIssueKey);
+  console.log("newPriority priority");
+  console.log(newPriority);
   console.log("hit escalate statement");
   console.log("incident");
   console.log(incident);
+  const priorityBlocks = getPriorityChangedBlocks(
+    previousPriority,
+    newPriority,
+  );
 
-  // ✅ Explicitly checking
+  const curIncident = getIncident(token, <string> incident.incident_id);
+  console.log(curIncident);
 
   if (incident.incident_swarming_channel_id !== undefined) {
     console.log(incident.incident_swarming_channel_id);
-    await postMessage(token, incident.incident_swarming_channel_id);
+    await postMessage(
+      token,
+      incident.incident_swarming_channel_id,
+      priorityBlocks,
+    );
     // post to swarming channel (normal chat.postMessage)
+  } else {
+    console.log("going into post reply");
+    const reply = await postReply(
+      token,
+      <string> incident.incident_channel,
+      priorityBlocks,
+      incident.incident_channel_msg_ts,
+    );
+    console.log(reply);
   }
 };

@@ -17,6 +17,7 @@ import { jiraIssueBlocks } from "../../../views/jira-issue-blocks.ts";
 import { getIncident } from "../../../utils/database/get-incident.ts";
 import { updateIncident } from "../../../utils/database/update-incident.ts";
 import { updateMessage } from "../../../utils/slack_apis/update-message.ts";
+import { endCall } from "../../../utils/slack_apis/end-call.ts";
 
 const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
   async (
@@ -93,5 +94,23 @@ export const viewSubmission = async (
       incident.incident_channel_msg_ts,
       closeBlocks,
     );
+
+    const curIncident = await getIncident(token, <string> incident.incident_id);
+    console.log("curIncident right before we close: ");
+    console.log(curIncident);
+
+    if (
+      incident.incident_swarming_channel_id !== undefined &&
+      incident.incident_swarming_msg_ts !== undefined
+    ) {
+      await endCall(curIncident.incident_call_id, token);
+
+      await updateMessage(
+        token,
+        incident.incident_swarming_channel_id,
+        incident.incident_swarming_msg_ts,
+        closeBlocks,
+      );
+    }
   }
 };
