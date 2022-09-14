@@ -24,12 +24,12 @@ const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
   ) => {
     const incidentChannel = env["INCIDENT_CHANNEL"];
     const incident = <Incident> inputs;
+    incident.short_description = incident.short_description.substring(0, 50);
     const createIssueResp = await createJiraIssue(env, incident);
     incident.incident_jira_issue_key = createIssueResp.key;
     incident.incident_status = "OPEN";
     //call to database to save incident and assign incident id
     incident.incident_id = (await saveNewIncident(token, incident)).incident_id;
-    incident.short_description = incident.short_description.substring(0, 50);
 
     const blocks = await newIncident(incident);
 
@@ -68,8 +68,6 @@ export const viewSubmission = async (
     // save the currentTime so that we know what time the incident was closed
     const incidentID = await JSON.parse(view.private_metadata).incident_id;
     const incident = await getIncident(token, incidentID);
-    console.log("incident: ");
-    console.log(incident);
     const comment =
       view.state.values.add_comment_block.close_incident_action.value;
 

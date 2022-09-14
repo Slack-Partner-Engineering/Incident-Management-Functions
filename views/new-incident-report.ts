@@ -1,8 +1,6 @@
 const newIncidentReport = (incidentReport: any) => {
   let reportText = "";
 
-  console.log(incidentReport.incidentSeverity);
-
   let incidentDRIs = "";
   for (const key in incidentReport.incidentDris) {
     if (
@@ -23,7 +21,6 @@ const newIncidentReport = (incidentReport: any) => {
             incidentReport.numberOfIncidents) * 100,
         )
       }% \n`;
-      console.log(incidentReport.incidentSeverity[key]);
     }
   }
 

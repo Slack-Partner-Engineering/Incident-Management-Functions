@@ -10,8 +10,6 @@ const closeIncidentBlocks = async (incidentObject: Incident) => {
     ? `<@${incidentObject.incident_dri}>`
     : "No one Assigned Currently";
 
-  console.log(incidentObject.incident_closed_ts);
-
   const startTime = new Date(<any> incidentObject.incident_start_time * 1000);
   const endTime = new Date(<any> incidentObject.incident_closed_ts);
 
@@ -21,7 +19,7 @@ const closeIncidentBlocks = async (incidentObject: Incident) => {
 
   let incidentText = "";
   incidentText = incidentText
-    .concat(`*A new incident has been created by ${incident_creator} *\n\n`)
+    .concat(`*The incident was created by ${incident_creator} *\n\n`)
     .concat(`*Title*: ${incidentObject.short_description}\n`)
     .concat(`*Severity*: ${incidentObject.severity}\n`)
     .concat(`*Description*: ${incidentObject.long_description}\n`)
@@ -57,16 +55,16 @@ const closeIncidentBlocks = async (incidentObject: Incident) => {
           },
           "value": incidentStr,
         },
-        {
-          "type": "button",
-          "action_id": "get_incident_summary",
-          "text": {
-            "type": "plain_text",
-            "text": "Incident Summary",
-            "emoji": true,
-          },
-          "value": incidentStr,
-        },
+        // {
+        //   "type": "button",
+        //   "action_id": "get_incident_summary",
+        //   "text": {
+        //     "type": "plain_text",
+        //     "text": "Incident Summary",
+        //     "emoji": true,
+        //   },
+        //   "value": incidentStr,
+        // },
       ],
     },
   ];

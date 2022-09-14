@@ -41,5 +41,6 @@ export async function createJiraIssue(env: any, incident: Incident) {
     },
   );
   const createTicketJson = await createTicketResp.json();
+
   return createTicketJson;
 }
