@@ -3,6 +3,8 @@ import { postNewIncident } from "../../functions/send_to_slack/post_incident/def
 import { openView } from "../slack_apis/open-view.ts";
 import { closeIncidentModal } from "../../views/close-incident-modal.ts";
 import { newSwarmChannel } from "../../functions/create_incident_channel/incident-management-orchestrator.ts";
+import { increaseJiraPriority } from "../externalAPIs/atlassian/increaseJiraPriority.ts";
+import { escalateIncident } from "../../functions/escalate/escalateIncident.ts";
 
 const router = BlockActionsRouter(postNewIncident);
 
@@ -36,9 +38,10 @@ export const incidentHandler = router.addHandler(
         break;
       }
 
-      case "escalate":
-        console.log("hit escalate statement");
+      case "escalate": {
+        await escalateIncident(incident, env, token, body);
         break;
+      }
 
       case "de_escalate":
         console.log("hit de_escalate statement");

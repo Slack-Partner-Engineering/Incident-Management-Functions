@@ -21,6 +21,8 @@ const updateIncident = async (token: string, incident: Incident) => {
       error: response.error,
     };
   } else {
+    console.log("response.item: ");
+    console.log(response.item);
     return response.item;
   }
 };
