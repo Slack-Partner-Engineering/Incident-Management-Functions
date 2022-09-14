@@ -10,7 +10,10 @@ const closeIncidentBlocks = async (incidentObject: Incident) => {
     ? `<@${incidentObject.incident_dri}>`
     : "No one Assigned Currently";
 
-  const dateTime = new Date(<any> incidentObject.incident_start_time * 1000);
+  console.log(incidentObject.incident_closed_ts);
+
+  const startTime = new Date(<any> incidentObject.incident_start_time * 1000);
+  const endTime = new Date(<any> incidentObject.incident_closed_ts);
 
   const externalId = incidentObject.external_incident_id
     ? `*External Id*: ${incidentObject.external_incident_id} \n`
@@ -22,7 +25,9 @@ const closeIncidentBlocks = async (incidentObject: Incident) => {
     .concat(`*Title*: ${incidentObject.short_description}\n`)
     .concat(`*Severity*: ${incidentObject.severity}\n`)
     .concat(`*Description*: ${incidentObject.long_description}\n`)
-    .concat(`*Incident Start Time*: ${dateTime}\n`)
+    .concat(`*Close Notes*: ${incidentObject.incident_close_notes}\n`)
+    .concat(`*Incident Start Time*: ${startTime}\n`)
+    .concat(`*Incident End Time*: ${endTime}\n`)
     .concat(`*DRI*: ${incidentDRI}\n`)
     .concat(externalId)
     .concat(`*Incident Id*: ${incidentObject.incident_id}\n`)
@@ -44,40 +49,20 @@ const closeIncidentBlocks = async (incidentObject: Incident) => {
       "elements": [
         {
           "type": "button",
-          "action_id": "escalate",
+          "action_id": "re_open_action",
           "text": {
             "type": "plain_text",
-            "text": "Escalate",
+            "text": "Re Open",
             "emoji": true,
           },
           "value": incidentStr,
         },
         {
           "type": "button",
-          "action_id": "de_escalate",
+          "action_id": "get_incident_summary",
           "text": {
             "type": "plain_text",
-            "text": "De-escalate",
-            "emoji": true,
-          },
-          "value": incidentStr,
-        },
-        {
-          "type": "button",
-          "action_id": "assign_dri",
-          "text": {
-            "type": "plain_text",
-            "text": "Assign DRI",
-            "emoji": true,
-          },
-          "value": incidentStr,
-        },
-        {
-          "type": "button",
-          "action_id": "add_members",
-          "text": {
-            "type": "plain_text",
-            "text": "Add Members",
+            "text": "Incident Summary",
             "emoji": true,
           },
           "value": incidentStr,
@@ -85,7 +70,6 @@ const closeIncidentBlocks = async (incidentObject: Incident) => {
       ],
     },
   ];
-
   return blocks;
 };
 

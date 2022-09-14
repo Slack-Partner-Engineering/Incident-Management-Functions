@@ -16,6 +16,7 @@ import { updateJiraPriorityToLow } from "../../../utils/externalAPIs/atlassian/u
 import { jiraIssueBlocks } from "../../../views/jira-issue-blocks.ts";
 import { getIncident } from "../../../utils/database/get-incident.ts";
 import { updateIncident } from "../../../utils/database/update-incident.ts";
+import { updateMessage } from "../../../utils/slack_apis/update-message.ts";
 
 const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
   async (
@@ -62,14 +63,20 @@ export const viewSubmission = async (
   { view, body, token, env }: any,
 ) => {
   if (view.callback_id === "close_incident_modal") {
+    const incidentClosedTS = Date.now();
+
     // save the currentTime so that we know what time the incident was closed
-    const incident = await JSON.parse(view.private_metadata);
+    const incidentID = await JSON.parse(view.private_metadata).incident_id;
+    const incident = await getIncident(token, incidentID);
     console.log("incident: ");
     console.log(incident);
-    incident.incident_status = "CLOSED";
-    const incidentJiraKey = incident.incident_jira_issue_key;
     const comment =
       view.state.values.add_comment_block.close_incident_action.value;
+
+    incident.incident_status = "CLOSED";
+    incident.incident_close_notes = comment;
+    incident.incident_closed_ts = incidentClosedTS;
+    const incidentJiraKey = incident.incident_jira_issue_key;
 
     await addJiraComment(
       env,
@@ -78,8 +85,15 @@ export const viewSubmission = async (
     );
 
     await updateJiraPriorityToLow(env, incidentJiraKey);
-    // const closeBlocks = await closeIncidentBlocks(incident);
-    // const incidentChannel = env["INCIDENT_CHANNEL"];
-    // const curIncident = await getIncident(token, incident.incident_id);
+    await updateIncident(token, incident);
+
+    const closeBlocks = await closeIncidentBlocks(incident);
+
+    await updateMessage(
+      token,
+      incident.incident_channel,
+      incident.incident_channel_msg_ts,
+      closeBlocks,
+    );
   }
 };
