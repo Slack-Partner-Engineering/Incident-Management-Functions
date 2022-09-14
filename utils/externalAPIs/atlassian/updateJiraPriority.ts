@@ -29,8 +29,6 @@ export async function updateJiraPriorityToLow(env: any, issueKey: string) {
   const requestBody: any = await JSON.stringify({
     "update": { "priority": [{ "set": { "id": "4" } }] },
   });
-  console.log("requestBody for updatepriority");
-  console.log(requestBody);
 
   const updateJiraPriorityResp = await fetch(
     url,
@@ -43,8 +41,6 @@ export async function updateJiraPriorityToLow(env: any, issueKey: string) {
       body: requestBody,
     },
   );
-  console.log("updateJiraPriorityResp: ");
-  console.log(updateJiraPriorityResp);
 
   return updateJiraPriorityResp;
 }

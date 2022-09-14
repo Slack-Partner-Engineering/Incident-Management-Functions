@@ -68,8 +68,6 @@ export const viewSubmission = async (
     // save the currentTime so that we know what time the incident was closed
     const incidentID = await JSON.parse(view.private_metadata).incident_id;
     const incident = await getIncident(token, incidentID);
-    console.log("incident: ");
-    console.log(incident);
     const comment =
       view.state.values.add_comment_block.close_incident_action.value;
 
