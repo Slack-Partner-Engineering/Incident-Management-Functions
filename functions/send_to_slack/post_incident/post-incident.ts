@@ -96,8 +96,6 @@ export const viewSubmission = async (
     );
 
     const curIncident = await getIncident(token, <string> incident.incident_id);
-    console.log("curIncident right before we close: ");
-    console.log(curIncident);
 
     if (
       incident.incident_swarming_channel_id !== undefined &&

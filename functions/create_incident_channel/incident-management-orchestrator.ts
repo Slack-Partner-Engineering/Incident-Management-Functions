@@ -94,7 +94,6 @@ export const newSwarmChannel = async (
   );
   incident.incident_call_id = callBlockId.call.id;
   await updateIncident(token, incident);
-  console.log("after update incident");
 
   await postMessage(
     token,
