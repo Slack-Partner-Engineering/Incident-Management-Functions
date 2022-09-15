@@ -2,7 +2,6 @@
 import type { SlackFunctionHandler } from "deno-slack-sdk/types.ts";
 import type { parseWebhook } from "./definition.ts";
 import type { Incident } from "../../../types/incident-object.ts";
-import { saveNewIncident } from "../../../utils/database/create-incident.ts";
 
 const normalizeData: SlackFunctionHandler<typeof parseWebhook.definition> =
   async (

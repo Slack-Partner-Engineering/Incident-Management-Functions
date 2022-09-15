@@ -24,7 +24,7 @@ const postIncidentReport: SlackFunctionHandler<
   );
 
   return await {
-    conpleted: true,
+    outputs: false,
   };
 };
 
