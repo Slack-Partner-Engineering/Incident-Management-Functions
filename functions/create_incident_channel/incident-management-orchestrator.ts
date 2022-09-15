@@ -20,6 +20,8 @@ import { Incident } from "../../types/incident-object.ts";
 import { updateIncident } from "../../utils/database/update-incident.ts";
 import { setTopic } from "../../utils/slack_apis/set-topic.ts";
 import { swarmIncidentOriginalMessageUpdate } from "../../views/swarm-incident-original-message-update.ts";
+import { createSalesforceIncident } from "../../salesforce/create-salesforce-incident.ts";
+import { getSalesforceIncidentBlocks } from "../../views/salesforce-new-incident-created.ts";
 
 export const newSwarmChannel = async (
   incident: Incident,
@@ -60,6 +62,23 @@ export const newSwarmChannel = async (
     <string> incident.incident_channel,
     body.message.ts,
     updatedIncidentChannelBlocks,
+  );
+
+  const sfIncidentURL = await createSalesforceIncident(incident, env);
+
+  const sfIncidentBlocks = await getSalesforceIncidentBlocks(sfIncidentURL);
+  await postMessage(
+    token,
+    createChannelResp.channel.id,
+    sfIncidentBlocks,
+  );
+  await addBookmark(
+    token,
+    createChannelResp.channel.id,
+    "Salesforce Incident",
+    "link",
+    sfIncidentURL,
+    ":salesforce:",
   );
 
   await addBookmark(
@@ -123,6 +142,7 @@ export const newSwarmChannel = async (
     createChannelResp.channel.id,
     token,
   );
+
   await setTopic(
     token,
     createChannelResp.channel.id,

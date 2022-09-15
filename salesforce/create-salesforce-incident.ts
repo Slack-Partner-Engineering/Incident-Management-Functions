@@ -1,55 +1,60 @@
-import jsforce from "https://esm.sh/jsforce";
-import { config } from "https://esm.sh/dotenv@16.0.2";
-config();
-
 const createSalesforceIncident = async (incidentInfo: any, env: any) => {
   console.log(incidentInfo);
+  const url =
+    "https://slack-5a-dev-ed.my.salesforce.com/services/data/v55.0/sobjects/incident__c";
 
-  let result;
+  const body: any = {
+    Name: "Slack Created - {source}",
+    Incident_Number__c: "INC-4423534423",
+    Summary__c: "short description",
+    Severity__c: "CRITICAL",
+  };
 
-  const conn = new jsforce.Connection({
-    oauth2: {
-      clientId: env["SALESFORCE_CLIENT_ID"],
-      clientSecret: env["SALESFORCE_CLIENT_SECRET"],
-      redirectUri: env["SALESFORCE_REDIRECT_URL"],
-    },
-    instanceUrl: env["SALESFORCE_INSTANCE_URL"],
-    accessToken: env["SALESFORCE_ACCESS_TOKEN"],
-    refreshToken: env["SALESFORCE_REFRESH_TOKEN"],
-  });
+  const auth = `Bearer ${env["ACCESS_TOKEN"]}`;
 
-  conn.oauth2.refreshToken(
-    env["SALESFORCE_REFRESH_TOKEN"],
-    (err, results) => {
-      if (err) return (err);
-      console.log(results);
-    },
-  );
-
-  // Single record creation
-  await conn.sobject("incident__c").create(
+  const sfResponse: any = await fetch(
+    url,
     {
-      Name: "Slack Created - {source}",
-      Incident_Number__c: "INC-4423534423",
-      Summary__c: "short description",
-      Severity__c: "CRITICAL",
-    },
-    await function (err: any, ret: any) {
-      if (err || !ret.success) {
-        return console.error(err, ret);
-      }
-      console.log("Created record id : " + ret.id);
-      console.log(
-        `Object URL ${env["SALESFORCE_INSTANCE_URL"] + "/" + ret.id}`,
-      );
-      result = {
-        "status": "sucess",
-        url: `${env["SALESFORCE_INSTANCE_URL"] + "/" + ret.id}`,
-        "message": "incident Created!",
-      };
+      method: "POST",
+      headers: {
+        "Authorization": auth,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
     },
   );
-  return result;
+  const res = await sfResponse.json();
+  const incidentURL = `${env["SALESFORCE_INSTANCE_URL"] + "/" + res.id}`;
+  console.log(incidentURL);
+  return incidentURL;
 };
 
 export { createSalesforceIncident };
+
+// curl https://MyDomainName.my.salesforce.com/services/data/v56.0/sobjects/Account/ -H
+//"Authorization: Bearer token" -H "Content-Type: application/json" -d "@newaccount.json"
+
+// // Single record creation
+// await conn.sobject("incident__c").create(
+//   {
+//     Name: "Slack Created - {source}",
+//     Incident_Number__c: "INC-4423534423",
+//     Summary__c: "short description",
+//     Severity__c: "CRITICAL",
+//   },
+//   await function (err: any, ret: any) {
+//     if (err || !ret.success) {
+//       return console.error(err, ret);
+//     }
+//     console.log("Created record id : " + ret.id);
+//     console.log(
+//       `Object URL ${env["SALESFORCE_INSTANCE_URL"] + "/" + ret.id}`,
+//     );
+//     result = {
+//       "status": "sucess",
+//       url: `${env["SALESFORCE_INSTANCE_URL"] + "/" + ret.id}`,
+//       "message": "incident Created!",
+//     };
+//     return result.url;
+//   },
+// );
