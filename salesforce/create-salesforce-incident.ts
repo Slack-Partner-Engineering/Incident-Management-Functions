@@ -1,13 +1,19 @@
-const createSalesforceIncident = async (incidentInfo: any, env: any) => {
+import { Incident } from "../types/incident-object.ts";
+
+const createSalesforceIncident = async (incidentInfo: Incident, env: any) => {
   console.log(incidentInfo);
   const url =
     "https://slack-5a-dev-ed.my.salesforce.com/services/data/v55.0/sobjects/incident__c";
 
   const body: any = {
-    Name: "Slack Created - {source}",
-    Incident_Number__c: "INC-4423534423",
-    Summary__c: "short description",
-    Severity__c: "CRITICAL",
+    Name: `${
+      incidentInfo.external_incident_id
+        ? incidentInfo.incident_trigger
+        : "Reported Internally in Slack"
+    }`,
+    Incident_Number__c: incidentInfo.incident_id,
+    Summary__c: incidentInfo.short_description,
+    Severity__c: incidentInfo.severity,
   };
 
   const auth = `Bearer ${env["ACCESS_TOKEN"]}`;
