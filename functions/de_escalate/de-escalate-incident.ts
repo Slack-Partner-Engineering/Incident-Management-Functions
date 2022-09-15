@@ -23,14 +23,12 @@ export const deEscalateIncident = async (
   let newSeverity;
   if (curSeverity == "Low") {
     const errBlocks = await errorDeEscalate();
-    console.log("cannot de escalate a low severity incident");
-    const reply = await postReply(
+    await postReply(
       token,
       <string> curIncident.incident_channel,
       errBlocks,
       curIncident.incident_channel_msg_ts,
     );
-    console.log(reply);
   } else {
     switch (curSeverity) {
       case "Medium": {
@@ -56,39 +54,33 @@ export const deEscalateIncident = async (
     const updateIncidentBlocks = await newIncident(curIncident);
 
     if (curIncident.incident_swarming_channel_id !== undefined) {
-      console.log(incident.incident_swarming_channel_id);
-      const reply = await postReply(
+      incident.incident_swarming_channel_id;
+      await postReply(
         token,
         <string> curIncident.incident_swarming_channel_id,
         severityBlocks,
         curIncident.incident_swarming_msg_ts,
       );
-      console.log(" Reply after posting in incident swarming channel");
-      console.log(reply);
-      const updateMsgResp = await updateMessage(
+      await updateMessage(
         token,
         <string> curIncident.incident_swarming_channel_id,
         curIncident.incident_swarming_msg_ts,
         updateIncidentBlocks,
       );
-      console.log(" updateMsgResp after posting in incident swarming channel");
-      console.log(updateMsgResp);
+    } else {
+      await postReply(
+        token,
+        <string> curIncident.incident_channel,
+        severityBlocks,
+        curIncident.incident_channel_msg_ts,
+      );
+
+      await updateMessage(
+        token,
+        <string> curIncident.incident_channel,
+        curIncident.incident_channel_msg_ts,
+        updateIncidentBlocks,
+      );
     }
-    const reply = await postReply(
-      token,
-      <string> curIncident.incident_channel,
-      severityBlocks,
-      curIncident.incident_channel_msg_ts,
-    );
-    console.log(" Reply after posting in reg channel");
-    console.log(reply);
-    const updateMsgResp = await updateMessage(
-      token,
-      <string> curIncident.incident_channel,
-      curIncident.incident_channel_msg_ts,
-      updateIncidentBlocks,
-    );
-    console.log(" updateMsgResp after posting in reg channel");
-    console.log(updateMsgResp);
   }
 };
