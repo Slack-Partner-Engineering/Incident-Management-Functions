@@ -52,6 +52,16 @@ export const newSwarmChannel = async (
   incident.incident_swarming_channel_id = initialMessage.channel;
   incident.incident_swarming_msg_ts = initialMessage.message.ts;
 
+  const updatedIncidentChannelBlocks = await swarmIncidentOriginalMessageUpdate(
+    incident,
+  );
+  await updateMessage(
+    token,
+    <string> incident.incident_channel,
+    body.message.ts,
+    updatedIncidentChannelBlocks,
+  );
+
   await addBookmark(
     token,
     createChannelResp.channel.id,
@@ -117,14 +127,5 @@ export const newSwarmChannel = async (
     token,
     createChannelResp.channel.id,
     `Major Incident Channel: ${incident.long_description?.substring(0, 250)}`,
-  );
-  const updatedIncidentChannelBlocks = await swarmIncidentOriginalMessageUpdate(
-    incident,
-  );
-  await updateMessage(
-    token,
-    <string> incident.incident_channel,
-    body.message.ts,
-    updatedIncidentChannelBlocks,
   );
 };
