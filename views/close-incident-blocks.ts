@@ -50,7 +50,7 @@ const closeIncidentBlocks = async (incidentObject: Incident) => {
           "action_id": "re_open_action",
           "text": {
             "type": "plain_text",
-            "text": "Re Open",
+            "text": "Reopen",
             "emoji": true,
           },
           "value": incidentStr,
