@@ -37,10 +37,10 @@ export const parseWebhook = DefineFunction({
         type: Schema.types.string,
         description: "Long Description",
       },
-      incident_participants: {
-        type: Schema.types.string,
-        description: "Incident Participants",
-      },
+      // incident_participants: {
+      //   type: Schema.types.string,
+      //   description: "Incident Participants",
+      // },
       incident_dri: {
         type: Schema.types.string,
         description: "Incident DRI",
@@ -60,6 +60,10 @@ export const parseWebhook = DefineFunction({
       incident_id: {
         type: Schema.types.string,
         description: "Slack Id for the incident",
+      },
+      incident_channel: {
+        type: Schema.types.string,
+        description: "Slack Channel for the incident",
       },
     },
     required: ["short_description", "severity", "incident_trigger"],

@@ -1,11 +1,11 @@
 // deno-lint-ignore-file no-explicit-any
 import { SlackAPI } from "deno-slack-api/mod.ts";
 
-export async function createChannel(
+export const createChannel = async (
   token: string,
   incidentDescription: string,
   incident_id: string,
-) {
+) => {
   const client = SlackAPI(token, {});
 
   const channelName = await createChannelName(
@@ -20,7 +20,7 @@ export async function createChannel(
     is_private: false,
   });
   return resp;
-}
+};
 
 function createChannelName(
   incidentDescription: string,

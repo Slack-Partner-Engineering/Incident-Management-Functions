@@ -6,7 +6,7 @@ import { saveNewIncident } from "../../../utils/database/create-incident.ts";
 
 const normalizeData: SlackFunctionHandler<typeof parseWebhook.definition> =
   async (
-    { inputs, token },
+    { inputs, token, env },
   ) => {
     const payload = <Incident> inputs;
 
@@ -30,10 +30,11 @@ const normalizeData: SlackFunctionHandler<typeof parseWebhook.definition> =
       incident_trigger: "an External Service (PagerDuty)",
       incident_id: "",
       incident_status: "OPEN",
+      incident_channel: env["INCIDENT_CHANNEL"],
     };
 
     //call to database to save incident and assign incident id
-    incident.incident_id = (await saveNewIncident(token, incident)).incident_id;
+    // incident.incident_id = (await saveNewIncident(token, incident)).incident_id;
 
     //incident now has a incident number
     return await {
