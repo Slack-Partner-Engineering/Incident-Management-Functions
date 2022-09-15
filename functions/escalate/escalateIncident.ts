@@ -64,14 +64,11 @@ export const escalateIncident = async (
 
     // post to swarming channel (normal chat.postMessage)
   } else {
-    console.log("going into post reply");
-    console.log(incident);
     const reply = await postReply(
       token,
       <string> curIncident.incident_channel,
       priorityBlocks,
       curIncident.incident_channel_msg_ts,
     );
-    console.log(reply);
   }
 };
