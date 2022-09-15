@@ -27,6 +27,8 @@ export const newSwarmChannel = async (
   token: any,
   body: any,
 ) => {
+  console.log(incident);
+
   const shortDescription = incident.short_description;
   const meetingResp = await createZoomMeeting(env);
   const incidenId = incident.incident_id;

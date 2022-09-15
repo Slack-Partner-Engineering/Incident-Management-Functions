@@ -41,10 +41,10 @@ runFromExternalWebhook.addStep(postNewIncident, {
   short_description: parseBodyStep.outputs.short_description,
   severity: parseBodyStep.outputs.severity,
   long_description: parseBodyStep.outputs.long_description,
-  incident_participants: parseBodyStep.outputs.incident_participants,
+  //incident_participants: parseBodyStep.outputs.incident_participants,
   incident_dri: parseBodyStep.outputs.incident_dri,
   incident_start_time: parseBodyStep.outputs.incident_start_time,
   incident_trigger: parseBodyStep.outputs.incident_trigger,
   external_incident_id: parseBodyStep.outputs.external_incident_id,
-  incident_id: parseBodyStep.outputs.incident_id,
+  incident_channel: parseBodyStep.outputs.incident_channel,
 });
