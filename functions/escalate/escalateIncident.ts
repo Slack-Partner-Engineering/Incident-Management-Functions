@@ -5,24 +5,13 @@
 //
 import { postMessage } from "../../utils/slack_apis/post-message.ts";
 import { postReply } from "../../utils/slack_apis/post-message.ts";
-import { jiraIssueBlocks } from "../../views/jira-issue-blocks.ts";
-import { createZoomMeeting } from "../../utils/externalAPIs/zoom/createMeeting.ts";
-import { createChannel } from "../../utils/slack_apis/create-channel.ts";
-import { getIncidentChannelBlocks } from "../../views/get-channel-blocks.ts";
-import { swarmIncident } from "../../views/swarm-incident.ts";
-import { getZoomBlock } from "../../views/zoom-call-blocks.ts";
 import { updateMessage } from "../../utils/slack_apis/update-message.ts";
-import { inviteUserToChannel } from "../../utils/slack_apis/invite-user-to-channel.ts";
-import { addBookmark } from "../../utils/slack_apis/add-bookmark.ts";
-import { getBoxRunbook } from "../../views/box-runbok-blocks.ts";
-import { addCall } from "../../utils/slack_apis/add-call.ts";
 import { Incident } from "../../types/incident-object.ts";
 import { updateIncident } from "../../utils/database/update-incident.ts";
-import { setTopic } from "../../utils/slack_apis/set-topic.ts";
-import { increaseJiraPriority } from "../../utils/externalAPIs/atlassian/increaseJiraPriority.ts";
-import { getJiraPriority } from "../../utils/externalAPIs/atlassian/getJiraPriority.ts";
-import { getPriorityIncreasedBlocks } from "../../views/get-priority-increased-blocks.ts";
+import { getSeverityBlocks } from "../../views/get-severity-blocks.ts";
 import { getIncident } from "../../utils/database/get-incident.ts";
+import { newIncident } from "../../views/new-incident.ts";
+import { errorEscalate } from "../../views/error-escalate-blocks.ts";
 
 export const escalateIncident = async (
   incident: Incident,
@@ -33,42 +22,74 @@ export const escalateIncident = async (
   const curIncident = await getIncident(token, <string> incident.incident_id);
   const curSeverity = curIncident.severity;
   let newSeverity;
-  switch (curSeverity) {
-    case "Low": {
-      newSeverity = "Medium";
-      break;
-    }
-    case "Medium": {
-      newSeverity = "High";
-      break;
-    }
-    case "High": {
-      newSeverity = "Critical";
-      break;
-    }
-  }
-
-  const priorityBlocks = getPriorityIncreasedBlocks(
-    curSeverity,
-    newSeverity,
-  );
-
-  if (incident.incident_swarming_channel_id !== undefined) {
-    console.log(incident.incident_swarming_channel_id);
-    const reply = await postReply(
-      token,
-      <string> curIncident.incident_swarming_channel_id,
-      priorityBlocks,
-      curIncident.incident_swarming_msg_ts,
-    );
-
-    // post to swarming channel (normal chat.postMessage)
-  } else {
+  if (curSeverity == "Critical") {
+    let errBlocks = await errorEscalate();
+    console.log("cannot escalate a critical incident");
     const reply = await postReply(
       token,
       <string> curIncident.incident_channel,
-      priorityBlocks,
+      errBlocks,
       curIncident.incident_channel_msg_ts,
     );
+    console.log(reply);
+  } else {
+    switch (curSeverity) {
+      case "Low": {
+        newSeverity = "Medium";
+        break;
+      }
+      case "Medium": {
+        newSeverity = "High";
+        break;
+      }
+      case "High": {
+        newSeverity = "Critical";
+        break;
+      }
+    }
+    curIncident.severity = newSeverity;
+    await updateIncident(token, curIncident);
+
+    const severityBlocks = getSeverityBlocks(
+      curSeverity,
+      newSeverity,
+    );
+    const updateIncidentBlocks = await newIncident(curIncident);
+
+    if (curIncident.incident_swarming_channel_id !== undefined) {
+      console.log(incident.incident_swarming_channel_id);
+      const reply = await postReply(
+        token,
+        <string> curIncident.incident_swarming_channel_id,
+        severityBlocks,
+        curIncident.incident_swarming_msg_ts,
+      );
+      console.log(" Reply after posting in incident swarming channel");
+      console.log(reply);
+      const updateMsgResp = await updateMessage(
+        token,
+        <string> curIncident.incident_swarming_channel_id,
+        curIncident.incident_swarming_msg_ts,
+        updateIncidentBlocks,
+      );
+      console.log(" updateMsgResp after posting in incident swarming channel");
+      console.log(updateMsgResp);
+    }
+    const reply = await postReply(
+      token,
+      <string> curIncident.incident_channel,
+      severityBlocks,
+      curIncident.incident_channel_msg_ts,
+    );
+    console.log(" Reply after posting in reg channel");
+    console.log(reply);
+    const updateMsgResp = await updateMessage(
+      token,
+      <string> curIncident.incident_channel,
+      curIncident.incident_channel_msg_ts,
+      updateIncidentBlocks,
+    );
+    console.log(" updateMsgResp after posting in reg channel");
+    console.log(updateMsgResp);
   }
 };
