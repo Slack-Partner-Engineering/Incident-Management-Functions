@@ -64,15 +64,18 @@ export const newSwarmChannel = async (
     updatedIncidentChannelBlocks,
   );
 
-  const sfIncidentURL = <string> await createSalesforceIncident(
+  const sfIncident = <any> await createSalesforceIncident(
     incident,
     env,
     false,
   );
-  console.log(sfIncidentURL);
-  console.log("hitt line 73");
+  console.log("SF incident id" + sfIncident.incidentId);
 
-  const sfIncidentBlocks = await getSalesforceIncidentBlocks(sfIncidentURL);
+  incident.salesforce_incident_id = sfIncident.incidentId;
+
+  const sfIncidentBlocks = await getSalesforceIncidentBlocks(
+    sfIncident.incidentURL,
+  );
   await postMessage(
     token,
     createChannelResp.channel.id,
@@ -83,7 +86,7 @@ export const newSwarmChannel = async (
     createChannelResp.channel.id,
     "Salesforce Incident",
     "link",
-    sfIncidentURL,
+    sfIncident.incidentURL,
     ":salesforce:",
   );
 
@@ -148,6 +151,7 @@ export const newSwarmChannel = async (
     createChannelResp.channel.id,
     token,
   );
+  console.log(incident);
 
   await setTopic(
     token,
