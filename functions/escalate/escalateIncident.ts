@@ -67,6 +67,12 @@ export const escalateIncident = async (
         curIncident.incident_swarming_msg_ts,
         updateIncidentBlocks,
       );
+      await updateMessage(
+        token,
+        <string> curIncident.incident_channel,
+        curIncident.incident_channel_msg_ts,
+        updateIncidentBlocks,
+      );
     } else {
       await postReply(
         token,
