@@ -56,11 +56,10 @@ export const deEscalateIncident = async (
 
     if (curIncident.incident_swarming_channel_id !== undefined) {
       incident.incident_swarming_channel_id;
-      await postReply(
+      await postMessage(
         token,
         <string> curIncident.incident_swarming_channel_id,
         severityBlocks,
-        curIncident.incident_swarming_msg_ts,
       );
       await updateMessage(
         token,
