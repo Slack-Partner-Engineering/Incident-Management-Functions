@@ -22,20 +22,21 @@ export const assignDRIModal = (
     },
     "blocks": [
       {
-        "type": "section",
+        "type": "input",
         "block_id": "assign_dri_block",
-        "text": {
-          "type": "mrkdwn",
-          "text": "Assign a new DRI",
-        },
-        "accessory": {
-          "type": "users_select",
+        "element": {
+          "type": "multi_users_select",
           "placeholder": {
             "type": "plain_text",
-            "text": "Select a user",
+            "text": "Select DRI",
             "emoji": true,
           },
           "action_id": "users_select_action",
+        },
+        "label": {
+          "type": "plain_text",
+          "text": "Select a user to be responsible for this incident",
+          "emoji": true,
         },
       },
     ],

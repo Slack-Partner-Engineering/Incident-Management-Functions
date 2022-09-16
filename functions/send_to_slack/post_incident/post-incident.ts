@@ -22,6 +22,7 @@ import { documentOnIncidentClose } from "../../../views/doc-on-incident-close.ts
 import { addBookmark } from "../../../utils/slack_apis/add-bookmark.ts";
 import { setTopic } from "../../../utils/slack_apis/set-topic.ts";
 import { driUpdatedBlocks } from "../../../views/dri-updated-blocks.ts";
+import { swarmIncidentOriginalMessageUpdate } from "../../../views/swarm-incident-original-message-update.ts";
 
 const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
   async (
@@ -139,10 +140,11 @@ export const viewSubmission = async (
   }
   if (view.callback_id === "assign_dri_modal") {
     console.log("assign dri modal submitted");
+    console.log(view);
     const incidentID = await JSON.parse(view.private_metadata).incident_id;
     const incident = await getIncident(token, incidentID);
     const dri =
-      view.state.values.assign_dri_block.users_select_action.selected_user;
+      view.state.values.assign_dri_block.users_select_action.selected_users[0];
     console.log(dri);
     incident.incident_dri = dri;
     await updateIncident(token, incident);
@@ -158,11 +160,15 @@ export const viewSubmission = async (
         blocks,
       );
 
+      const updatedIncidentChannelBlocks =
+        await swarmIncidentOriginalMessageUpdate(
+          incident,
+        );
       await updateMessage(
         token,
         incident.incident_channel,
         incident.incident_channel_msg_ts,
-        blocks,
+        updatedIncidentChannelBlocks,
       );
 
       await postReply(

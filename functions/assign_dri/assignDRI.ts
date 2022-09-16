@@ -30,3 +30,11 @@ export const assignDRI = async (
   );
   console.log("after open view");
 };
+
+export const viewSubmission = async (
+  { view, body, token, env }: any,
+) => {
+  if (view.callback_id === "assign_dri_modal") {
+    console.log("assign dri modal submitted");
+  }
+};

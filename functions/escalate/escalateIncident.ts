@@ -12,7 +12,8 @@ import { getSeverityBlocks } from "../../views/get-severity-blocks.ts";
 import { getIncident } from "../../utils/database/get-incident.ts";
 import { newIncident } from "../../views/new-incident.ts";
 import { errorEscalate } from "../../views/error-escalate-blocks.ts";
-
+import { swarmIncidentOriginalMessageUpdate } from "../../views/swarm-incident-original-message-update.ts";
+import { swarmIncident } from "../../views/swarm-incident.ts";
 export const escalateIncident = async (
   incident: Incident,
   env: any,
@@ -67,11 +68,15 @@ export const escalateIncident = async (
         curIncident.incident_swarming_msg_ts,
         updateIncidentBlocks,
       );
+      const updatedIncidentChannelBlocks =
+        await swarmIncidentOriginalMessageUpdate(
+          curIncident,
+        );
       await updateMessage(
         token,
         <string> curIncident.incident_channel,
         curIncident.incident_channel_msg_ts,
-        updateIncidentBlocks,
+        updatedIncidentChannelBlocks,
       );
     } else {
       await postReply(
