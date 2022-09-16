@@ -85,4 +85,23 @@ const AuditIncidents = DefineDatastore({
     },
   },
 });
-export { AuditIncidents, Incident };
+
+const SalesforceAuth = DefineDatastore({
+  name: "SalesforceAuth",
+  primary_key: "salesforce_org_id",
+  attributes: {
+    salesforce_org_id: {
+      type: Schema.types.string,
+    },
+    access_token: {
+      type: Schema.types.string,
+    },
+    refresh_token: {
+      type: Schema.types.string,
+    },
+    date_time_access_token_issued: {
+      type: Schema.types.number,
+    },
+  },
+});
+export { AuditIncidents, Incident, SalesforceAuth };

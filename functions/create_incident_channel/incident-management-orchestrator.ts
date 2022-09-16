@@ -67,7 +67,7 @@ export const newSwarmChannel = async (
   const sfIncident = <any> await createSalesforceIncident(
     incident,
     env,
-    false,
+    token,
   );
   console.log("SF incident id" + sfIncident.incidentId);
 
@@ -151,7 +151,6 @@ export const newSwarmChannel = async (
     createChannelResp.channel.id,
     token,
   );
-  console.log(incident);
 
   await setTopic(
     token,
