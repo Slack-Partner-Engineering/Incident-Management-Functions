@@ -2,7 +2,7 @@ import { Incident } from "../types/incident-object.ts";
 
 let refreshedToken = "";
 
-const createSalesforceIncident = async (
+const updateSalesforceIncident = async (
   incidentInfo: Incident,
   env: any,
   refresh: boolean,
@@ -11,7 +11,7 @@ const createSalesforceIncident = async (
 
   const url = `${
     env["SALESFORCE_INSTANCE_URL"]
-  }/services/data/v55.0/sobjects/incident__c`;
+  }/services/data/v55.0/sobjects/incident__c/${incidentInfo.salesforce_incident_id}`;
 
   const body: any = {
     Name: `${
@@ -34,7 +34,7 @@ const createSalesforceIncident = async (
   const sfResponse: any = await fetch(
     url,
     {
-      method: "POST",
+      method: "PATCH",
       headers: {
         "Authorization": auth,
         "Content-Type": "application/json",
@@ -76,10 +76,9 @@ const createSalesforceIncident = async (
     const incidentURL = `${
       env["SALESFORCE_INSTANCE_URL"] + "/" + refreshTokenResponse.id
     }`;
-    return {
-      incidentURL: incidentURL,
-      incidentId: refreshTokenResponse.id,
-    };
+    console.log(refreshedToken);
+
+    return incidentURL;
   } else {
     const incidentURL = `${env["SALESFORCE_INSTANCE_URL"] + "/" + res.id}`;
     return {
@@ -110,7 +109,7 @@ const createSalesforceIncident = async (
 //   await createSalesforceIncident(incident, env, refresh);
 // };
 
-export { createSalesforceIncident };
+export { updateSalesforceIncident };
 
 // POST /services/oauth2/token HTTP/1.1
 // Host: login.salesforce.com

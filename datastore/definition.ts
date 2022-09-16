@@ -67,6 +67,9 @@ const Incident = DefineDatastore({
     incident_call_id: {
       type: Schema.types.string,
     },
+    salesforce_incident_id: {
+      type: Schema.types.string,
+    },
   },
 });
 
