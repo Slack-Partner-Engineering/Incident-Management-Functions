@@ -13,7 +13,7 @@ import { getIncident } from "../../utils/database/get-incident.ts";
 import { newIncident } from "../../views/new-incident.ts";
 import { errorEscalate } from "../../views/error-escalate-blocks.ts";
 import { swarmIncidentOriginalMessageUpdate } from "../../views/swarm-incident-original-message-update.ts";
-import { swarmIncident } from "../../views/swarm-incident.ts";
+import { updateSalesforceIncident } from "../../salesforce/update-salesforce-incident.ts";
 export const escalateIncident = async (
   incident: Incident,
   env: any,
@@ -56,11 +56,10 @@ export const escalateIncident = async (
     const updateIncidentBlocks = await newIncident(curIncident);
 
     if (curIncident.incident_swarming_channel_id !== undefined) {
-      await postReply(
+      await postMessage(
         token,
         <string> curIncident.incident_swarming_channel_id,
         severityBlocks,
-        curIncident.incident_swarming_msg_ts,
       );
       await updateMessage(
         token,
@@ -78,6 +77,7 @@ export const escalateIncident = async (
         curIncident.incident_channel_msg_ts,
         updatedIncidentChannelBlocks,
       );
+      await updateSalesforceIncident(curIncident, env, token);
     } else {
       await postReply(
         token,
@@ -91,6 +91,7 @@ export const escalateIncident = async (
         curIncident.incident_channel_msg_ts,
         updateIncidentBlocks,
       );
+      await updateSalesforceIncident(curIncident, env, token);
     }
   }
 };

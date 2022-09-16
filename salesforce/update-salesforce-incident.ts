@@ -1,14 +1,14 @@
 import { Incident } from "../types/incident-object.ts";
+import { getSfAuth } from "../utils/database/get-salesforce-auth.ts";
+import { storeSalesforceAuth } from "../utils/database/store-salesforce-auth.ts";
 
 let refreshedToken = "";
 
 const updateSalesforceIncident = async (
   incidentInfo: Incident,
   env: any,
-  refresh: boolean,
+  token: string,
 ) => {
-  console.log(incidentInfo);
-
   const url = `${
     env["SALESFORCE_INSTANCE_URL"]
   }/services/data/v55.0/sobjects/incident__c/${incidentInfo.salesforce_incident_id}`;
@@ -23,14 +23,19 @@ const updateSalesforceIncident = async (
     Summary__c: incidentInfo.short_description,
     Severity__c: incidentInfo.severity,
   };
+  console.log(
+    incidentInfo.severity + " is what is shown in the save salesforce method",
+  );
 
-  let auth = "";
-  if (refresh === false) {
-    auth = `Bearer ${env["ACCESS_TOKEN"]}`;
+  let auth;
+  const sfAuth = await getSfAuth(token, env["SALESFORCE_ORG_ID"]);
+
+  if (sfAuth) {
+    auth = `Bearer ${sfAuth.access_token}`;
+    console.log(auth);
   } else {
-    auth = `Bearer ${refreshedToken}`;
+    auth = `Bearer ${env["ACCESS_TOKEN"]}`;
   }
-
   const sfResponse: any = await fetch(
     url,
     {
@@ -42,9 +47,14 @@ const updateSalesforceIncident = async (
       body: JSON.stringify(body),
     },
   );
-  const res = await sfResponse.json();
 
-  if (res[0]) {
+  const res = await sfResponse.ok;
+  console.log(res);
+
+  //if the token is expired
+  if (!sfResponse.ok) {
+    console.log("call failed");
+
     //await refreshToken(incidentInfo, env, true);
     const client_id = env["SALESFORCE_CLIENT_ID"];
     const client_secret = env["SALESFORCE_CLIENT_SECRET"];
@@ -59,26 +69,31 @@ const updateSalesforceIncident = async (
       },
     });
     const res = await refreshResponse.json();
+
+    //store the new token
+    await storeSalesforceAuth(
+      env["SALESFORCE_ORG_ID"],
+      res.access_token,
+      env["SALESFORCE_REFRESH_TOKEN"],
+      token,
+    );
     refreshedToken = res.access_token;
-    auth = `Bearer ${refreshedToken}`;
+    const refreshedAuth = `Bearer ${refreshedToken}`;
+
+    //make the api call again with the new token
     const sfResponse: any = await fetch(
       url,
       {
-        method: "POST",
+        method: "PATCH",
         headers: {
-          "Authorization": auth,
+          "Authorization": refreshedAuth,
           "Content-Type": "application/json",
         },
         body: JSON.stringify(body),
       },
     );
-    const refreshTokenResponse = await sfResponse.json();
-    const incidentURL = `${
-      env["SALESFORCE_INSTANCE_URL"] + "/" + refreshTokenResponse.id
-    }`;
-    console.log(refreshedToken);
-
-    return incidentURL;
+    await sfResponse.json();
+    return {};
   } else {
     const incidentURL = `${env["SALESFORCE_INSTANCE_URL"] + "/" + res.id}`;
     return {
@@ -87,63 +102,5 @@ const updateSalesforceIncident = async (
     };
   }
 };
-// const refreshToken = async (incident: Incident, env: any, refresh: boolean) => {
-//   const client_id = env["SALESFORCE_CLIENT_ID"];
-//   const client_secret = env["SALESFORCE_CLIENT_SECRET"];
-//   const refresh_token = env["SALESFORCE_REFRESH_TOKEN"];
-//   const refreshURL =
-//     `https://login.salesforce.com/services/oauth2/token?client_id=${client_id}&client_secret=${client_secret}&grant_type=refresh_token&refresh_token=${refresh_token}`;
-
-//   console.log(refreshURL);
-
-//   const refreshResponse: any = await fetch(refreshURL, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//   });
-//   console.log(refreshResponse);
-//   const res = await refreshResponse.json();
-//   console.log(res);
-//   refreshedToken = res.access_token;
-//   await createSalesforceIncident(incident, env, refresh);
-// };
 
 export { updateSalesforceIncident };
-
-// POST /services/oauth2/token HTTP/1.1
-// Host: login.salesforce.com
-// Authorization:  Basic
-// client_id=3MVG9lKcPoNINVBIPJjdw1J9LLM82HnFVVX19KY1uA5mu0QqEWhqKpoW3svG3XHrXDiCQjK1mdgAvhCscA9GE&
-// client_secret=1955279925675241571
-// grant_type=refresh_token&
-// refresh_token=your token here
-//https://help.salesforce.com/s/articleView?id=sf.remoteaccess_oauth_refresh_token_flow.htm&type=5
-
-// curl https://MyDomainName.my.salesforce.com/services/data/v56.0/sobjects/Account/ -H
-//"Authorization: Bearer token" -H "Content-Type: application/json" -d "@newaccount.json"
-
-// // Single record creation
-// await conn.sobject("incident__c").create(
-//   {
-//     Name: "Slack Created - {source}",
-//     Incident_Number__c: "INC-4423534423",
-//     Summary__c: "short description",
-//     Severity__c: "CRITICAL",
-//   },
-//   await function (err: any, ret: any) {
-//     if (err || !ret.success) {
-//       return console.error(err, ret);
-//     }
-//     console.log("Created record id : " + ret.id);
-//     console.log(
-//       `Object URL ${env["SALESFORCE_INSTANCE_URL"] + "/" + ret.id}`,
-//     );
-//     result = {
-//       "status": "sucess",
-//       url: `${env["SALESFORCE_INSTANCE_URL"] + "/" + ret.id}`,
-//       "message": "incident Created!",
-//     };
-//     return result.url;
-//   },
-// );

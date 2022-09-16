@@ -1,7 +1,11 @@
 import { Manifest } from "deno-slack-sdk/mod.ts";
 import { runFromExternalWebhook } from "./workflows/incoming-webhook-incident.ts";
 import { postIncidentFromButtonWF } from "./workflows/button-create-incident-wf.ts";
-import { AuditIncidents, Incident } from "./datastore/definition.ts";
+import {
+  AuditIncidents,
+  Incident,
+  SalesforceAuth,
+} from "./datastore/definition.ts";
 import { getIncidentReportButtonWF } from "./workflows/button-create-incident-report.ts";
 
 export default Manifest({
@@ -14,7 +18,7 @@ export default Manifest({
     getIncidentReportButtonWF,
   ],
   outgoingDomains: [],
-  datastores: [Incident, AuditIncidents],
+  datastores: [Incident, AuditIncidents, SalesforceAuth],
   botScopes: [
     "commands",
     "chat:write",
