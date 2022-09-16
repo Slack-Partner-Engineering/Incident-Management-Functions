@@ -5,6 +5,7 @@ import { closeIncidentModal } from "../../views/close-incident-modal.ts";
 import { newSwarmChannel } from "../../functions/create_incident_channel/incident-management-orchestrator.ts";
 import { escalateIncident } from "../../functions/escalate/escalateIncident.ts";
 import { deEscalateIncident } from "../../functions/de_escalate/de-escalate-incident.ts";
+import { assignDRI } from "../../functions/assign_dri/assignDRI.ts";
 
 const router = BlockActionsRouter(postNewIncident);
 
@@ -44,16 +45,11 @@ export const incidentHandler = router.addHandler(
       }
 
       case "de_escalate":
-        console.log("hit de_escalate statement");
         await deEscalateIncident(incident, env, token, body);
         break;
 
       case "assign_dri":
-        console.log("hit assign_dri statement");
-        break;
-
-      case "add_members":
-        console.log("hit add_members statement");
+        await assignDRI(incident, env, token, body);
         break;
 
       default:

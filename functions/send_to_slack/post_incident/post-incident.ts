@@ -21,6 +21,7 @@ import { endCall } from "../../../utils/slack_apis/end-call.ts";
 import { documentOnIncidentClose } from "../../../views/doc-on-incident-close.ts";
 import { addBookmark } from "../../../utils/slack_apis/add-bookmark.ts";
 import { setTopic } from "../../../utils/slack_apis/set-topic.ts";
+import { driUpdatedBlocks } from "../../../views/dri-updated-blocks.ts";
 
 const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
   async (
@@ -133,6 +134,55 @@ export const viewSubmission = async (
         token,
         incident.incident_swarming_channel_id,
         incidentCloseDocumentBlocks,
+      );
+    }
+  }
+  if (view.callback_id === "assign_dri_modal") {
+    console.log("assign dri modal submitted");
+    const incidentID = await JSON.parse(view.private_metadata).incident_id;
+    const incident = await getIncident(token, incidentID);
+    const dri =
+      view.state.values.assign_dri_block.users_select_action.selected_user;
+    console.log(dri);
+    incident.incident_dri = dri;
+    await updateIncident(token, incident);
+    const driBlocks = await driUpdatedBlocks(dri);
+
+    const blocks = await newIncident(incident);
+
+    if (incident.incident_swarming_channel_id !== undefined) {
+      await updateMessage(
+        token,
+        incident.incident_swarming_channel_id,
+        incident.incident_swarming_msg_ts,
+        blocks,
+      );
+
+      await updateMessage(
+        token,
+        incident.incident_channel,
+        incident.incident_channel_msg_ts,
+        blocks,
+      );
+
+      await postReply(
+        token,
+        incident.incident_swarming_channel_id,
+        driBlocks,
+        incident.incident_swarming_msg_ts,
+      );
+    } else {
+      await updateMessage(
+        token,
+        incident.incident_channel,
+        incident.incident_channel_msg_ts,
+        blocks,
+      );
+      await postReply(
+        token,
+        incident.incident_channel,
+        driBlocks,
+        incident.incident_channel_msg_ts,
       );
     }
   }
