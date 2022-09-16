@@ -64,7 +64,13 @@ export const newSwarmChannel = async (
     updatedIncidentChannelBlocks,
   );
 
-  const sfIncidentURL = await createSalesforceIncident(incident, env);
+  const sfIncidentURL = <string> await createSalesforceIncident(
+    incident,
+    env,
+    false,
+  );
+  console.log(sfIncidentURL);
+  console.log("hitt line 73");
 
   const sfIncidentBlocks = await getSalesforceIncidentBlocks(sfIncidentURL);
   await postMessage(
