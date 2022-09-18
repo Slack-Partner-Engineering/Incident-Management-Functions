@@ -21,7 +21,7 @@ const updateSalesforceIncident = async (
     }`,
     Incident_Number__c: incidentInfo.incident_id,
     Summary__c: incidentInfo.short_description,
-    Severity__c: incidentInfo.severity,
+    Severity__c: incidentInfo.severity.substring(0, 250),
   };
   console.log(
     incidentInfo.severity + " is what is shown in the save salesforce method",
@@ -32,7 +32,6 @@ const updateSalesforceIncident = async (
 
   if (sfAuth) {
     auth = `Bearer ${sfAuth.access_token}`;
-    console.log(auth);
   } else {
     auth = `Bearer ${env["ACCESS_TOKEN"]}`;
   }
@@ -53,7 +52,7 @@ const updateSalesforceIncident = async (
 
   //if the token is expired
   if (!sfResponse.ok) {
-    console.log("call failed");
+    console.("call failed");
 
     //await refreshToken(incidentInfo, env, true);
     const client_id = env["SALESFORCE_CLIENT_ID"];

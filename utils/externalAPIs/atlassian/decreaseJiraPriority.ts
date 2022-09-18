@@ -38,9 +38,6 @@ export async function decreaseJiraPriority(env: any, issueKey: any) {
     currentIssuePriority += 1;
   }
 
-  console.log("currentIssuePriority: ");
-  console.log(currentIssuePriority);
-
   const requestBody: any = JSON.stringify({
     "update": {
       "priority": [{ "set": { "id": `${currentIssuePriority}` } }],
