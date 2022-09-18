@@ -23,10 +23,8 @@ const closeSalesforceIncident = async (
     Summary__c: incidentInfo.short_description,
     Severity__c: incidentInfo.severity,
     Incident_Open__c: "RESOLVED",
+    Resolution_Notes__c: incidentInfo.incident_close_notes,
   };
-  console.log(
-    incidentInfo.severity + " is what is shown in the save salesforce method",
-  );
 
   let auth;
   const sfAuth = await getSfAuth(token, env["SALESFORCE_ORG_ID"]);
@@ -50,7 +48,6 @@ const closeSalesforceIncident = async (
   );
 
   const res = await sfResponse.ok;
-  console.log(res);
 
   //if the token is expired
   if (!sfResponse.ok) {
@@ -80,7 +77,6 @@ const closeSalesforceIncident = async (
       token,
     );
     refreshedToken = res.access_token;
-    console.log("access token" + res.access_token);
 
     const refreshedAuth = `Bearer ${refreshedToken}`;
 

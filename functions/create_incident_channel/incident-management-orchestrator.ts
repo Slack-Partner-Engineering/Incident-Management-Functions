@@ -64,17 +64,11 @@ export const newSwarmChannel = async (
     updatedIncidentChannelBlocks,
   );
 
-  const sfIncident = <any> await createSalesforceIncident(
-    incident,
-    env,
-    token,
-  );
-  console.log("SF incident id" + sfIncident.incidentId);
-
-  incident.salesforce_incident_id = sfIncident.incidentId;
-
+  const sfIncidentURL = `${
+    env["SALESFORCE_INSTANCE_URL"] + "/" + incident.salesforce_incident_id
+  }`;
   const sfIncidentBlocks = await getSalesforceIncidentBlocks(
-    sfIncident.incidentURL,
+    sfIncidentURL,
   );
   await postMessage(
     token,
@@ -86,7 +80,7 @@ export const newSwarmChannel = async (
     createChannelResp.channel.id,
     "Salesforce Incident",
     "link",
-    sfIncident.incidentURL,
+    sfIncidentURL,
     ":salesforce:",
   );
 

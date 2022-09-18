@@ -24,6 +24,8 @@ import { setTopic } from "../../../utils/slack_apis/set-topic.ts";
 import { driUpdatedBlocks } from "../../../views/dri-updated-blocks.ts";
 import { swarmIncidentOriginalMessageUpdate } from "../../../views/swarm-incident-original-message-update.ts";
 import { closeSalesforceIncident } from "../../../salesforce/close-salesforce-incident.ts";
+import { createSalesforceIncident } from "../../../salesforce/create-salesforce-incident.ts";
+import { getSalesforceIncidentBlocks } from "../../../views/salesforce-new-incident-created.ts";
 
 const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
   async (
@@ -47,7 +49,6 @@ const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
     );
 
     incident.incident_channel_msg_ts = await postMsgResp.ts;
-    await updateIncident(token, incident);
 
     const jiraIssueMessage = await jiraIssueBlocks(env, createIssueResp);
 
@@ -57,6 +58,27 @@ const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
       jiraIssueMessage,
       postMsgResp.ts,
     );
+
+    const sfIncident = <any> await createSalesforceIncident(
+      incident,
+      env,
+      token,
+    );
+    console.log("SF incident id " + sfIncident.incidentId);
+
+    incident.salesforce_incident_id = sfIncident.incidentId;
+
+    const sfIncidentBlocks = await getSalesforceIncidentBlocks(
+      sfIncident.incidentURL,
+    );
+    await postReply(
+      token,
+      incidentChannel,
+      sfIncidentBlocks,
+      postMsgResp.ts,
+    );
+    await updateIncident(token, incident);
+
     return {
       completed: false,
     };
@@ -83,6 +105,7 @@ export const viewSubmission = async (
     incident.incident_closed_ts = incidentClosedTS;
     const incidentJiraKey = incident.incident_jira_issue_key;
     await closeSalesforceIncident(incident, env, token);
+
     await addJiraComment(
       env,
       incidentJiraKey,
