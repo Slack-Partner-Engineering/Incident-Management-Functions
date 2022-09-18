@@ -23,6 +23,7 @@ import { addBookmark } from "../../../utils/slack_apis/add-bookmark.ts";
 import { setTopic } from "../../../utils/slack_apis/set-topic.ts";
 import { driUpdatedBlocks } from "../../../views/dri-updated-blocks.ts";
 import { swarmIncidentOriginalMessageUpdate } from "../../../views/swarm-incident-original-message-update.ts";
+import { closeSalesforceIncident } from "../../../salesforce/close-salesforce-incident.ts";
 
 const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
   async (
@@ -81,7 +82,7 @@ export const viewSubmission = async (
     incident.incident_close_notes = comment;
     incident.incident_closed_ts = incidentClosedTS;
     const incidentJiraKey = incident.incident_jira_issue_key;
-
+    await closeSalesforceIncident(incident, env, token);
     await addJiraComment(
       env,
       incidentJiraKey,
