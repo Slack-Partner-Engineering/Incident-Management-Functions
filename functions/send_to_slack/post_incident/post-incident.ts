@@ -48,8 +48,6 @@ const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
       incidentChannel,
       blocks,
     );
-    console.log("postMsgResp");
-    console.log(postMsgResp);
 
     incident.incident_channel_msg_ts = await postMsgResp.ts;
 
@@ -75,13 +73,12 @@ const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
       sfIncident.incidentURL,
     );
 
-    const reply = await postReply(
+    await postReply(
       token,
       incidentChannel,
       sfIncidentBlocks,
       postMsgResp.ts,
     );
-    console.log(reply);
     await updateIncident(token, incident);
 
     return {
@@ -168,13 +165,10 @@ export const viewSubmission = async (
     }
   }
   if (view.callback_id === "assign_dri_modal") {
-    console.log("assign dri modal submitted");
-    console.log(view);
     const incidentID = await JSON.parse(view.private_metadata).incident_id;
     const incident = await getIncident(token, incidentID);
     const dri =
       view.state.values.assign_dri_block.users_select_action.selected_users[0];
-    console.log(dri);
     incident.incident_dri = dri;
     await updateIncident(token, incident);
     const driBlocks = await driUpdatedBlocks(dri);
