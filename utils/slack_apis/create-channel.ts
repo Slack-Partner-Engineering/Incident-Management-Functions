@@ -41,6 +41,9 @@ async function sanitizeChannelName(
     if (channelStr[i] === " ") {
       (channelStr[i] as any) = "-";
     }
+    if (channelStr[i] === "'") {
+      (channelStr[i] as any) = "";
+    }
   }
   channelStr = channelStr.join("");
   return channelStr;

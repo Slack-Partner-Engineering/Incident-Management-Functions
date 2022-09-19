@@ -23,6 +23,7 @@ import { addBookmark } from "../../../utils/slack_apis/add-bookmark.ts";
 import { setTopic } from "../../../utils/slack_apis/set-topic.ts";
 import { driUpdatedBlocks } from "../../../views/dri-updated-blocks.ts";
 import { swarmIncidentOriginalMessageUpdate } from "../../../views/swarm-incident-original-message-update.ts";
+import { swarmIncident } from "../../../views/swarm-incident.ts";
 import { closeSalesforceIncident } from "../../../salesforce/close-salesforce-incident.ts";
 import { createSalesforceIncident } from "../../../salesforce/create-salesforce-incident.ts";
 import { getSalesforceIncidentBlocks } from "../../../views/salesforce-new-incident-created.ts";
@@ -174,14 +175,13 @@ export const viewSubmission = async (
     await updateIncident(token, incident);
     const driBlocks = await driUpdatedBlocks(dri);
 
-    const blocks = await newIncident(incident);
-
     if (incident.incident_swarming_channel_id !== undefined) {
+      const updatedIncidentBlocks = await swarmIncident(incident);
       await updateMessage(
         token,
         incident.incident_swarming_channel_id,
         incident.incident_swarming_msg_ts,
-        blocks,
+        updatedIncidentBlocks,
       );
 
       const updatedIncidentChannelBlocks =
@@ -202,6 +202,7 @@ export const viewSubmission = async (
         incident.incident_swarming_msg_ts,
       );
     } else {
+      const blocks = await newIncident(incident);
       await updateMessage(
         token,
         incident.incident_channel,

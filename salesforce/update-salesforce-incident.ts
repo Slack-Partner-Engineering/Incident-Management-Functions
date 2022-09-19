@@ -52,7 +52,7 @@ const updateSalesforceIncident = async (
 
   //if the token is expired
   if (!sfResponse.ok) {
-    console.("call failed");
+    console.log("call failed");
 
     //await refreshToken(incidentInfo, env, true);
     const client_id = env["SALESFORCE_CLIENT_ID"];
