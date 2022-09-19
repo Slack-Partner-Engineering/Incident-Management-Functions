@@ -26,7 +26,7 @@ const normalizeData: SlackFunctionHandler<typeof parseWebhook.definition> =
       severity: payload.severity ? payload.severity : "",
       incident_participants: "",
       incident_dri: "",
-      incident_trigger: "External Service (PagerDuty)",
+      incident_trigger: "External Service (PagerDuty - AWS Cloudwatch)",
       incident_id: "",
       incident_status: "OPEN",
       incident_channel: env["INCIDENT_CHANNEL"],
