@@ -9,8 +9,8 @@ import {
 import { getIncidentReportButtonWF } from "./workflows/button-create-incident-report.ts";
 
 export default Manifest({
-  name: "Incident Response Bot",
-  description: "Reverse a string",
+  name: "Incident Response",
+  description: "Handles Incident Response",
   icon: "assets/icon.png",
   workflows: [
     runFromExternalWebhook,
