@@ -38,6 +38,15 @@ const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
     const createIssueResp = await createJiraIssue(env, incident);
     incident.incident_jira_issue_key = createIssueResp.key;
     incident.incident_status = "OPEN";
+
+    const sfIncident = <any> await createSalesforceIncident(
+      incident,
+      env,
+      token,
+    );
+    console.log("SF incident id " + sfIncident.incidentId);
+
+    incident.salesforce_incident_id = sfIncident.incidentId;
     //call to database to save incident and assign incident id
     incident.incident_id = (await saveNewIncident(token, incident)).incident_id;
 
@@ -59,15 +68,6 @@ const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
       jiraIssueMessage,
       postMsgResp.ts,
     );
-
-    const sfIncident = <any> await createSalesforceIncident(
-      incident,
-      env,
-      token,
-    );
-    console.log("SF incident id " + sfIncident.incidentId);
-
-    incident.salesforce_incident_id = sfIncident.incidentId;
 
     const sfIncidentBlocks = await getSalesforceIncidentBlocks(
       sfIncident.incidentURL,
