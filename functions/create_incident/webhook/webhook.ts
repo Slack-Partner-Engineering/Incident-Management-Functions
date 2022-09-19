@@ -24,7 +24,7 @@ const normalizeData: SlackFunctionHandler<typeof parseWebhook.definition> =
         : "No short description",
       long_description: payload.long_description
         ? payload.long_description
-        : "No long description",
+        : "There have been many reports this morning that the site is down. This is a major issue, can we get on it right away. ",
       severity: payload.severity ? payload.severity : "",
       incident_participants: "",
       incident_dri: "",
