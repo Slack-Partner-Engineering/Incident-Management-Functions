@@ -10,6 +10,10 @@ const closeIncidentBlocks = async (incidentObject: Incident) => {
     ? `<@${incidentObject.incident_dri}>`
     : "No one Assigned Currently";
 
+  const longDescription = incidentObject.long_description
+    ? `${incidentObject.long_description}`
+    : "";
+
   const startTime = new Date(<any> incidentObject.incident_start_time * 1000);
   const endTime = new Date(<any> incidentObject.incident_closed_ts);
 
@@ -19,17 +23,12 @@ const closeIncidentBlocks = async (incidentObject: Incident) => {
 
   let incidentText = "";
   incidentText = incidentText
-    .concat(`*The incident was created by ${incident_creator} *\n\n`)
-    .concat(`*Title*: ${incidentObject.short_description}\n`)
-    .concat(`*Severity*: ${incidentObject.severity}\n`)
-    .concat(`*Description*: ${incidentObject.long_description}\n`)
-    .concat(`*Close Notes*: ${incidentObject.incident_close_notes}\n`)
-    .concat(`*Incident Start Time*: ${startTime}\n`)
-    .concat(`*Incident End Time*: ${endTime}\n`)
-    .concat(`*DRI*: ${incidentDRI}\n`)
-    .concat(externalId)
-    .concat(`*Incident Id*: ${incidentObject.incident_id}\n`)
-    .concat(`*INCIDENT STATUS*: ${incidentObject.incident_status}`);
+    .concat(
+      `⚠️ ` + `*${incidentObject.incident_id}*` + ": " +
+        `*${incidentObject.short_description}*` +
+        ` has been created by ${incident_creator} \n\n`,
+    )
+    .concat(`*Description*: ${longDescription}\n`);
 
   const incidentStr = await JSON.stringify(incidentObject);
 
@@ -40,6 +39,31 @@ const closeIncidentBlocks = async (incidentObject: Incident) => {
         type: "mrkdwn",
         text: incidentText,
       },
+    },
+    {
+      "type": "context",
+      "elements": [
+        {
+          "text": "Status: " + `*${incidentObject.incident_status}* `,
+          "type": "mrkdwn",
+        },
+        {
+          "text": " ⬆️ Severity: " + `*${incidentObject.severity}*`,
+          "type": "mrkdwn",
+        },
+        {
+          "text": " 🙋🏽‍♀️ DRI: " + `*${incidentDRI}*`,
+          "type": "mrkdwn",
+        },
+        {
+          "text": " ⏰ Start Time: " + `*${startTime}*`,
+          "type": "mrkdwn",
+        },
+        {
+          "text": " 🕓 End Time: " + `*${endTime}*`,
+          "type": "mrkdwn",
+        },
+      ],
     },
     {
       "type": "actions",

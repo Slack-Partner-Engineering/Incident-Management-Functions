@@ -48,6 +48,8 @@ const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
       incidentChannel,
       blocks,
     );
+    console.log("postMsgResp");
+    console.log(postMsgResp);
 
     incident.incident_channel_msg_ts = await postMsgResp.ts;
 
@@ -72,12 +74,14 @@ const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
     const sfIncidentBlocks = await getSalesforceIncidentBlocks(
       sfIncident.incidentURL,
     );
-    await postReply(
+
+    const reply = await postReply(
       token,
       incidentChannel,
       sfIncidentBlocks,
       postMsgResp.ts,
     );
+    console.log(reply);
     await updateIncident(token, incident);
 
     return {
