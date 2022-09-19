@@ -27,6 +27,7 @@ import { swarmIncident } from "../../../views/swarm-incident.ts";
 import { closeSalesforceIncident } from "../../../salesforce/close-salesforce-incident.ts";
 import { createSalesforceIncident } from "../../../salesforce/create-salesforce-incident.ts";
 import { getSalesforceIncidentBlocks } from "../../../views/salesforce-new-incident-created.ts";
+import { removeBookmark } from "../../../utils/slack_apis/remove-bookmark.ts";
 
 const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
   async (
@@ -133,6 +134,11 @@ export const viewSubmission = async (
       incident.incident_swarming_msg_ts !== undefined
     ) {
       await endCall(curIncident.incident_call_id, token);
+      await removeBookmark(
+        token,
+        curIncident.incident_swarming_channel_id,
+        curIncident.zoom_call_bookmark_id,
+      );
 
       await updateMessage(
         token,
@@ -193,11 +199,10 @@ export const viewSubmission = async (
         updatedIncidentChannelBlocks,
       );
 
-      await postReply(
+      await postMessage(
         token,
         incident.incident_swarming_channel_id,
         driBlocks,
-        incident.incident_swarming_msg_ts,
       );
     } else {
       const blocks = await newIncident(incident);

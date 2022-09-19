@@ -29,11 +29,10 @@ export const deEscalateIncident = async (
     const errBlocks = await errorDeEscalate();
     //send an error message to swarming channel if there is one,
     if (curIncident.incident_swarming_channel_id !== undefined) {
-      await postReply(
+      await postMessage(
         token,
         <string> curIncident.incident_swarming_channel_id,
         errBlocks,
-        curIncident.incident_swarming_msg_ts,
       );
     } else {
       //otherwise send the error message to the regular incident channel
@@ -73,11 +72,10 @@ export const deEscalateIncident = async (
 
     if (curIncident.incident_swarming_channel_id !== undefined) {
       incident.incident_swarming_channel_id;
-      await postReply(
+      await postMessage(
         token,
         <string> curIncident.incident_swarming_channel_id,
         severityBlocks,
-        curIncident.incident_swarming_msg_ts,
       );
       await updateMessage(
         token,
