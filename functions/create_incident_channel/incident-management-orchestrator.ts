@@ -126,14 +126,13 @@ export const newSwarmChannel = async (
     callBlockId.call.id,
   );
   incident.incident_call_id = callBlockId.call.id;
-  await updateIncident(token, incident);
 
   await postMessage(
     token,
     createChannelResp.channel.id,
     zoomBlocks,
   );
-  await addBookmark(
+  const zoomBookmark: any = await addBookmark(
     token,
     createChannelResp.channel.id,
     "Incident Call",
@@ -141,6 +140,9 @@ export const newSwarmChannel = async (
     meetingResp.join_url,
     ":zoom:",
   );
+  incident.zoom_call_bookmark_id = zoomBookmark.bookmark.id;
+  await updateIncident(token, incident);
+
   await inviteUserToChannel(
     body.user.id,
     createChannelResp.channel.id,

@@ -70,6 +70,9 @@ const Incident = DefineDatastore({
     salesforce_incident_id: {
       type: Schema.types.string,
     },
+    zoom_call_bookmark_id: {
+      type: Schema.types.string,
+    },
   },
 });
 
