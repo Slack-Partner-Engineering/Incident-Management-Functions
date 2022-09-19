@@ -9,14 +9,16 @@ const normalizeData: SlackFunctionHandler<typeof parseWebhook.definition> =
   ) => {
     const payload = <Incident> inputs;
 
+    const startTime = <string> payload.incident_start_time
+      ? payload.incident_start_time
+      : <string> <unknown> (Date.now() / 1000); //fix this later, slack passes seconds, date.now is milliseconds
+
     const incident = {
       slack_reporter: "",
       external_incident_id: payload.external_incident_id
         ? payload.external_incident_id
         : "",
-      incident_start_time: payload.incident_start_time
-        ? payload.incident_start_time
-        : JSON.stringify(Date.now()),
+      incident_start_time: startTime,
       short_description: payload.short_description
         ? payload.short_description
         : "No short description",

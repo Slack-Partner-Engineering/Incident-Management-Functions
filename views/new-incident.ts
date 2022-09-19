@@ -13,8 +13,11 @@ const newIncident = async (incidentObject: Incident) => {
   const longDescription = incidentObject.long_description
     ? `${incidentObject.long_description}`
     : "";
+  console.log("incident start time: ");
+  console.log(incidentObject.incident_start_time);
 
   const dateTime = new Date(<any> incidentObject.incident_start_time * 1000);
+  console.log(dateTime);
 
   const externalId = incidentObject.external_incident_id
     ? `*External Id*: ${incidentObject.external_incident_id} \n`
