@@ -37,6 +37,7 @@ export const newSwarmChannel = async (
     shortDescription,
     <string> incidenId,
   );
+  console.log(createChannelResp);
 
   const channelBlocks = await getIncidentChannelBlocks(createChannelResp);
   await postReply(

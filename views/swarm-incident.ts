@@ -12,6 +12,10 @@ const swarmIncident = async (incidentObject: Incident) => {
     ? `<@${incidentObject.incident_dri}>`
     : "No one Assigned Currently";
 
+  const longDescription = incidentObject.long_description
+    ? `${incidentObject.long_description}`
+    : "";
+
   const dateTime = new Date(<any> incidentObject.incident_start_time * 1000);
 
   const externalId = incidentObject.external_incident_id
@@ -20,25 +24,43 @@ const swarmIncident = async (incidentObject: Incident) => {
 
   let incidentText = "";
   incidentText = incidentText
-    .concat(`*A new incident has been created by ${incident_creator} *\n\n`)
-    .concat(`*Title*: ${incidentObject.short_description}\n`)
-    .concat(`*Severity*: ${incidentObject.severity}\n`)
-    .concat(`*Description*: ${incidentObject.long_description}\n`)
-    .concat(`*Incident Start Time*: ${dateTime}\n`)
-    .concat(`*DRI*: ${incidentDRI}\n`)
-    .concat(externalId)
-    .concat(`*Incident Id*: ${incidentObject.incident_id}\n`)
-    .concat(`*INCIDENT STATUS*: ${incidentObject.incident_status}`);
+    .concat(
+      `⚠️ ` + `*${incidentObject.incident_id}*` + ": " +
+        `*${incidentObject.short_description}*` +
+        ` has been created by ${incident_creator} \n\n`,
+    )
+    .concat(`*Description*: ${longDescription}\n`);
 
   const incidentStr = await JSON.stringify(incidentObject);
 
-  const blocks = [
+  const blocks: any = [
     {
       type: "section",
       text: {
         type: "mrkdwn",
         text: incidentText,
       },
+    },
+    {
+      "type": "context",
+      "elements": [
+        {
+          "text": "Status: " + `*${incidentObject.incident_status}* `,
+          "type": "mrkdwn",
+        },
+        {
+          "text": " ⬆️ Severity: " + `*${incidentObject.severity}*`,
+          "type": "mrkdwn",
+        },
+        {
+          "text": " 🙋🏽‍♀️ DRI: " + `*${incidentDRI}*`,
+          "type": "mrkdwn",
+        },
+        {
+          "text": " ⏰ Start Time: " + `*${dateTime}*`,
+          "type": "mrkdwn",
+        },
+      ],
     },
     {
       "type": "actions",
@@ -80,16 +102,6 @@ const swarmIncident = async (incidentObject: Incident) => {
           "text": {
             "type": "plain_text",
             "text": "Assign DRI",
-            "emoji": true,
-          },
-          "value": incidentStr,
-        },
-        {
-          "type": "button",
-          "action_id": "add_members",
-          "text": {
-            "type": "plain_text",
-            "text": "Add Member",
             "emoji": true,
           },
           "value": incidentStr,

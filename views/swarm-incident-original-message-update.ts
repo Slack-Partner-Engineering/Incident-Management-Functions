@@ -12,6 +12,10 @@ const swarmIncidentOriginalMessageUpdate = (incidentObject: Incident) => {
     ? `<@${incidentObject.incident_dri}>`
     : "No one Assigned Currently";
 
+  const longDescription = incidentObject.long_description
+    ? `${incidentObject.long_description}`
+    : "";
+
   const dateTime = new Date(<any> incidentObject.incident_start_time * 1000);
 
   const externalId = incidentObject.external_incident_id
@@ -20,15 +24,12 @@ const swarmIncidentOriginalMessageUpdate = (incidentObject: Incident) => {
 
   let incidentText = "";
   incidentText = incidentText
-    .concat(`*A new incident has been created by ${incident_creator} *\n\n`)
-    .concat(`*Title*: ${incidentObject.short_description}\n`)
-    .concat(`*Severity*: ${incidentObject.severity}\n`)
-    .concat(`*Description*: ${incidentObject.long_description}\n`)
-    .concat(`*Incident Start Time*: ${dateTime}\n`)
-    .concat(`*DRI*: ${incidentDRI}\n`)
-    .concat(externalId)
-    .concat(`*Incident Id*: ${incidentObject.incident_id}\n`)
-    .concat(`*INCIDENT STATUS*: ${incidentObject.incident_status}`)
+    .concat(
+      `⚠️ ` + `*${incidentObject.incident_id}*` + ": " +
+        `*${incidentObject.short_description}*` +
+        ` has been created by ${incident_creator} \n\n`,
+    )
+    .concat(`*Description*: ${longDescription}\n`)
     .concat(
       `\n\n INCIDENT IS BEING RESOLVED IN :warning: Incident channel <#${incidentObject.incident_swarming_channel_id}>`,
     );
@@ -39,6 +40,27 @@ const swarmIncidentOriginalMessageUpdate = (incidentObject: Incident) => {
         type: "mrkdwn",
         text: incidentText,
       },
+    },
+    {
+      "type": "context",
+      "elements": [
+        {
+          "text": "Status: " + `*${incidentObject.incident_status}* `,
+          "type": "mrkdwn",
+        },
+        {
+          "text": " ⬆️ Severity: " + `*${incidentObject.severity}*`,
+          "type": "mrkdwn",
+        },
+        {
+          "text": " 🙋🏽‍♀️ DRI: " + `*${incidentDRI}*`,
+          "type": "mrkdwn",
+        },
+        {
+          "text": " ⏰ Start Time: " + `*${dateTime}*`,
+          "type": "mrkdwn",
+        },
+      ],
     },
   ];
 
