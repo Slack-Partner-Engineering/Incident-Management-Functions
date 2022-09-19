@@ -5,7 +5,7 @@ export const getSalesforceIncidentBlocks = (salesforceUrl: string) => {
       block_id: "salesforce_incident_created",
       text: {
         type: "mrkdwn",
-        text: ` :salesforce: <${salesforceUrl}|Salesforce Incident> Created`,
+        text: ` :salesforce: <${salesforceUrl}|Salesforce Incident> created.`,
       },
     },
   ];
