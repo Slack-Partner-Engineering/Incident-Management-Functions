@@ -1,3 +1,5 @@
+//View to push in the root cause analysis document to be used in channel.
+
 export const documentOnIncidentClose = () => {
   return [
     {

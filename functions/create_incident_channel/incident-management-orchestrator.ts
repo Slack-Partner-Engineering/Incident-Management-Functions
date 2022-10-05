@@ -20,7 +20,6 @@ import { Incident } from "../../types/incident-object.ts";
 import { updateIncident } from "../../utils/database/update-incident.ts";
 import { setTopic } from "../../utils/slack_apis/set-topic.ts";
 import { swarmIncidentOriginalMessageUpdate } from "../../views/swarm-incident-original-message-update.ts";
-import { createSalesforceIncident } from "../../salesforce/create-salesforce-incident.ts";
 import { getSalesforceIncidentBlocks } from "../../views/salesforce-new-incident-created.ts";
 
 export const newSwarmChannel = async (

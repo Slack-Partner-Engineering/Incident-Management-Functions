@@ -1,3 +1,5 @@
+//This view will bring up a modal for a user to assign a DRI to the incident.
+
 export const assignDRIModal = (
   incident: string,
 ) => {

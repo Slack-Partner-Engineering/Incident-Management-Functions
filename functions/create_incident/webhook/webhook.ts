@@ -5,7 +5,7 @@ import type { Incident } from "../../../types/incident-object.ts";
 
 const normalizeData: SlackFunctionHandler<typeof parseWebhook.definition> =
   async (
-    { inputs, token, env },
+    { inputs, env },
   ) => {
     const payload = <Incident> inputs;
 

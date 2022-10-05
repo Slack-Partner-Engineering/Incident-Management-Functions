@@ -1,4 +1,3 @@
-// deno-lint-ignore-file no-explicit-any
 import { getBasicAuthJira } from "../../auth/getBasicAuthJira.ts";
 
 /** This function lets a user in Slack update the priority of an issue

@@ -1,4 +1,3 @@
-// deno-lint-ignore-file no-explicit-any
 import { SlackAPI } from "deno-slack-api/mod.ts";
 
 export async function getUserName(token: any, userID: any) {

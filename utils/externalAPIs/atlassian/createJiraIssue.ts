@@ -1,4 +1,3 @@
-// deno-lint-ignore-file no-explicit-any
 import type { Incident } from "../../../types/incident-object.ts";
 import { getBasicAuthJira } from "../../auth/getBasicAuthJira.ts";
 

@@ -1,4 +1,3 @@
-// deno-lint-ignore-file no-explicit-any
 import { getBasicAuthJira } from "../../auth/getBasicAuthJira.ts";
 
 export async function addJiraComment(

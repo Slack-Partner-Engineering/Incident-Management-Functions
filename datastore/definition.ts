@@ -1,3 +1,9 @@
+//This file defines the database structure for the app.
+//There are 3 tables.
+// Incidents is the main table that captures all incident data
+//AuditIncidents is used to capture changes to the incidents. This can be used to send to another system or build reports on Slack
+//SalesforceAuth is used to capture Salesforce Auth specifically.
+
 import { DefineDatastore, Schema } from "deno-slack-sdk/mod.ts";
 
 const Incident = DefineDatastore({

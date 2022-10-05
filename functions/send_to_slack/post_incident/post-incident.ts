@@ -92,7 +92,7 @@ export default postIncident;
 export const blockActions = incidentHandler;
 
 export const viewSubmission = async (
-  { view, body, token, env }: any,
+  { view, token, env }: any,
 ) => {
   if (view.callback_id === "close_incident_modal") {
     const incidentClosedTS = Date.now();
