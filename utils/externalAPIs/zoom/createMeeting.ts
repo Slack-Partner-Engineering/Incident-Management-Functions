@@ -1,5 +1,3 @@
-// deno-lint-ignore-file no-explicit-any
-
 export async function createZoomMeeting(env: any) {
   const bt = "Bearer " + env["ZOOM_JWT_TOKEN"];
 

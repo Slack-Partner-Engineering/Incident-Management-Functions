@@ -19,10 +19,6 @@ export const postNewIncident = DefineFunction({
         type: Schema.types.string,
         description: "Long Description",
       },
-      // incident_participants: {
-      //   type: Schema.types.string,
-      //   description: "Incident Participants",
-      // },
       incident_dri: {
         type: Schema.types.string,
         description: "Incident DRI",
