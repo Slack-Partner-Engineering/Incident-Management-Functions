@@ -1,3 +1,6 @@
+//This view builds the incident closed blocks to update the incident messages
+//that are in the incident channel and also the swarming channel if it exists.
+
 import type { Incident } from "../types/incident-object.ts";
 
 const closeIncidentBlocks = async (incidentObject: Incident) => {

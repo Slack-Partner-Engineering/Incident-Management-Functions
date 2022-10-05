@@ -1,3 +1,5 @@
+//This view is for a Box demo, showing what you could insert for an external URL
+
 export const getBoxRunbook = () => {
   return [
     {

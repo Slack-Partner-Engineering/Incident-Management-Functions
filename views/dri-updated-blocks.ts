@@ -1,4 +1,5 @@
-// deno-lint-ignore-file no-explicit-any
+//Blocks to post a message to thread or channel when the DRI is updated.
+
 export function driUpdatedBlocks(dri: any) {
   const blocks = [
     {

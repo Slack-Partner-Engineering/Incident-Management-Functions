@@ -1,3 +1,5 @@
+//This view will generate the blocks to open a modal when closing an incident.
+
 export const closeIncidentModal = (
   incident: string,
 ) => {

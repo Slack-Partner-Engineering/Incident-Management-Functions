@@ -1,4 +1,5 @@
-// deno-lint-ignore-file no-explicit-any
+//Blocks to post ephemerally when a user tries to deescalate a low.
+
 export function errorDeEscalate() {
   const blocks = [
     {
