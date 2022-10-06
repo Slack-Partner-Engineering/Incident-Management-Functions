@@ -1,3 +1,4 @@
+//There is one custom type. The incident object.
 export type Incident = {
   incident_id?: string | undefined;
   severity: string;
