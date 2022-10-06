@@ -1,3 +1,7 @@
+//This is the definition file of a fucntion.
+//The function takes incoming data from a webhook and forms it into what is needed
+//for the incident object.
+
 import { DefineFunction, Schema } from "deno-slack-sdk/mod.ts";
 
 export const parseWebhook = DefineFunction({

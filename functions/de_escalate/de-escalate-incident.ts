@@ -1,7 +1,5 @@
-//This function will take the previous priority and decrease it
-//input: standard incident object, env, token, body
-//output: channel URL, channel_id, incident object.
-//
+//This function takes the previous incident severity and decrease it.
+
 import { postMessage } from "../../utils/slack_apis/post-message.ts";
 import { postReply } from "../../utils/slack_apis/post-message.ts";
 import { updateMessage } from "../../utils/slack_apis/update-message.ts";

@@ -1,8 +1,5 @@
-//This function should take in the standard incident object from various triggers.
-//It should then create the incident channel, etc... to kick off the process.
-//input: standard incident object
-//output: channel URL, channel_id, incident object.
-//
+//This wiil escalate an incident
+
 import { postMessage } from "../../utils/slack_apis/post-message.ts";
 import { postReply } from "../../utils/slack_apis/post-message.ts";
 import { updateMessage } from "../../utils/slack_apis/update-message.ts";

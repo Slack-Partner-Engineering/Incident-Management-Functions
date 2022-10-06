@@ -1,3 +1,6 @@
+//Function defintion for the initial post incidnet function. All incidents start this way
+//and the initial incident is posted into the incident channel.
+
 import { DefineFunction, Schema } from "deno-slack-sdk/mod.ts";
 
 export const postNewIncident = DefineFunction({
