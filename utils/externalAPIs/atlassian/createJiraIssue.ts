@@ -1,3 +1,7 @@
+//This function will make a call to Jira Cloud to create an issue
+//input: env, and the standard incident object
+//output: API call response to /issue
+
 import type { Incident } from "../../../types/incident-object.ts";
 import { getBasicAuthJira } from "../../auth/getBasicAuthJira.ts";
 

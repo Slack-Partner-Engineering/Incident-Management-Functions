@@ -1,7 +1,7 @@
 //This function will take the previous priority and decrease it
-//input: standard incident object, env, token, body
+//input: standard incident object, env, token
 //output: channel URL, channel_id, incident object.
-//
+
 import { postMessage } from "../../utils/slack_apis/post-message.ts";
 import { postReply } from "../../utils/slack_apis/post-message.ts";
 import { updateMessage } from "../../utils/slack_apis/update-message.ts";
@@ -19,7 +19,6 @@ export const deEscalateIncident = async (
   incident: Incident,
   env: any,
   token: any,
-  body: any,
 ) => {
   const curIncident = await getIncident(token, <string> incident.incident_id);
   const curSeverity = curIncident.severity;

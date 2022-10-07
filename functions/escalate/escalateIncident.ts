@@ -1,8 +1,8 @@
 //This function should take in the standard incident object from various triggers.
 //It should then create the incident channel, etc... to kick off the process.
-//input: standard incident object
+//input: standard incident object, env, token
 //output: channel URL, channel_id, incident object.
-//
+
 import { postMessage } from "../../utils/slack_apis/post-message.ts";
 import { postReply } from "../../utils/slack_apis/post-message.ts";
 import { updateMessage } from "../../utils/slack_apis/update-message.ts";
@@ -19,7 +19,6 @@ export const escalateIncident = async (
   incident: Incident,
   env: any,
   token: any,
-  body: any,
 ) => {
   const curIncident = await getIncident(token, <string> incident.incident_id);
 

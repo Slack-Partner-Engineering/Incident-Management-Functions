@@ -1,8 +1,10 @@
+//This function will update the status of a Jira issue
+//input: env, and the key of the issue to update
+//output: API call response to /issue
+//@see https://developer.atlassian.com/server/jira/platform/jira-rest-api-example-add-comment-8946422/
+
 import { getBasicAuthJira } from "../../auth/getBasicAuthJira.ts";
 
-/** This function lets a user in Slack update the status of an issue
- * @see https://developer.atlassian.com/server/jira/platform/jira-rest-api-example-add-comment-8946422/
- */
 export async function updateStatus(env: any, issueKey: string) {
   const instance = env["JIRA_INSTANCE"];
   const basicAuth = await getBasicAuthJira(env);

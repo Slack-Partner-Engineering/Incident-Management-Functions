@@ -1,3 +1,7 @@
+//This function will set the priority on Jira to "Low" after an incident is closed
+//input: env, and the key of the issue to set to "Low" priority
+//output: API call response from PUT /issue
+
 import { getBasicAuthJira } from "../../auth/getBasicAuthJira.ts";
 
 /** This function lets a user in Slack update the priority of an issue

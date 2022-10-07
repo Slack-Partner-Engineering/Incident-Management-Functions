@@ -1,3 +1,7 @@
+//This function will make a call to Jira Cloud to add a comment to a specific issue
+//input: env, jiraIssueKey, closeNotes
+//output: API call response to /comment
+
 import { getBasicAuthJira } from "../../auth/getBasicAuthJira.ts";
 
 export async function addJiraComment(
@@ -26,6 +30,5 @@ export async function addJiraComment(
       body: JSON.stringify(requestBody),
     },
   );
-  // const addCommentRespJson = await addCommentResp.json();
   return addCommentResp;
 }
