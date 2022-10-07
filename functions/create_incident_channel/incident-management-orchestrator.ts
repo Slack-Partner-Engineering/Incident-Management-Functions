@@ -19,6 +19,7 @@ import { updateIncident } from "../../utils/database/update-incident.ts";
 import { setTopic } from "../../utils/slack_apis/set-topic.ts";
 import { swarmIncidentOriginalMessageUpdate } from "../../views/swarm-incident-original-message-update.ts";
 import { getSalesforceIncidentBlocks } from "../../views/salesforce-new-incident-created.ts";
+import { getObjectURL } from "../../salesforce/sf_connector/build-object-url.ts";
 
 export const newSwarmChannel = async (
   incident: Incident,
@@ -62,9 +63,8 @@ export const newSwarmChannel = async (
     updatedIncidentChannelBlocks,
   );
 
-  const sfIncidentURL = `${
-    env["SALESFORCE_INSTANCE_URL"] + "/" + incident.salesforce_incident_id
-  }`;
+  const sfIncidentURL = getObjectURL(incident.salesforce_incident_id, env);
+
   const sfIncidentBlocks = await getSalesforceIncidentBlocks(
     sfIncidentURL,
   );

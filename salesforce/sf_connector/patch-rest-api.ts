@@ -1,4 +1,5 @@
 import { getSfAuth } from "../../utils/database/get-salesforce-auth.ts";
+import { getObjectURL } from "./build-object-url.ts";
 import { getRestURLPatch } from "./build-rest-url.ts";
 import { refreshSfToken } from "./refresh-token.ts";
 
@@ -51,9 +52,10 @@ const updateSfRecord = async (
     await sfResponse.json();
     return {};
   } else {
-    const incidentURL = `${env["SALESFORCE_INSTANCE_URL"] + "/" + res.id}`;
+    const sfIncidentURL = getObjectURL(res.id, env);
+
     return {
-      incidentURL: incidentURL,
+      incidentURL: sfIncidentURL,
       incidentId: res.id,
     };
   }
