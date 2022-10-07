@@ -1,3 +1,5 @@
+//Function definition for the incident report.
+
 import { DefineFunction, Schema } from "deno-slack-sdk/mod.ts";
 
 export const postNewIncidentReport = DefineFunction({

@@ -1,4 +1,5 @@
-//this function should post the details of a new incident report in the incident channel.
+//This function posts the details of a new incident report in the incident channel.
+
 import type { SlackFunctionHandler } from "deno-slack-sdk/types.ts";
 import type { postNewIncidentReport } from "./definition.ts";
 import { postEphemeralMessage } from "../../../utils/slack_apis/post-message.ts";

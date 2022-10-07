@@ -1,8 +1,6 @@
-//This function should take in the standard incident object from various triggers.
-//It should then create the incident channel, etc... to kick off the process.
-//input: standard incident object
-//output: channel URL, channel_id, incident object.
-//
+//This function takes in the standard incident object from various triggers.
+//It should then create the incident channel and post into channel to kick off the swarming incident.
+
 import { postMessage } from "../../utils/slack_apis/post-message.ts";
 import { postReply } from "../../utils/slack_apis/post-message.ts";
 import { jiraIssueBlocks } from "../../views/jira-issue-blocks.ts";
