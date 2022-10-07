@@ -44,9 +44,12 @@ const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
       env,
       token,
     );
-    console.log("SF incident id " + sfIncident.incidentId);
 
-    incident.salesforce_incident_id = sfIncident.incidentId;
+    if (sfIncident) {
+      incident.salesforce_incident_id = sfIncident.incidentId;
+    } else {
+      console.log("NO INCIDENT ID");
+    }
     //call to database to save incident and assign incident id
     incident.incident_id = (await saveNewIncident(token, incident)).incident_id;
 

@@ -1,7 +1,13 @@
-const getRestURL = (sfObject: string, env: any) => {
-  return `${
-    env["SALESFORCE_INSTANCE_URL"]
-  }/services/data/v55.0/sobjects/${sfObject}`;
+const getRestURLPost = (sfObject: string, env: any) => {
+  return `${env["SALESFORCE_INSTANCE_URL"]}/services/data/${
+    env["SALESFORCE_API_VERSION"]
+  }/sobjects/${sfObject}`;
 };
 
-export { getRestURL };
+const getRestURLPatch = (sfObject: string, env: any, objectId: string) => {
+  return `${env["SALESFORCE_INSTANCE_URL"]}/services/data/${
+    env["SALESFORCE_API_VERSION"]
+  }/sobjects/${sfObject}/${objectId}`;
+};
+
+export { getRestURLPatch, getRestURLPost };

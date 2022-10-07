@@ -40,12 +40,12 @@ export const incidentHandler = router.addHandler(
       }
 
       case "escalate": {
-        await escalateIncident(incident, env, token, body);
+        await escalateIncident(incident, env, token);
         break;
       }
 
       case "de_escalate":
-        await deEscalateIncident(incident, env, token, body);
+        await deEscalateIncident(incident, env, token);
         break;
 
       case "assign_dri":
