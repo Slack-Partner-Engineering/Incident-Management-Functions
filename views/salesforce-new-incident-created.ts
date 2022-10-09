@@ -1,3 +1,4 @@
+//View to show the newly created Salesforce Incident.
 export const getSalesforceIncidentBlocks = (salesforceUrl: string) => {
   return [
     {

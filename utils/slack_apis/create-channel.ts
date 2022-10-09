@@ -1,3 +1,9 @@
+//This function will create a channel. It uses a couple of other helper functions to do this.
+//See helper functions below.
+//input: token, incidentDescription, incident_id
+//output: API call response to /conversations.create
+//@see https://api.slack.com/methods/conversations.create
+
 import { SlackAPI } from "deno-slack-api/mod.ts";
 
 export const createChannel = async (
@@ -21,6 +27,9 @@ export const createChannel = async (
   return resp;
 };
 
+//This helper function constructs a channel name based on the description and ID.
+//input: incidentDescription, incident_id
+//output: channel name with the incident description and ID
 function createChannelName(
   incidentDescription: string,
   incident_id: string,
@@ -29,6 +38,10 @@ function createChannelName(
   return channelName;
 }
 
+//This helper function sanitizes the channel name. For example, a channel
+//name cannot have apostrophies or blank spaces, so we replace those.
+//input: channelName
+//output: sanitized channel name
 async function sanitizeChannelName(
   channelName: any,
 ) {

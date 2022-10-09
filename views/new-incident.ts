@@ -1,3 +1,5 @@
+//This is the main incident view. It is what is shown when a new incident is created.
+//Same view used whether incident created via button click or webhook.
 import type { Incident } from "../types/incident-object.ts";
 
 const newIncident = async (incidentObject: Incident) => {

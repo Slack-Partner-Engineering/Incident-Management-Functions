@@ -1,3 +1,4 @@
+//A view which shows the newly created swarming channel.
 // deno-lint-ignore-file no-explicit-any
 export function getIncidentChannelBlocks(
   createChannelInfo: any,

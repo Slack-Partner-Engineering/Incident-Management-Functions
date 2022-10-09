@@ -1,3 +1,8 @@
+//This function add a bookmark to a Slack channel
+//input: token, channel, title, type, link, emoji
+//output: API call response to /bookmarks.add
+//@see https://api.slack.com/methods/bookmarks.add
+
 import { SlackAPI } from "deno-slack-api/mod.ts";
 
 export const addBookmark = async (

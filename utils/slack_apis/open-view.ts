@@ -1,3 +1,8 @@
+//This function will open a view for a user.
+//input: token,modalView, triggger_id
+//output: none
+//@see https://api.slack.com/methods/views.open
+
 import { SlackAPI } from "deno-slack-api/mod.ts";
 
 export const openView = async (

@@ -1,8 +1,10 @@
-//this workflow should deal with an incoming incident from a webhook.
-//takes in a stringified json body for now (refactor will take in values later)
-//sends the data to the incoming webhook function to normalize the data
-//sends the incident management object then to the new incident send to slack function to post the details in channel.
-//it will in the future call the inident orchestrator function too to kick off the new incident process.
+//this workflow creates an incident from a link trigger.
+//It takes in details as the current user who invoked the workflow, the time at which the workflow
+//was invoked (currentTime), and the channel from which the workflow was invoked.
+//The workflow takes more incident details such as a summary, severity, DRI, and long description.
+//Once the user submits the open form step, the function calls the postNewIncident custom function
+//which creates an incident object, and creates records of the incident in Salesforce and Jira. It
+//outputs the incident view, along with buttons to interact with the incident.
 import { DefineWorkflow, Schema } from "deno-slack-sdk/mod.ts";
 import { postNewIncident } from "../functions/send_to_slack/post_incident/definition.ts";
 

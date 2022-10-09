@@ -1,3 +1,8 @@
+//The functions below will post a regular message.
+//input: token,channel, blocks
+//output: response to chat.postMessage API call
+//@see https://api.slack.com/methods/chat.postMessage
+
 import { SlackAPI } from "deno-slack-api/mod.ts";
 
 export async function postMessage(
@@ -15,6 +20,10 @@ export async function postMessage(
   return resp;
 }
 
+//The functions below will post a thread reply.
+//input: token, channel, blocks, thread_ts of original message to reply to
+//output: response to chat.postMessage API call
+//@see https://api.slack.com/methods/chat.postMessage
 export async function postReply(
   token: string,
   channel: string,
@@ -32,6 +41,10 @@ export async function postReply(
   return resp;
 }
 
+//The functions below will post an ephemeral message.
+//input: token, channel, blocks, user_id of the user to post the message to.
+//output: response to chat.postMessage API call
+//@see https://api.slack.com/methods/chat.postEphemeral
 export async function postEphemeralMessage(
   token: string,
   channel_id: string,

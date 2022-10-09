@@ -1,3 +1,9 @@
+//This function will set the topic of a channel. It is used to set the topic of
+//the swarming channel once the channel is created.
+//input: token, channel_id, text
+//output: response to API call /conversations.setTopic
+//@see https://api.slack.com/methods/conversations.setTopic
+
 import { SlackAPI } from "deno-slack-api/mod.ts";
 
 export const setTopic = async (
