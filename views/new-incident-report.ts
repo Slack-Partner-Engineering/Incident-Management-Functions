@@ -1,3 +1,4 @@
+//This view shows the incident report. It shows open, closed, swarming, and total incidents.
 const newIncidentReport = (incidentReport: any) => {
   let reportText = "";
 

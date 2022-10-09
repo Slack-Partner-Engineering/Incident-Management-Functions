@@ -1,3 +1,8 @@
+//This function will create a Zoom meeting and start the meeting
+//input: env
+//output: API call response to /meetings
+//@see https://marketplace.zoom.us/docs/api-reference/zoom-api/methods/#operation/meetingCreate
+
 export async function createZoomMeeting(env: any) {
   const bt = "Bearer " + env["ZOOM_JWT_TOKEN"];
 

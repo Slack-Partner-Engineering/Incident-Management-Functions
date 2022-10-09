@@ -1,3 +1,8 @@
+//This function will create a report and send it as an ephemeral message to the user. It will
+//show the total incidents, open icidents, closed incidents, the DRIs, and percentage of incidents by severity.
+//input: token
+//output: A report object
+
 import { getIncidents } from "../database/get-incident.ts";
 import type { Incident } from "../../types/incident-object.ts";
 
