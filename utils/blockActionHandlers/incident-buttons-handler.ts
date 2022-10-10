@@ -6,7 +6,7 @@ import { newSwarmChannel } from "../../functions/create_incident_channel/inciden
 import { escalateIncident } from "../../functions/escalate/escalateIncident.ts";
 import { deEscalateIncident } from "../../functions/de_escalate/de-escalate-incident.ts";
 import { assignDRI } from "../../functions/assign_dri/assignDRI.ts";
-
+import { sendUpdateModal } from "../../views/send-update-modal.ts";
 const router = BlockActionsRouter(postNewIncident);
 
 export const incidentHandler = router.addHandler(
@@ -17,6 +17,7 @@ export const incidentHandler = router.addHandler(
     "de_escalate",
     "assign_dri",
     "add_members",
+    "send_update",
   ],
   async ({ action, body, token, env }) => {
     const incident = JSON.parse(body.actions[0].value);
@@ -31,6 +32,17 @@ export const incidentHandler = router.addHandler(
         //pass in whole incident obj to view, so we can update the original incident obj later
         const incident = action.value;
         const ModalView = await closeIncidentModal(incident);
+        await openView(
+          token,
+          ModalView,
+          body.interactivity.interactivity_pointer,
+        );
+        break;
+      }
+
+      case "send_update": {
+        const incident = action.value;
+        const ModalView = sendUpdateModal(incident);
         await openView(
           token,
           ModalView,

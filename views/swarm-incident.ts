@@ -68,6 +68,16 @@ const swarmIncident = async (incidentObject: Incident) => {
       "elements": [
         {
           "type": "button",
+          "action_id": "send_update",
+          "text": {
+            "type": "plain_text",
+            "text": "Send Update",
+            "emoji": true,
+          },
+          "value": incidentStr,
+        },
+        {
+          "type": "button",
           "action_id": "close_incident",
           "text": {
             "type": "plain_text",

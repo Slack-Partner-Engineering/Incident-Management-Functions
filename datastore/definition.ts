@@ -79,6 +79,9 @@ const Incident = DefineDatastore({
     zoom_call_bookmark_id: {
       type: Schema.types.string,
     },
+    incident_update: {
+      type: Schema.types.string,
+    },
   },
 });
 
