@@ -1,26 +1,30 @@
 # ⚠️ Incident-Management-Functions ⚠️
 
-The incident management functions are a set of functions used to optimize the process of incident management within Slack. This project has a few goals:
-* Partner agnostic. This means that it should be easy to switch in Jira vs. ServiceNow as your preffered platform to save incident data.
-* Highly customizable. You should be able to add in multiple solutions depending on your preffered tech stack.
-* Show the power of the Slack platform. All work on the incident stays in Slack, but updates are shared with multiple data sources (i.e. Salesforce, Jira, Zendesk). 
+The incident management functions are a set of functions used to optimize the process of incident management within Slack. This project utilizes 
+Jira, Salesforce, Zoom, Box, and other partners to save incident data. It utilizes the beta [Slack CLI](https://api.slack.com/future/tools/cli) to create functions. 
 
-![incmgmtcompressed](https://user-images.githubusercontent.com/10428517/194784689-ab2a39d6-8e98-44a4-a0be-7c48458ce338.gif)
+## Disclaimer
+This project is built using pre-released features on the Slack Platform. It may contain bugs, performance issues, and isn't representative of the final product. The code in this project isn't meant to be a standard template. It may change or become legacy as updates are released to the Slack Beta Platform.
 
-## Getting Started
+# Steps 
+1. [Clone the repo](#step-1-clone-the-repo)
+2. [Configuration Via Environmental Variables](#step-2-configuration-via-environmental-variables)
+3. [Deploy the App](#step-3-deploy-the-app)
+4. [Add Environmental Variables to Slack Cloud](#step-4-add-environmental-variables-to-slack-cloud)
+5. [Create the Triggers](#step-5-Create-the-triggers)
+6. [Run the Workflows](#step-6-run-the-workflows)
 
-To install and configure this app on your system, you will need to ensure you have downloaded the [Slack CLI](https://api.slack.com/future/tools/cli).
-Once you have downloaded that, you can go ahead and clone this repo.
+## Step 1. Clone the Repo
 
-1. `git clone https://github.com/Slack-Partner-Engineering/Incident-Management-Functions.git`
+```git clone https://github.com/Slack-Partner-Engineering/Incident-Management-Functions.git```
 
-## Configure the App
+## Step 2. Configuration Via Environmental Variables
 
 Next, you will have to configure your app by setting enviornmental variables. This will enable you to send incident data to your exteral accounts, such as 
-Zendesk, Jira, Salesforce, ServiceNow, and others.
+Zendesk, Jira, Salesforce and others.
 
-1. Go ahead and edit the `.sample.env` file. Rename it to `.env`.
-2. Fill in the necessary environmental variables. A completed `.env` file should look like the following:
+Go ahead and open the `.sample.env` file. 
+There you will find  the necessary environmental variables. A completed `.env` file should look like the following:
 
 ```
 INCIDENT_CHANNEL=C03V2ED7111
@@ -43,44 +47,59 @@ SALESFORCE_ORG_ID=00D5f000test
 SALESFORCE_API_VERSION=v55.0
 ```
 
-3. Once you've filled the `.env` file, go ahead and save it, and source the changes.
-4. Run the `source .env` command to set your variables.
+> If you want to run this in local mode, you will need to copy the `sample.env` file, rename it to `.env`, add your env variables, and then run `source .env` to set your variables. Next, run `slack run` to run the app in local mode.
 
-🎉 Nice job, you're now ready to run the app! 🎉
+## Step 3. Deploy the App
 
-## Running it locally
+In order to be able to add env variables to a deployed app, you will need to deploy it first!
+Run `slack deploy` to do so. If all went well, you will see the following message:
 
-If you want to run it locally, you will be able to do so using the following command. This is great for development and testing.
+```
+hporutiu@hporuti-ltmkkef Incident-Management-Functions % hermes deploy
+? Choose a workspace  [Use arrows to move, type to filter]
+> homesiteappworkshop  Team ID: T0344K**** 
+? Choose a workspace devrelsandbox  Team ID: T038J6T**** 
+   App ID: N/A   Status: Not installed
+
+
+📚 App Manifest
+   Created app manifest for "Incident Response" in "DevRel Sandbox" workspace
+
+🏠 Workspace Install
+   Installed "Incident Response" app to "DevRel Sandbox" workspace
+   Updated app icon: assets/icon.png
+   Finished in 3.5s
+
+🎁 App packaged and ready to deploy
+   0.019MB was packaged in 4.1s
+
+🚀 Incident Response deployed in 11.5s
+   Dashboard:  https://slack.com/apps/A045X89B***
+   App Owner:  hporutiu (U0******)
+   Workspace:  DevRel Sandbox (T038J6****)
+```
+
+## Step 4. Add Environmental Variables to Slack Cloud
+
+To add the `INCIDENT_CHANNEL` variable to our deployed app, we would run `slack env add INCIDENT_CHANNEL C03V2ED7111` and then hit enter.
+You should see the following output:
 
 ```bash
-slack run
+hporutiu@hporuti-ltmkkef Incident-Management-Functions % hermes env add INCIDENT_CHANNEL C03V2ED7111
+? Choose a workspace devrelsandbox  Team ID: T038J6TH5PF 
+   App ID: A045X89BRCK   Status: Installed
+
+ APP  A045X89BRCK
+✨  successfully added INCIDENT_CHANNEL to app environment variables
 ```
 
-## Deploying to Slack's Hosting
+Make sure to repeat that process for the rest of the variables.
 
-If you want to deploy the app, you will need to add the environmental variables to Slack Cloud. You can do so using the `slack var add` command.
-Go ahead and run the following commands to add the env variables to the cloud:
+🎉 Awesome! You are one step away from running your app! 🎉
 
-```
-$ slack var add INCIDENT_CHANNEL [Ctrl+V] [Enter]
-```
+The last step will be to create a trigger. 
 
-So, for example, if my `INCIDENT_CHANNEL` I wanted to use was `C03V2ED7111` I would run:
-
-```
-$ slack var add INCIDENT_CHANNEL C03V2ED7111 [Enter]
-```
-
-Go ahead and repeat that for all of the variables you plan to use. Once you have added all variables, you can now deploy your app!
-
-
-```bash
-slack deploy
-```
-
-Awesome! You are now ready to interact with your app! To do so, we will create a trigger.
-
-## Seeing it in action
+## Step 5. Create the Triggers
 
 After creating your app, you'll need to create a new trigger that will start the
 workflow.
@@ -105,6 +124,10 @@ workspace, you should see output like this:
    Trigger Name: Create an Incident
    URL: https://slack.com/shortcuts/Ft045S9B0VHR/fea203fe37ec662daced1ab4969f730e
 ```
+
+Great job! Now, let's use that trigger to kick off a workflow!
+
+## Step 6. Run the Workflows
 
 Now, take the URL, and paste it into a channel. It should unfurl with a green button that 
 says `Start`, as shown below. That button will kick off your workflow!
