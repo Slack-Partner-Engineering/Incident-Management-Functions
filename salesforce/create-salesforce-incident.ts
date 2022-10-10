@@ -16,6 +16,8 @@ const createSalesforceIncident = async (
     Summary__c: incidentInfo.short_description,
     Severity__c: incidentInfo.severity,
   };
+  console.log(body);
+
   return await createNewSFRecord(body, env, token, "incident__c");
 };
 

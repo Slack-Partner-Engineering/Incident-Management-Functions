@@ -23,4 +23,5 @@ export type Incident = {
   incident_call_id: string;
   salesforce_incident_id: string;
   zoom_call_bookmark_id: string;
+  incident_update: string;
 };
