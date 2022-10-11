@@ -6,7 +6,7 @@ Jira, Salesforce, Zoom, Box, and other partners to save incident data. It utiliz
 ## Disclaimer
 This project is built using pre-released features on the Slack Platform. It may contain bugs, performance issues, and isn't representative of the final product. The code in this project isn't meant to be a standard template. It may change or become legacy as updates are released to the Slack Beta Platform.
 
-https://user-images.githubusercontent.com/10428517/195148485-29f2e373-05e2-4f9d-966e-fe6a81c44faa.mp4
+https://user-images.githubusercontent.com/10428517/195149574-c8bb012e-f9d0-410d-b321-6151cd9e1ffe.mp4
 
 # Steps 
 1. [Clone the repo](#step-1-clone-the-repo)
@@ -54,6 +54,25 @@ SALESFORCE_API_VERSION=v55.0
 ```
 
 > If you want to run this in local mode, you will need to copy the `sample.env` file, rename it to `.env`, add your env variables, and then run `source .env` to set your variables. Next, run `slack run` to run the app in local mode.
+
+### Notes on Getting API Keys
+
+* `INCIDENT_CHANNEL` is where you will be interacting with the app. It is where the app will post updates about your incident. It needs to be a public Slack channel.
+
+* `ZOOM_JWT_TOKEN` will need to be collected from the Zoom Developer Site, here: https://marketplace.zoom.us/develop/create. You will need to create a free 
+Zoom developer account, and then create a JWT token, as shown below:
+
+https://user-images.githubusercontent.com/10428517/195176403-1a2ee3c7-f423-4fb3-b177-a4bc2b49cb72.png
+
+* `JIRA_USERNAME` is the email from your Jira Cloud developer account. This is needed to create Jira Issues.
+
+* `JIRA_API_KEY` can be managed from here: https://id.atlassian.com/manage-profile/security/api-tokens. Make sure to create one, and then save it in a safe place.
+
+* `JIRA_PROJECT` is the project `Key` that you want to add issues to. The names of your projects can be found here, under the `Key` field: https://horeaporutiu.atlassian.net/jira/projects. It is usually a three letter upper case name, as shown below:
+
+https://user-images.githubusercontent.com/10428517/195177542-1fd06cf0-2170-4a26-a96b-eeb08b59c1a6.png
+
+The rest of the env variables are to be retrieved from your Salesforce Developer account.
 
 ## Step 3. Deploy the App
 
