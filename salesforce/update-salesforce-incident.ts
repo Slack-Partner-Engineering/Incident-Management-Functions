@@ -6,7 +6,7 @@ const updateSalesforceIncident = async (
   token: string,
 ) => {
   const body: any = {
-    Status_Update__c: incidentInfo.incident_update,
+    Status_Update__c: incidentInfo.last_incident_update,
     Name: `${
       incidentInfo.external_incident_id
         ? incidentInfo.incident_trigger
