@@ -62,7 +62,7 @@ SALESFORCE_API_VERSION=v55.0
 * `ZOOM_JWT_TOKEN` will need to be collected from the Zoom Developer Site, here: https://marketplace.zoom.us/develop/create. You will need to create a free 
 Zoom developer account, and then create a JWT token, as shown below:
 
-https://user-images.githubusercontent.com/10428517/195176403-1a2ee3c7-f423-4fb3-b177-a4bc2b49cb72.png
+![ZoomToken](https://user-images.githubusercontent.com/10428517/195176403-1a2ee3c7-f423-4fb3-b177-a4bc2b49cb72.png)
 
 * `JIRA_USERNAME` is the email from your Jira Cloud developer account. This is needed to create Jira Issues.
 
@@ -70,7 +70,7 @@ https://user-images.githubusercontent.com/10428517/195176403-1a2ee3c7-f423-4fb3-
 
 * `JIRA_PROJECT` is the project `Key` that you want to add issues to. The names of your projects can be found here, under the `Key` field: https://horeaporutiu.atlassian.net/jira/projects. It is usually a three letter upper case name, as shown below:
 
-https://user-images.githubusercontent.com/10428517/195177542-1fd06cf0-2170-4a26-a96b-eeb08b59c1a6.png
+![JiraKey](https://user-images.githubusercontent.com/10428517/195177542-1fd06cf0-2170-4a26-a96b-eeb08b59c1a6.png)
 
 The rest of the env variables are to be retrieved from your Salesforce Developer account.
 
@@ -78,6 +78,8 @@ The rest of the env variables are to be retrieved from your Salesforce Developer
 
 In order to be able to add env variables to a deployed app, you will need to deploy it first!
 Run `slack deploy` to do so. If all went well, you will see the following message:
+
+> Note, I've created an alias for my Slack CLI, `hermes`. `hermes deploy` will yeild the same result as `slack deploy`.
 
 ```
 hporutiu@hporuti-ltmkkef Incident-Management-Functions % hermes deploy
@@ -109,6 +111,8 @@ hporutiu@hporuti-ltmkkef Incident-Management-Functions % hermes deploy
 To add the `INCIDENT_CHANNEL` variable to our deployed app, we would run `slack env add INCIDENT_CHANNEL C03V2ED7111` and then hit enter.
 You should see the following output:
 
+> Note, I've created an alias for my Slack CLI, `hermes`. `hermes env add` will yeild the same result as `slack env add`.
+
 ```bash
 hporutiu@hporuti-ltmkkef Incident-Management-Functions % hermes env add INCIDENT_CHANNEL C03V2ED7111
 ? Choose a workspace devrelsandbox  Team ID: T038J6TH5PF 
@@ -125,6 +129,8 @@ Make sure to repeat that process for the rest of the variables.
 The last step will be to create a trigger. 
 
 ## Step 5. Create the Triggers
+
+https://user-images.githubusercontent.com/10428517/195186528-43d81752-145c-4fd9-8a7f-cbc77cd36778.mp4
 
 After creating your app, you'll need to create a new trigger that will start the
 workflow.
@@ -162,9 +168,6 @@ says `Start`, as shown below. That button will kick off your workflow!
 
 Now, click on the `Start` button. Fill out the form, and then hit `Submit` when you are done. You should see an incident created in your 
 incident channel, as shown below.
-
-https://user-images.githubusercontent.com/10428517/194968780-8b4bdf15-d61d-4c8e-8e02-7f66594d585b.mp4
-
 
 <img width="589" alt="Screen Shot 2022-10-09 at 8 00 18 PM" src="https://user-images.githubusercontent.com/10428517/194785424-b9d66452-40d2-45e8-8539-ab1b55f3c377.png">
 
