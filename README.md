@@ -62,7 +62,7 @@ SALESFORCE_API_VERSION=v55.0
 * `ZOOM_JWT_TOKEN` will need to be collected from the Zoom Developer Site, here: https://marketplace.zoom.us/develop/create. You will need to create a free 
 Zoom developer account, and then create a JWT token, as shown below:
 
-https://user-images.githubusercontent.com/10428517/195176403-1a2ee3c7-f423-4fb3-b177-a4bc2b49cb72.png
+![ZoomToken](https://user-images.githubusercontent.com/10428517/195176403-1a2ee3c7-f423-4fb3-b177-a4bc2b49cb72.png)
 
 * `JIRA_USERNAME` is the email from your Jira Cloud developer account. This is needed to create Jira Issues.
 
@@ -70,7 +70,7 @@ https://user-images.githubusercontent.com/10428517/195176403-1a2ee3c7-f423-4fb3-
 
 * `JIRA_PROJECT` is the project `Key` that you want to add issues to. The names of your projects can be found here, under the `Key` field: https://horeaporutiu.atlassian.net/jira/projects. It is usually a three letter upper case name, as shown below:
 
-https://user-images.githubusercontent.com/10428517/195177542-1fd06cf0-2170-4a26-a96b-eeb08b59c1a6.png
+![JiraKey](https://user-images.githubusercontent.com/10428517/195177542-1fd06cf0-2170-4a26-a96b-eeb08b59c1a6.png)
 
 The rest of the env variables are to be retrieved from your Salesforce Developer account.
 
