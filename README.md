@@ -17,6 +17,8 @@ https://user-images.githubusercontent.com/10428517/194968780-8b4bdf15-d61d-4c8e-
 6. [Run the Workflows and Create an Incident](#step-6-run-the-workflows-and-create-an-incident)
 7. [View Incident Details in Jira and Salesforce](#step-7-view-incident-details-in-jira-and-salesforce)
 8. [Create Swarming Channel](#step-8-create-swarming-channel)
+9. [Close the Incident](#step-9-close-the-incident)
+10. [Generate a Report](#step-10-generate-a-report)
 
 ## Step 1. Clone the Repo
 
