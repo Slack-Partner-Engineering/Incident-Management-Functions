@@ -154,22 +154,20 @@ workspace, you should see output like this:
    Trigger ID:   Ft045S9B0VHR
    Trigger Type: shortcut
    Trigger Name: Create an Incident
-   URL: https://slack.com/shortcuts/Ft045S9B0VHR/fea203fe37ec662daced1ab4969f730e
+   URL: https://slack.com/shortcuts/Ft045W7LGYKG/6374de8cdf66f250deb6335c58b4d04d
 ```
 
 Great job! Now, let's use that trigger to kick off a workflow!
 
 ## Step 6. Run the Workflows and Create an Incident
 
+https://user-images.githubusercontent.com/10428517/195210585-88d78009-e1a7-44a3-8400-cb2c052f42da.mp4
+
 Now, take the URL, and paste it into a channel. It should unfurl with a green button that 
 says `Start`, as shown below. That button will kick off your workflow!
 
-<img width="581" alt="Screen Shot 2022-10-09 at 7 53 59 PM" src="https://user-images.githubusercontent.com/10428517/194785249-bf32dbc2-0c4a-4ee5-8b34-1ce9253566c0.png">
-
 Now, click on the `Start` button. Fill out the form, and then hit `Submit` when you are done. You should see an incident created in your 
 incident channel, as shown below.
-
-<img width="589" alt="Screen Shot 2022-10-09 at 8 00 18 PM" src="https://user-images.githubusercontent.com/10428517/194785424-b9d66452-40d2-45e8-8539-ab1b55f3c377.png">
 
 Great job! You've now created a incident via a link trigger! Now, let's move on to show you all of the functionality the app provides.
 
