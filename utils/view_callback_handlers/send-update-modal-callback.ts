@@ -16,7 +16,8 @@ const sendUpdateModalCallback = async (
   const update = view.state.values.send_update_block.send_update_action.value;
 
   //add field to incident, last update, that way audit will alwys show.
-  incident.incident_update = update;
+  incident.last_incident_update = update;
+  incident.last_incident_update_ts = Date.now();
   await updateIncident(token, incident);
 
   const updateBlocks = await sendUpdateMessageBlocks(update, updateUser);
