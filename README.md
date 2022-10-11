@@ -1,10 +1,12 @@
-# ⚠️ Incident-Management-Functions ⚠️
+# Incident-Management-Functions ⚠️
 
 The incident management functions are a set of functions used to optimize the process of incident management within Slack. This project utilizes 
-Jira, Salesforce, Zoom, Box, and other partners to save incident data. It utilizes the beta [Slack CLI](https://api.slack.com/future/tools/cli) to create functions. 
+Jira, Salesforce, Zoom, Box, and other partners to save incident data. It utilizes the beta [Slack CLI](https://api.slack.com/future/tools/cli) to create functions.
 
 ## Disclaimer
 This project is built using pre-released features on the Slack Platform. It may contain bugs, performance issues, and isn't representative of the final product. The code in this project isn't meant to be a standard template. It may change or become legacy as updates are released to the Slack Beta Platform.
+
+https://user-images.githubusercontent.com/10428517/194968780-8b4bdf15-d61d-4c8e-8e02-7f66594d585b.mp4
 
 # Steps 
 1. [Clone the repo](#step-1-clone-the-repo)
@@ -12,7 +14,9 @@ This project is built using pre-released features on the Slack Platform. It may 
 3. [Deploy the App](#step-3-deploy-the-app)
 4. [Add Environmental Variables to Slack Cloud](#step-4-add-environmental-variables-to-slack-cloud)
 5. [Create the Triggers](#step-5-Create-the-triggers)
-6. [Run the Workflows](#step-6-run-the-workflows)
+6. [Run the Workflows and Create an Incident](#step-6-run-the-workflows-and-create-an-incident)
+7. [View Incident Details in Jira and Salesforce](#step-7-view-incident-details-in-jira-and-salesforce)
+8. [Create Swarming Channel](#step-8-create-swarming-channel)
 
 ## Step 1. Clone the Repo
 
@@ -110,7 +114,8 @@ slack trigger create --trigger-def triggers/create-incident-button.json
 
 The CLI will ask you to choose a workspace to install your trigger to. Also, it will ask you 
 if you want to install it for your dev app, or your prod app. Choose wisely, as the dev version of 
-the trigger will only work with `slack run`, and the prod version with `slack deploy`. Once you've picked a
+the trigger will only work with `slack run`, and the prod version with `slack deploy`. Let's choose 
+the production version for now! Once you've picked a
 workspace, you should see output like this:
 
 ```
@@ -127,22 +132,56 @@ workspace, you should see output like this:
 
 Great job! Now, let's use that trigger to kick off a workflow!
 
-## Step 6. Run the Workflows
+## Step 6. Run the Workflows and Create an Incident
 
 Now, take the URL, and paste it into a channel. It should unfurl with a green button that 
 says `Start`, as shown below. That button will kick off your workflow!
 
 <img width="581" alt="Screen Shot 2022-10-09 at 7 53 59 PM" src="https://user-images.githubusercontent.com/10428517/194785249-bf32dbc2-0c4a-4ee5-8b34-1ce9253566c0.png">
 
-Let's try it out! Go ahead and run `Slack run`. Make sure to choose the same workspace as your trigger.
-
 Now, click on the `Start` button. Fill out the form, and then hit `Submit` when you are done. You should see an incident created in your 
 incident channel, as shown below.
 
+https://user-images.githubusercontent.com/10428517/194968780-8b4bdf15-d61d-4c8e-8e02-7f66594d585b.mp4
+
+
 <img width="589" alt="Screen Shot 2022-10-09 at 8 00 18 PM" src="https://user-images.githubusercontent.com/10428517/194785424-b9d66452-40d2-45e8-8539-ab1b55f3c377.png">
 
-Great job! You've now created a incident via a link trigger! Now, let's move on to show you how to create an incident via a webhook.
+Great job! You've now created a incident via a link trigger! Now, let's move on to show you all of the functionality the app provides.
 
+## Step 7. View Incident Details in Jira and Salesforce
+
+Go ahead and click on the incident replies to see the Jira issue and Salesforce incident that was created. You will need to have set up your account credentials via
+the env variables to make sure this works as shown below.
+
+https://user-images.githubusercontent.com/10428517/194969514-9389a152-3bf0-4a80-9bc2-4e8f4d21b76e.mp4
+
+## Step 8. Create Swarming Channel
+
+Next, click on the `Create Channel` button to create a Swarming channel. This will automatically create a Zoom call and start it so that the participants can 
+resolve the incident.
+
+https://user-images.githubusercontent.com/10428517/194970092-a269a46c-db89-4a14-b0d7-0d96836ab57b.mp4
+
+## Step 9. Close the Incident
+Now that we've solved the incident, it's time to close it! Click on `Close Incident` and add your close notes as shown below.
+
+https://user-images.githubusercontent.com/10428517/194970955-1ff56c8e-5b52-4df4-a455-26db380e7dd4.mp4
+
+Great job! You've now used the power of the Slack Platform to create, swarm, and close an incident all within Slack, while keeping all of your 
+records of data updated!
+
+## Step 10. Generate a Report
+
+Lastly, let's generate a report. To do so, we will need to create a trigger by using the following command:
+
+```
+slack trigger create --trigger-def triggers/create-new-report-button.json
+```
+
+https://user-images.githubusercontent.com/10428517/194971294-f7bf8dbc-7a97-4b14-922f-b34141fb523b.mp4
+
+<!-- 
 ## Using Webhook Triggers
 
 To run the external Webhook trigger you will need to create the trigger in the
@@ -176,7 +215,7 @@ curl --location --request POST 'https://hooks.slack.com/triggers/TDTKUPPK8/39729
 "severity": "High",
 "external_incident_id": "XX-2345"
 }'
-```
+``` -->
 
 ## Building the App
 
