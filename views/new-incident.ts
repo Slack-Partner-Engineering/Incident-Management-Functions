@@ -17,7 +17,6 @@ const newIncident = async (incidentObject: Incident) => {
     : "";
 
   const dateTime = new Date(<any> incidentObject.incident_start_time * 1000);
-  console.log(dateTime);
 
   const externalId = incidentObject.external_incident_id
     ? `*External Id*: ${incidentObject.external_incident_id} \n`

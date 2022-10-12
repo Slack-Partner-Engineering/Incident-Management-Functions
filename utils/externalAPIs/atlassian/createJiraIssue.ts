@@ -12,7 +12,6 @@ export async function createJiraIssue(env: any, incident: Incident) {
   const issueURL = "/rest/api/2/issue/";
 
   const url = "https://" + instance + issueURL;
-  console.log(incident);
   const incidentID = incident.incident_id;
   console.log(incidentID);
 
