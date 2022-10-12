@@ -59,20 +59,22 @@ SALESFORCE_API_VERSION=v55.0
 
 * `INCIDENT_CHANNEL` is where you will be interacting with the app. It is where the app will post updates about your incident. It needs to be a public Slack channel.
 
-* `ZOOM_JWT_TOKEN` will need to be collected from the Zoom Developer Site, here: https://marketplace.zoom.us/develop/create. You will need to create a free 
-Zoom developer account, and then create a JWT token, as shown below:
+* `ZOOM_JWT_TOKEN` will need to be collected from the Zoom Developer Site. First, create a basic Zoom account with your <b>personal email</b>. Then, go to the [zoom marketplace](https://marketplace.zoom.us/develop/create) to create a JWT token. 
 
 ![ZoomToken](https://user-images.githubusercontent.com/10428517/195176403-1a2ee3c7-f423-4fb3-b177-a4bc2b49cb72.png)
 
-* `JIRA_USERNAME` is the email from your Jira Cloud developer account. This is needed to create Jira Issues.
+* `JIRA_USERNAME` is the email from your Jira Cloud developer account. This is needed to create Jira Issues. First, you will need to create a free Atlassian 
+account. Next, sign up for the free [Cloud Developer Bundle](https://www.atlassian.com/try/cloud/signup?product=confluence.ondemand,jira-software.ondemand,jira-servicedesk.ondemand,jira-core.ondemand&developer=true) with Atlassian. 
 
 * `JIRA_API_KEY` can be managed from here: https://id.atlassian.com/manage-profile/security/api-tokens. Make sure to create one, and then save it in a safe place.
 
-* `JIRA_PROJECT` is the project `Key` that you want to add issues to. The names of your projects can be found here, under the `Key` field: https://horeaporutiu.atlassian.net/jira/projects. It is usually a three letter upper case name, as shown below:
+* `JIRA_PROJECT` This env variable is the project `Key` that you want to add issues to. It's usually a three letter upper case name, as shown in the screenshot below (My `JIRA_PROJECT` keys happen to be `INC` and `TEST`). To create a Jira Project, follow [these steps](https://support.atlassian.com/jira-software-cloud/docs/create-a-new-project/). After you've created a project, you can quickly find your projects, with their respective keys, here, under the `Key` field: 
+`https://add-your-domain-here.atlassian.net/jira/projects`. Note that you will have to replace the `add-your-domain-here` portion of the URL with your own domain.
+My URL happens to be: https://horeaporutiu.atlassian.net/jira/projects. 
 
 ![JiraKey](https://user-images.githubusercontent.com/10428517/195177542-1fd06cf0-2170-4a26-a96b-eeb08b59c1a6.png)
 
-The rest of the env variables are to be retrieved from your Salesforce Developer account.
+* The rest of the env variables are to be retrieved from your Salesforce Developer account. To get a free Salesforce Developer account, follow this [link](https://developer.salesforce.com/signup). Next, follow the [Create a Connected App Trailhead Module](https://trailhead.salesforce.com/content/learn/projects/build-a-connected-app-for-api-integration/create-a-connected-app) to grab your developer credentials needed. Alternatively, you can review this [help documentation](https://help.salesforce.com/s/articleView?language=en_US&id=sf.connected_app_create.htm&type=5).
 
 ## Step 3. Deploy the App
 
