@@ -225,27 +225,30 @@ Great job! You now know how to create an incident via a webhook! 🎉
 
 ## Step 7. View Incident Details in Jira and Salesforce
 
+https://user-images.githubusercontent.com/10428517/195429541-18b10e8c-eabf-4111-81bb-1e2a83a8d44b.mp4
+
 Go ahead and click on the incident replies to see the Jira issue and Salesforce incident that was created. You will need to have set up your account credentials via
 the env variables to make sure this works as shown below.
 
-https://user-images.githubusercontent.com/10428517/194969514-9389a152-3bf0-4a80-9bc2-4e8f4d21b76e.mp4
-
 ## Step 8. Create Swarming Channel
+
+https://user-images.githubusercontent.com/10428517/195429767-2e2ec683-2c86-43db-8950-51cf971cdb7c.mp4
 
 Next, click on the `Create Channel` button to create a Swarming channel. This will automatically create a Zoom call and start it so that the participants can 
 resolve the incident.
 
-https://user-images.githubusercontent.com/10428517/194970092-a269a46c-db89-4a14-b0d7-0d96836ab57b.mp4
-
 ## Step 9. Close the Incident
-Now that we've solved the incident, it's time to close it! Click on `Close Incident` and add your close notes as shown below.
 
-https://user-images.githubusercontent.com/10428517/194970955-1ff56c8e-5b52-4df4-a455-26db380e7dd4.mp4
+https://user-images.githubusercontent.com/10428517/195429714-c608a98e-be05-4004-81d1-13314a140a15.mp4
+
+Now that we've solved the incident, it's time to close it! Click on `Close Incident` and add your close notes as shown below.
 
 Great job! You've now used the power of the Slack Platform to create, swarm, and close an incident all within Slack, while keeping all of your 
 records of data updated!
 
 ## Step 10. Generate a Report
+
+https://user-images.githubusercontent.com/10428517/195429846-ef8a4caa-b663-40e6-a75b-37c3b2259445.mp4
 
 Lastly, let's generate a report. To do so, we will need to create a trigger by using the following command:
 
@@ -253,7 +256,6 @@ Lastly, let's generate a report. To do so, we will need to create a trigger by u
 slack trigger create --trigger-def triggers/create-new-report-button.json
 ```
 
-https://user-images.githubusercontent.com/10428517/194971294-f7bf8dbc-7a97-4b14-922f-b34141fb523b.mp4
 
 <!-- 
 ## Using Webhook Triggers
