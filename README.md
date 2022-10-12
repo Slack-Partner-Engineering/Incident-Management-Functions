@@ -157,6 +157,14 @@ workspace, you should see output like this:
    URL: https://slack.com/shortcuts/Ft045W7LGYKG/6374de8cdf66f250deb6335c58b4d04d
 ```
 
+> Note, there are a two other triggers that we will want to generate to get the full funcionality of this app. To do so, run the 
+following commands:
+
+```bash
+slack trigger create --trigger-def triggers/create-new-report-button.json
+```
+This trigger will be the same as the one above, except that it will just automatically generate a report, as shown in 
+
 Great job! Now, let's use that trigger to kick off a workflow!
 
 ## Step 6. Run the Workflows and Create an Incident
@@ -169,7 +177,51 @@ says `Start`, as shown below. That button will kick off your workflow!
 Now, click on the `Start` button. Fill out the form, and then hit `Submit` when you are done. You should see an incident created in your 
 incident channel, as shown below.
 
-Great job! You've now created a incident via a link trigger! Now, let's move on to show you all of the functionality the app provides.
+Great job! You've now created a incident via a link trigger!
+
+### Create an Incident via Webhook
+
+https://user-images.githubusercontent.com/10428517/195428586-7ac3db97-3302-4814-bffa-bb97920f69fe.mp4
+
+Now that we have learned how to create an incident manually, via a button click, let's learn how to create one via a webhook. First, we'll need 
+to create a webhook trigger, by running the following command:
+
+```
+slack trigger create --trigger-def triggers/create-incident-webhook.json
+```
+
+Again, make sure to choose the production (non-dev) version. You should see an output like the following:
+
+```
+? Choose an app Incident Response
+   App ID: A045X89BRCK   Status: Installed
+   Workspace: devrelsandbox      Team ID: T038J6TH5PF
+
+
+⚡ Trigger created
+   Trigger ID:   Ft046MEBS6N5
+   Trigger Type: webhook
+   Trigger Name: Create Incident From External Source via Webhook
+   Webhook URL:  https://hooks.slack.com/triggers/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
+```
+
+My Webhook URL is `https://hooks.slack.com/triggers/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` but yours will be slightly different.
+Now, to test out that the trigger is working successfully, send the following cURL request (<b>make sure to use your own webhook URL!</b>).
+
+
+```bash
+ curl --location --request POST 'https://hooks.slack.com/triggers/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' \                    
+--header 'Content-Type: application/json' \
+--data-raw '{
+"short_description": "Many reports that site is down! Multiple pages are returning 404 errors!",   
+"severity": "High",              
+"external_incident_id": "XX-2345"
+}'
+```
+
+Now, you should see a new incident created in your incident channel, as shown in the video above.
+
+Great job! You now know how to create an incident via a webhook! 🎉
 
 ## Step 7. View Incident Details in Jira and Salesforce
 
