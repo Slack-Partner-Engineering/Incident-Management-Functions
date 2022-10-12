@@ -79,30 +79,26 @@ The rest of the env variables are to be retrieved from your Salesforce Developer
 In order to be able to add env variables to a deployed app, you will need to deploy it first!
 Run `slack deploy` to do so. If all went well, you will see the following message:
 
-> Note, I've created an alias for my Slack CLI, `hermes`. `hermes deploy` will yeild the same result as `slack deploy`.
-
 ```
-hporutiu@hporuti-ltmkkef Incident-Management-Functions % hermes deploy
-? Choose a workspace  [Use arrows to move, type to filter]
-> homesiteappworkshop  Team ID: T0344K**** 
-? Choose a workspace devrelsandbox  Team ID: T038J6T**** 
-   App ID: N/A   Status: Not installed
+slack deploy
+? Choose a workspace devrelsandbox  Team ID: T038J6***** 
+   App ID: A045X****  Status: Installed
 
 
 📚 App Manifest
-   Created app manifest for "Incident Response" in "DevRel Sandbox" workspace
+   Updated app manifest for "Incident Response" in "DevRel Sandbox" workspace
 
 🏠 Workspace Install
    Installed "Incident Response" app to "DevRel Sandbox" workspace
    Updated app icon: assets/icon.png
-   Finished in 3.5s
+   Finished in 4.2s
 
 🎁 App packaged and ready to deploy
-   0.019MB was packaged in 4.1s
+   0.019MB was packaged in 1.9s
 
-🚀 Incident Response deployed in 11.5s
-   Dashboard:  https://slack.com/apps/A045X89B***
-   App Owner:  hporutiu (U0******)
+🚀 Incident Response deployed in 6.1s
+   Dashboard:  https://slack.com/apps/A045X8*****
+   App Owner:  hporutiu (U039******)
    Workspace:  DevRel Sandbox (T038J6****)
 ```
 
@@ -111,14 +107,12 @@ hporutiu@hporuti-ltmkkef Incident-Management-Functions % hermes deploy
 To add the `INCIDENT_CHANNEL` variable to our deployed app, we would run `slack env add INCIDENT_CHANNEL C03V2ED7111` and then hit enter.
 You should see the following output:
 
-> Note, I've created an alias for my Slack CLI, `hermes`. `hermes env add` will yeild the same result as `slack env add`.
-
 ```bash
-hporutiu@hporuti-ltmkkef Incident-Management-Functions % hermes env add INCIDENT_CHANNEL C03V2ED7111
-? Choose a workspace devrelsandbox  Team ID: T038J6TH5PF 
-   App ID: A045X89BRCK   Status: Installed
+hporutiu@hporuti-ltmkkef Incident-Management-Functions % slack env add INCIDENT_CHANNEL C03V2ED7111
+? Choose a workspace devrelsandbox  Team ID: T038J6***** 
+   App ID: A045X8*****   Status: Installed
 
- APP  A045X89BRCK
+ APP  A045X8****
 ✨  successfully added INCIDENT_CHANNEL to app environment variables
 ```
 
