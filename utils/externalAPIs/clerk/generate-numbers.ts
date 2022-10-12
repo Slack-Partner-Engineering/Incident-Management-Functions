@@ -1,9 +1,9 @@
-//deterine which numbers to send messages to
-//pull user group
-//pull users
-//get phone number from profile
-const generateNumbers = async () => {
-  return "9785785230";
+//for now this will be hard coded, update to be dynamic in a future release.
+const generateNumbers = () => {
+  const phoneNumbers = [
+    "+19785785230",
+  ];
+  return phoneNumbers;
 };
 
 export { generateNumbers };
