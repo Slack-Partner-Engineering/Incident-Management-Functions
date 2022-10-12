@@ -80,8 +80,8 @@ In order to be able to add env variables to a deployed app, you will need to dep
 Run `slack deploy` to do so. If all went well, you will see the following message:
 
 ```
-slack deploy
-? Choose a workspace devrelsandbox  Team ID: T038J6***** 
+hporutiu@hporuti-ltmkkef Incident-Management-Functions % slack deploy
+? Choose a workspace devrelsandbox  Team ID: T038J6**** 
    App ID: A045X****  Status: Installed
 
 
