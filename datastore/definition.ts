@@ -85,6 +85,9 @@ const Incident = DefineDatastore({
     last_incident_update_ts: {
       type: Schema.types.string,
     },
+    leadership_paged: {
+      type: Schema.types.boolean,
+    },
   },
 });
 

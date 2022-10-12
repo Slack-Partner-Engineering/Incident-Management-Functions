@@ -1,0 +1,57 @@
+//logic to determoine if a SMS should be sent or not.
+//ie, only if critical or in a swarm
+// this is called when an issue is created, escalated to critical, swarm is created (and it's not already critical), also called whenever an issue is closed, or send update is used.
+//add value to incident boolean, leadership paged/y/n - use this to not spam leadership
+
+//sendmessageNewIncident
+//input, incident
+//if appropriate, call get numbers, pass message and numbers to the send message function
+
+//sendmessageEscalToCritical
+//input, incident
+//if appropriate, call get numbers, pass message and numbers to the send message function
+
+//get numbers to send - call file
+
+//send messages accepts the numbers array, and the message.
+import { Incident } from "../../../types/incident-object.ts";
+
+const sendMessageClerk = async (
+  incident: Incident,
+  env: any,
+  status: string,
+) => {
+  if (
+    incident.incident_status === env["CLERK_NOTIFICATION_LEVEL"] ||
+    incident.incident_swarming_channel_id !== undefined
+  ) {
+    switch (status) {
+      case "new": {
+        break;
+      }
+      case "escalated": {
+        break;
+      }
+      case "deescalated": {
+        break;
+      }
+      case "swarm": {
+        break;
+      }
+      case "update": {
+        break;
+      }
+      case "close": {
+        break;
+      }
+      default:
+        break;
+    }
+  }
+
+  await console.log(incident);
+
+  return true; //or false if not paged
+};
+
+export { sendMessageClerk };
