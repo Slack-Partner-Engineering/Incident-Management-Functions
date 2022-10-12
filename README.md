@@ -59,7 +59,9 @@ SALESFORCE_API_VERSION=v55.0
 
 * `INCIDENT_CHANNEL` is where you will be interacting with the app. It is where the app will post updates about your incident. It needs to be a public Slack channel.
 
-* `ZOOM_JWT_TOKEN` will need to be collected from the Zoom Developer Site. First, create a basic Zoom account with your <b>personal email</b>. Then, go to the [zoom marketplace](https://marketplace.zoom.us/develop/create) to create a JWT token. 
+* `ZOOM_JWT_TOKEN` will need to be collected from the Zoom Developer Site. Login (or create an account if you do not have one). Go to the [zoom 
+marketplace](https://marketplace.zoom.us/develop/create) to create a JWT token. <b>If you logged in with your company account and do not have the correct 
+permissions to create a JWT token, create a basic Zoom account with your personal email.</b>
 
 ![ZoomToken](https://user-images.githubusercontent.com/10428517/195176403-1a2ee3c7-f423-4fb3-b177-a4bc2b49cb72.png)
 
