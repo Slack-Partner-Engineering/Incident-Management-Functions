@@ -107,7 +107,7 @@ hporutiu@hporuti-ltmkkef Incident-Management-Functions % slack deploy
 To add the `INCIDENT_CHANNEL` variable to our deployed app, we would run `slack env add INCIDENT_CHANNEL C03V2ED7111` and then hit enter.
 You should see the following output:
 
-```bash
+```
 hporutiu@hporuti-ltmkkef Incident-Management-Functions % slack env add INCIDENT_CHANNEL C03V2ED7111
 ? Choose a workspace devrelsandbox  Team ID: T038J6***** 
    App ID: A045X8*****   Status: Installed
@@ -119,8 +119,6 @@ hporutiu@hporuti-ltmkkef Incident-Management-Functions % slack env add INCIDENT_
 Make sure to repeat that process for the rest of the variables.
 
 🎉 Awesome! You are one step away from running your app! 🎉
-
-The last step will be to create a trigger. 
 
 ## Step 5. Create the Triggers
 
@@ -159,7 +157,7 @@ slack trigger create --trigger-def triggers/create-new-report-button.json
 ```
 This trigger will be the same as the one above, except that it will just automatically generate a report, as shown in 
 
-Great job! Now, let's use that trigger to kick off a workflow!
+🎉 Great job! Now, let's use that trigger to kick off a workflow! 🎉
 
 ## Step 6. Run the Workflows and Create an Incident
 
@@ -171,7 +169,7 @@ says `Start`, as shown below. That button will kick off your workflow!
 Now, click on the `Start` button. Fill out the form, and then hit `Submit` when you are done. You should see an incident created in your 
 incident channel, as shown below.
 
-Great job! You've now created a incident via a link trigger!
+🙌🏼 Great job! You've now created a incident via a link trigger! 🙌🏼
 
 ### Create an Incident via Webhook
 
@@ -215,7 +213,7 @@ Now, to test out that the trigger is working successfully, send the following cU
 
 Now, you should see a new incident created in your incident channel, as shown in the video above.
 
-Great job! You now know how to create an incident via a webhook! 🎉
+🙌🏼 Great job! You now know how to create an incident via a webhook! 🙌🏼
 
 ## Step 7. View Incident Details in Jira and Salesforce
 
