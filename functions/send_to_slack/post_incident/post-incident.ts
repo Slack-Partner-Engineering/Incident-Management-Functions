@@ -24,10 +24,10 @@ const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
     const incidentChannel = env["INCIDENT_CHANNEL"];
     const incident = <Incident> inputs;
     incident.short_description = incident.short_description.substring(0, 50);
-    incident.incident_status = "OPEN";
-    incident.incident_id = "INC-" + (Date.now());
     const createIssueResp = await createJiraIssue(env, incident);
     incident.incident_jira_issue_key = createIssueResp.key;
+    incident.incident_status = "OPEN";
+    incident.incident_id = "INC-" + (Date.now());
 
     const sfIncident = <any> await createSalesforceIncident(
       incident,
@@ -79,7 +79,8 @@ const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
       postMsgResp.ts,
     );
 
-    incident.leadership_paged = await sendMessageClerk(incident, env);
+    incident.leadership_paged = await sendMessageClerk(incident, env, "new");
+
     await updateIncident(token, incident);
 
     return {

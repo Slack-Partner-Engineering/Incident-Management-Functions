@@ -15,6 +15,9 @@
 
 //send messages accepts the numbers array, and the message.
 import { Incident } from "../../../types/incident-object.ts";
+import { newIncidentClerk } from "./messages/new-incident-message.ts";
+import { sendMessageToClerkAPI } from "./send-message-clerk.ts";
+import { generateNumbers } from "./generate-numbers.ts";
 
 const sendMessageClerk = async (
   incident: Incident,
@@ -25,8 +28,12 @@ const sendMessageClerk = async (
     incident.incident_status === env["CLERK_NOTIFICATION_LEVEL"] ||
     incident.incident_swarming_channel_id !== undefined
   ) {
+    let message = "";
     switch (status) {
       case "new": {
+        message = await newIncidentClerk(incident);
+        const phoneNumbers = await generateNumbers();
+        sendMessageToClerkAPI(message, phoneNumbers);
         break;
       }
       case "escalated": {
@@ -44,14 +51,18 @@ const sendMessageClerk = async (
       case "close": {
         break;
       }
+      case "edit": {
+        break;
+      }
+      case "reopen": {
+        break;
+      }
       default:
         break;
     }
+    return true; //a page went out
   }
-
-  await console.log(incident);
-
-  return true; //or false if not paged
+  return false; //no one was paged
 };
 
 export { sendMessageClerk };
