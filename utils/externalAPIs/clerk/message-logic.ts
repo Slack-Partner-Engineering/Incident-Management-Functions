@@ -25,7 +25,7 @@ const sendMessageClerk = async (
   status: string,
 ) => {
   if (
-    incident.incident_status === env["CLERK_NOTIFICATION_LEVEL"] ||
+    incident.severity === env["CLERK_NOTIFICATION_LEVEL"] ||
     incident.incident_swarming_channel_id !== undefined
   ) {
     let message = "";
@@ -33,7 +33,7 @@ const sendMessageClerk = async (
       case "new": {
         message = await newIncidentClerk(incident);
         const phoneNumbers = await generateNumbers();
-        sendMessageToClerkAPI(message, phoneNumbers);
+        sendMessageToClerkAPI(message, phoneNumbers, env);
         break;
       }
       case "escalated": {
