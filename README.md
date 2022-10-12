@@ -296,7 +296,7 @@ To test new changes before pushing, you can use the `build.sh` script to format,
 lint, and test the code. Once all checks pass, feel free to add your pull
 request.
 
-## Testing
+<!-- ## Testing
 
 You can write tests for your function, see `functions/reverse_test.ts` for a
 sample. Test base filenames should be suffixed with `_test`. To run tests just
@@ -304,4 +304,5 @@ run:
 
 ```bash
 slack deno test
-```
+``` -->
+
