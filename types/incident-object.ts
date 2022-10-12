@@ -25,4 +25,5 @@ export type Incident = {
   zoom_call_bookmark_id: string;
   last_incident_update: string;
   last_incident_update_ts: string;
+  leadership_paged: boolean;
 };

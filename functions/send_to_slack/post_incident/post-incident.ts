@@ -15,6 +15,7 @@ import { getSalesforceIncidentBlocks } from "../../../views/salesforce-new-incid
 import { closeIncidentModalCallback } from "../../../utils/view_callback_handlers/close-incident-modal-callback.ts";
 import { assignDRIModalCallback } from "../../../utils/view_callback_handlers/assign-dri-modal-callback.ts";
 import { sendUpdateModalCallback } from "../../../utils/view_callback_handlers/send-update-modal-callback.ts";
+import { sendMessageClerk } from "../../../utils/externalAPIs/clerk/message-logic-ts";
 
 const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
   async (
@@ -77,6 +78,8 @@ const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
       sfIncidentBlocks,
       postMsgResp.ts,
     );
+
+    incident.leadership_paged = await sendMessageClerk(incident, env);
     await updateIncident(token, incident);
 
     return {
