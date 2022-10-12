@@ -12,6 +12,9 @@ export async function createJiraIssue(env: any, incident: Incident) {
   const issueURL = "/rest/api/2/issue/";
 
   const url = "https://" + instance + issueURL;
+  console.log(incident);
+  const incidentID = incident.incident_id;
+  console.log(incidentID);
 
   //build the requestBody with our inputs from the UI
   const requestBody: any = {
@@ -19,7 +22,7 @@ export async function createJiraIssue(env: any, incident: Incident) {
       "project": {
         "key": projectKey,
       },
-      "summary": incident.short_description,
+      "summary": incidentID + ": " + incident.short_description,
       "description": "",
       "issuetype": {
         "name": "Task",

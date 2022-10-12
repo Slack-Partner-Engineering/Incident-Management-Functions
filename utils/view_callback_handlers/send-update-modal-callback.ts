@@ -4,6 +4,7 @@ import { postMessage } from "../slack_apis/post-message.ts";
 import { postReply } from "../slack_apis/post-message.ts";
 import { sendUpdateMessageBlocks } from "../../views/send-update-message-blocks.ts";
 import { updateSalesforceIncident } from "../../salesforce/update-salesforce-incident.ts";
+import { addJiraComment } from "../externalAPIs/atlassian/addJiraComment.ts";
 
 const sendUpdateModalCallback = async (
   view: any,
@@ -14,6 +15,13 @@ const sendUpdateModalCallback = async (
   const incidentID = await JSON.parse(view.private_metadata).incident_id;
   const incident = await getIncident(token, incidentID);
   const update = view.state.values.send_update_block.send_update_action.value;
+  const incidentJiraKey = incident.incident_jira_issue_key;
+  //The update should be sent to the appropriate Jira ticket via a comment
+  await addJiraComment(
+    env,
+    incidentJiraKey,
+    update,
+  );
 
   //add field to incident, last update, that way audit will alwys show.
   incident.last_incident_update = update;

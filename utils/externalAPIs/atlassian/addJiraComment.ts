@@ -16,7 +16,7 @@ export async function addJiraComment(
   const url = "https://" + instance + issueURL + jiraIssueKey + "/comment";
 
   const requestBody: any = {
-    "body": "Closing incident with the following close notes: " + closeNotes,
+    "body": closeNotes,
   };
 
   const addCommentResp: any = await fetch(
