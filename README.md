@@ -248,6 +248,11 @@ Lastly, let's generate a report. To do so, we will need to create a trigger by u
 slack trigger create --trigger-def triggers/create-new-report-button.json
 ```
 
+## Conclusion
+
+Thanks for following, and we hope this was useful for you. Please send feedback in #feedback-hermes-incident-management.
+
+
 
 <!-- 
 ## Using Webhook Triggers
