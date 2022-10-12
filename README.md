@@ -33,21 +33,21 @@ Go ahead and open the `.sample.env` file.
 There you will find  the necessary environmental variables. A completed `.env` file should look like the following:
 
 ```
-INCIDENT_CHANNEL=C03V2ED7111
-ZOOM_JWT_TOKEN=eyJhbGciOiJIUzI1NiJ9.eyJhddkgzU1lDd0s5TXd1bDlQd3ciLCJleHAiOjE5ODgyMTU5MjAsImlhdCI6MTY2MTQ0NDI4Nn0.nSqPuhfrt47Gqln2bDj9CEnk-x7dxVMgQlOzYinL8Hk
+INCIDENT_CHANNEL=C03V2ED7***
+ZOOM_JWT_TOKEN=eyJhbGciOiJIUzI1NiJ9.eyJhddkgzU1lDd0s5TXd1bDlQd3ciLCJleHAiOjE5ODgyMTU5MjAsImlh*************
 JIRA_USERNAME=testtiu@gmail.com
 JIRA_API_KEY=sPadwkkffh5u6JkCCD04
 JIRA_INSTANCE=test.atlassian.net
 JIRA_PROJECT=INC
-SALESFORCE_CLIENT_ID=3MVG9p1Q1BCe9fvF1KeDHqX9VVsOlNBYh9sCbgCPXbgfddA4wZl4DMC5IYFBa1A5VnV
-SALESFORCE_CLIENT_SECRET=5BA53B4CBAA248F1D23798E6D1CEEE89278F3F73B9A6688303F
+SALESFORCE_CLIENT_ID=3MVG9p1Q1BCe9fvF1KeDHqX9VV**********************
+SALESFORCE_CLIENT_SECRET=5BA53B4CBAA248F1D237************************
 SALESFORCE_INSTANCE_URL=https://slack-ed.my.salesforce.com
 SALESFORCE_USER_EMAIL=grtest@gmail.com
 SALESFORCE_USERNAME=test@gmail.com
 SALESFORCE_REDIRECT_URL=http://localhost/redirect
 SALESFORCE_LOGIN_URL=https://stest.my.salesforce.com
-ACCESS_TOKEN=00D5f000005X2hB!AQ4AQK7RwdGtestKP2Ea9KkvteCoN65xvWN6m6xWQ0rR0SD.a8ir3LeULrNNZBvc2mqL18xgR9Okg_S4stp73
-SALESFORCE_REFRESH_TOKEN=5Aep861FpKltestvYpULZ1ddCdnfHvpiFU7Jr95VBDX6KdVOMmpQkQuwG
+ACCESS_TOKEN=00D5f000005X2hB!**************************
+SALESFORCE_REFRESH_TOKEN=5Aep861F*********************
 SALESFORCE_USER_ID=0055f000test
 SALESFORCE_ORG_ID=00D5f000test
 SALESFORCE_API_VERSION=v55.0
@@ -59,7 +59,9 @@ SALESFORCE_API_VERSION=v55.0
 
 * `INCIDENT_CHANNEL` is where you will be interacting with the app. It is where the app will post updates about your incident. It needs to be a public Slack channel.
 
-* `ZOOM_JWT_TOKEN` will need to be collected from the Zoom Developer Site. First, create a basic Zoom account with your <b>personal email</b>. Then, go to the [zoom marketplace](https://marketplace.zoom.us/develop/create) to create a JWT token. 
+* `ZOOM_JWT_TOKEN` will need to be collected from the Zoom Developer Site. Login (or create an account if you do not have one). Go to the [zoom 
+marketplace](https://marketplace.zoom.us/develop/create) to create a JWT token. <b>If you logged in with your company account and do not have the correct 
+permissions to create a JWT token, create a basic Zoom account with your personal email.</b>
 
 ![ZoomToken](https://user-images.githubusercontent.com/10428517/195176403-1a2ee3c7-f423-4fb3-b177-a4bc2b49cb72.png)
 
