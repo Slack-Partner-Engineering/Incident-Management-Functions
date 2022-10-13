@@ -74,7 +74,7 @@ const closeIncidentBlocks = async (incidentObject: Incident) => {
       "elements": [
         {
           "type": "button",
-          "action_id": "re_open_action",
+          "action_id": "re_open",
           "text": {
             "type": "plain_text",
             "text": "Reopen",
