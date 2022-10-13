@@ -5,6 +5,7 @@ import { getIncident } from "../database/get-incident.ts";
 import { updateIncident } from "../database/update-incident.ts";
 import { addJiraComment } from "../externalAPIs/atlassian/addJiraComment.ts";
 import { updateJiraPriorityToLow } from "../externalAPIs/atlassian/updateJiraPriority.ts";
+import { sendMessageClerk } from "../externalAPIs/clerk/message-logic.ts";
 import { addBookmark } from "../slack_apis/add-bookmark.ts";
 import { endCall } from "../slack_apis/end-call.ts";
 import { postMessage } from "../slack_apis/post-message.ts";
@@ -30,6 +31,7 @@ const closeIncidentModalCallback = async (
   incident.incident_closed_ts = incidentClosedTS;
   const incidentJiraKey = incident.incident_jira_issue_key;
   await closeSalesforceIncident(incident, env, token);
+  await sendMessageClerk(incident, env, "close");
 
   await addJiraComment(
     env,

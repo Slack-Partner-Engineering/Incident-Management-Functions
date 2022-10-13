@@ -5,6 +5,7 @@ import { postReply } from "../slack_apis/post-message.ts";
 import { sendUpdateMessageBlocks } from "../../views/send-update-message-blocks.ts";
 import { updateSalesforceIncident } from "../../salesforce/update-salesforce-incident.ts";
 import { addJiraComment } from "../externalAPIs/atlassian/addJiraComment.ts";
+import { sendMessageClerk } from "../externalAPIs/clerk/message-logic.ts";
 
 const sendUpdateModalCallback = async (
   view: any,
@@ -47,6 +48,7 @@ const sendUpdateModalCallback = async (
 
   //send an update to Salesforce all the time
   await updateSalesforceIncident(incident, env, token);
+  await sendMessageClerk(incident, env, "update");
   //send update to jira all the time
 
   //check if incident is a swarm or it is critical, if so send an update to SMS via clerk

@@ -22,6 +22,8 @@ import { setTopic } from "../../utils/slack_apis/set-topic.ts";
 import { createZoomMeeting } from "../../utils/externalAPIs/zoom/createMeeting.ts";
 import { addCall } from "../../utils/slack_apis/add-call.ts";
 import { getZoomBlock } from "../../views/zoom-call-blocks.ts";
+import { sendMessageClerk } from "../../utils/externalAPIs/clerk/message-logic.ts";
+import { addBookmark } from "../../utils/slack_apis/add-bookmark.ts";
 export const reOpen = async (
   incident: Incident,
   env: any,
@@ -31,9 +33,7 @@ export const reOpen = async (
 
   curIncident.incident_status = "OPEN";
   curIncident.incident_closed_ts = "";
-  await updateIncident(token, curIncident);
 
-  // check if we are in swarming channel. If we are, we
   // need to use the view without the `Create Channel` button
   const updateIncidentBlocks = await newIncident(curIncident);
   const reOpenMessageBlocks = await reOpenIncidentMessageBlocks(
@@ -41,6 +41,7 @@ export const reOpen = async (
   );
   const swarmIncidentBlocks = await swarmIncident(curIncident);
 
+  // check if we are in swarming channel. If we are, we
   if (curIncident.incident_swarming_channel_id !== undefined) {
     await postMessage(
       token,
@@ -69,14 +70,31 @@ export const reOpen = async (
       `Major Incident Channel: ${incident.long_description?.substring(0, 250)}`,
     );
     const meetingResp = await createZoomMeeting(env);
-
     const callBlockId = await addCall(meetingResp.join_url, Date.now(), token);
     const zoomBlocks = await getZoomBlock(
       callBlockId.call.id,
     );
     incident.incident_call_id = callBlockId.call.id;
 
-    await updateSalesforceIncident(curIncident, env, token);
+    await postMessage(
+      token,
+      <string> curIncident.incident_swarming_channel_id,
+      zoomBlocks,
+    );
+    const zoomBookmark: any = await addBookmark(
+      token,
+      <string> curIncident.incident_swarming_channel_id,
+      "Incident Call",
+      "link",
+      meetingResp.join_url,
+      ":zoom:",
+    );
+    console.log(zoomBookmark);
+
+    incident.zoom_call_bookmark_id = zoomBookmark.bookmark.id;
+    await updateIncident(token, incident);
+
+    //not a swarm
   } else {
     await postReply(
       token,
@@ -92,4 +110,6 @@ export const reOpen = async (
     );
     await updateSalesforceIncident(curIncident, env, token);
   }
+  await updateSalesforceIncident(curIncident, env, token);
+  await sendMessageClerk(curIncident, env, "reopen");
 };

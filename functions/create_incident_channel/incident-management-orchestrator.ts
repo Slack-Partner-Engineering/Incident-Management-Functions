@@ -20,6 +20,7 @@ import { setTopic } from "../../utils/slack_apis/set-topic.ts";
 import { swarmIncidentOriginalMessageUpdate } from "../../views/swarm-incident-original-message-update.ts";
 import { getSalesforceIncidentBlocks } from "../../views/salesforce-new-incident-created.ts";
 import { getObjectURL } from "../../salesforce/sf_connector/build-object-url.ts";
+import { sendMessageClerk } from "../../utils/externalAPIs/clerk/message-logic.ts";
 
 export const newSwarmChannel = async (
   incident: Incident,
@@ -150,4 +151,6 @@ export const newSwarmChannel = async (
     createChannelResp.channel.id,
     `Major Incident Channel: ${incident.long_description?.substring(0, 250)}`,
   );
+
+  await sendMessageClerk(incident, env, "swarm");
 };

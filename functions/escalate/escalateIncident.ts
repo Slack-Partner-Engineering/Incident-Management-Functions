@@ -15,6 +15,7 @@ import { errorEscalate } from "../../views/error-escalate-blocks.ts";
 import { swarmIncidentOriginalMessageUpdate } from "../../views/swarm-incident-original-message-update.ts";
 import { swarmIncident } from "../../views/swarm-incident.ts";
 import { updateSalesforceIncident } from "../../salesforce/update-salesforce-incident.ts";
+import { sendMessageClerk } from "../../utils/externalAPIs/clerk/message-logic.ts";
 export const escalateIncident = async (
   incident: Incident,
   env: any,
@@ -107,6 +108,7 @@ export const escalateIncident = async (
         updateIncidentBlocks,
       );
       await updateSalesforceIncident(curIncident, env, token);
+      await sendMessageClerk(curIncident, env, "escalated");
     }
   }
 };
