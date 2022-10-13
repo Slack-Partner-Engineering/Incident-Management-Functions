@@ -6,6 +6,7 @@ import { newSwarmChannel } from "../../functions/create_incident_channel/inciden
 import { escalateIncident } from "../../functions/escalate/escalateIncident.ts";
 import { deEscalateIncident } from "../../functions/de_escalate/de-escalate-incident.ts";
 import { assignDRI } from "../../functions/assign_dri/assignDRI.ts";
+import { reOpen } from "../../functions/re_open/re-open-incident.ts";
 import { sendUpdateModal } from "../../views/send-update-modal.ts";
 import { editIncidentModal } from "../../views/edit-incident-modal.ts";
 const router = BlockActionsRouter(postNewIncident);
@@ -20,6 +21,7 @@ export const incidentHandler = router.addHandler(
     "add_members",
     "send_update",
     "edit",
+    "re_open",
   ],
   async ({ action, body, token, env }) => {
     const incident = JSON.parse(body.actions[0].value);
@@ -64,6 +66,10 @@ export const incidentHandler = router.addHandler(
 
       case "assign_dri":
         await assignDRI(incident, env, token, body);
+        break;
+
+      case "re_open":
+        await reOpen(incident, env, token);
         break;
 
       case "edit": {
