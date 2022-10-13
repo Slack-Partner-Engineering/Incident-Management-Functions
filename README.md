@@ -13,12 +13,13 @@ https://user-images.githubusercontent.com/10428517/195149574-c8bb012e-f9d0-410d-
 2. [Configuration Via Environmental Variables](#step-2-configuration-via-environmental-variables)
 3. [Deploy the App](#step-3-deploy-the-app)
 4. [Add Environmental Variables to Slack Cloud](#step-4-add-environmental-variables-to-slack-cloud)
-5. [Create the Triggers](#step-5-Create-the-triggers)
-6. [Run the Workflows and Create an Incident](#step-6-run-the-workflows-and-create-an-incident)
-7. [View Incident Details in Jira and Salesforce](#step-7-view-incident-details-in-jira-and-salesforce)
-8. [Create Swarming Channel](#step-8-create-swarming-channel)
-9. [Close the Incident](#step-9-close-the-incident)
-10. [Generate a Report](#step-10-generate-a-report)
+5. [Add Emojis](#step-5-add-emojis)
+6. [Create the Triggers](#step-5-Create-the-triggers)
+7. [Run the Workflows and Create an Incident](#step-6-run-the-workflows-and-create-an-incident)
+8. [View Incident Details in Jira and Salesforce](#step-7-view-incident-details-in-jira-and-salesforce)
+9. [Create Swarming Channel](#step-8-create-swarming-channel)
+10. [Close the Incident](#step-9-close-the-incident)
+11. [Generate a Report](#step-10-generate-a-report)
 
 ## Step 1. Clone the Repo
 
@@ -36,20 +37,20 @@ There you will find  the necessary environmental variables. A completed `.env` f
 INCIDENT_CHANNEL=C03V2ED7***
 ZOOM_JWT_TOKEN=eyJhbGciOiJIUzI1NiJ9.eyJhddkgzU1lDd0s5TXd1bDlQd3ciLCJleHAiOjE5ODgyMTU5MjAsImlh*************
 JIRA_USERNAME=testtiu@gmail.com
-JIRA_API_KEY=sPadwkkffh5u6JkCCD04
+JIRA_API_KEY=sPadwkkffh5u6Jk******
 JIRA_INSTANCE=test.atlassian.net
 JIRA_PROJECT=INC
 SALESFORCE_CLIENT_ID=3MVG9p1Q1BCe9fvF1KeDHqX9VV**********************
 SALESFORCE_CLIENT_SECRET=5BA53B4CBAA248F1D237************************
-SALESFORCE_INSTANCE_URL=https://slack-ed.my.salesforce.com
-SALESFORCE_USER_EMAIL=grtest@gmail.com
-SALESFORCE_USERNAME=test@gmail.com
+SALESFORCE_INSTANCE_URL=https://{your-instance}.salesforce.com
+SALESFORCE_USER_EMAIL=****@gmail.com
+SALESFORCE_USERNAME=****@gmail.com
 SALESFORCE_REDIRECT_URL=http://localhost/redirect
-SALESFORCE_LOGIN_URL=https://stest.my.salesforce.com
+SALESFORCE_LOGIN_URL=https://{your-instance}.my.salesforce.com
 ACCESS_TOKEN=00D5f000005X2hB!**************************
 SALESFORCE_REFRESH_TOKEN=5Aep861F*********************
-SALESFORCE_USER_ID=0055f000test
-SALESFORCE_ORG_ID=00D5f000test
+SALESFORCE_USER_ID=0055f0*****
+SALESFORCE_ORG_ID=00D5f00*****
 SALESFORCE_API_VERSION=v55.0
 ```
 
@@ -124,7 +125,17 @@ Make sure to repeat that process for the rest of the variables.
 
 🎉 Awesome! You are one step away from running your app! 🎉
 
-## Step 5. Create the Triggers
+## Step 5. Add Emojis
+
+Upload the emojis from [assets](./assets/): 
+
+1. :salesforce:
+2. :atlassian:
+3. :boxcorp:
+4. :clerk:
+5. :zoom:
+
+## Step 6. Create the Triggers
 
 https://user-images.githubusercontent.com/10428517/195186528-43d81752-145c-4fd9-8a7f-cbc77cd36778.mp4
 
@@ -163,7 +174,7 @@ This trigger will be the same as the one above, except that it will just automat
 
 🎉 Great job! Now, let's use that trigger to kick off a workflow! 🎉
 
-## Step 6. Run the Workflows and Create an Incident
+## Step 7. Run the Workflows and Create an Incident
 
 https://user-images.githubusercontent.com/10428517/195210585-88d78009-e1a7-44a3-8400-cb2c052f42da.mp4
 
@@ -219,21 +230,21 @@ Now, you should see a new incident created in your incident channel, as shown in
 
 🙌🏼 Great job! You now know how to create an incident via a webhook! 🙌🏼
 
-## Step 7. View Incident Details in Jira and Salesforce
+## Step 8. View Incident Details in Jira and Salesforce
 
 https://user-images.githubusercontent.com/10428517/195429541-18b10e8c-eabf-4111-81bb-1e2a83a8d44b.mp4
 
 Go ahead and click on the incident replies to see the Jira issue and Salesforce incident that was created. You will need to have set up your account credentials via
 the env variables to make sure this works as shown below.
 
-## Step 8. Create Swarming Channel
+## Step 9. Create Swarming Channel
 
 https://user-images.githubusercontent.com/10428517/195429767-2e2ec683-2c86-43db-8950-51cf971cdb7c.mp4
 
 Next, click on the `Create Channel` button to create a Swarming channel. This will automatically create a Zoom call and start it so that the participants can 
 resolve the incident.
 
-## Step 9. Close the Incident
+## Step 10. Close the Incident
 
 https://user-images.githubusercontent.com/10428517/195429714-c608a98e-be05-4004-81d1-13314a140a15.mp4
 
@@ -242,7 +253,7 @@ Now that we've solved the incident, it's time to close it! Click on `Close Incid
 Great job! You've now used the power of the Slack Platform to create, swarm, and close an incident all within Slack, while keeping all of your 
 records of data updated!
 
-## Step 10. Generate a Report
+## Step 11. Generate a Report
 
 https://user-images.githubusercontent.com/10428517/195429846-ef8a4caa-b663-40e6-a75b-37c3b2259445.mp4
 
