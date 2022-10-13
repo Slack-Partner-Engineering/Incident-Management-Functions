@@ -324,4 +324,4 @@ slack deno test
 ## Troubleshooting
 - If the bookmarks are not added in a swarming channel. Make sure all the emojis are uploaded properly with the correct names. 
 - If incidents are getting posted multiple times, try deploying and running in non-local dev mode. There can be dispatch timeouts and retries in local dev mode. 
-- IF you get any get or put DB errors, same as above, test with a deploy. This tends to be a timeout issue also. 
+- If you get any get or put DB errors, same as above, test with a deploy. This tends to be a timeout issue also. 
