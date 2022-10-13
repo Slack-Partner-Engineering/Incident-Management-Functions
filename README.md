@@ -15,11 +15,11 @@ https://user-images.githubusercontent.com/10428517/195149574-c8bb012e-f9d0-410d-
 4. [Add Environmental Variables to Slack Cloud](#step-4-add-environmental-variables-to-slack-cloud)
 5. [Add Emojis](#step-5-add-emojis)
 6. [Create the Triggers](#step-5-Create-the-triggers)
-7. [Run the Workflows and Create an Incident](#step-6-run-the-workflows-and-create-an-incident)
-8. [View Incident Details in Jira and Salesforce](#step-7-view-incident-details-in-jira-and-salesforce)
-9. [Create Swarming Channel](#step-8-create-swarming-channel)
-10. [Close the Incident](#step-9-close-the-incident)
-11. [Generate a Report](#step-10-generate-a-report)
+7. [Run the Workflows and Create an Incident](#step-7-run-the-workflows-and-create-an-incident)
+8. [View Incident Details in Jira and Salesforce](#step-8-view-incident-details-in-jira-and-salesforce)
+9. [Create Swarming Channel](#step-9-create-swarming-channel)
+10. [Close the Incident](#step-10-close-the-incident)
+11. [Generate a Report](#step-11-generate-a-report)
 
 ## Step 1. Clone the Repo
 
