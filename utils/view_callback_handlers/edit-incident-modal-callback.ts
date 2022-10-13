@@ -1,13 +1,6 @@
-import { closeSalesforceIncident } from "../../salesforce/close-salesforce-incident.ts";
-import { closeIncidentBlocks } from "../../views/close-incident-blocks.ts";
-import { documentOnIncidentClose } from "../../views/doc-on-incident-close.ts";
 import { getIncident } from "../database/get-incident.ts";
-import { addJiraComment } from "../externalAPIs/atlassian/addJiraComment.ts";
 import { updateJiraIssue } from "../externalAPIs/atlassian/updateJiraIssue.ts";
-import { addBookmark } from "../slack_apis/add-bookmark.ts";
-import { endCall } from "../slack_apis/end-call.ts";
 import { postMessage } from "../slack_apis/post-message.ts";
-import { removeBookmark } from "../slack_apis/remove-bookmark.ts";
 import { setTopic } from "../slack_apis/set-topic.ts";
 import { updateMessage } from "../slack_apis/update-message.ts";
 import { updateSalesforceIncident } from "../../salesforce/update-salesforce-incident.ts";
@@ -22,6 +15,7 @@ import {
   createChannelName,
   sanitizeChannelName,
 } from "../slack_apis/create-channel.ts";
+import { sendMessageClerk } from "../externalAPIs/clerk/message-logic.ts";
 
 const editIncidentModalCallback = async (
   view: any,
@@ -31,7 +25,6 @@ const editIncidentModalCallback = async (
   // save the currentTime so that we know what time the incident was closed
   const incidentID = await JSON.parse(view.private_metadata).incident_id;
   const incident = await getIncident(token, incidentID);
-  console.log(view);
   let newSummary = view.state.values.summary_block.edit_summary_action.value;
   let newLongDesc =
     view.state.values.long_desc_block.edit_long_desc_action.value;
@@ -49,8 +42,7 @@ const editIncidentModalCallback = async (
   await updateJiraIssue(env, incident, newSummary, newLongDesc);
 
   //update Slack DataStore with new values
-  let dataStoreResp = await updateIncident(token, incident);
-  console.log(dataStoreResp);
+  const dataStoreResp = await updateIncident(token, incident);
 
   // check if we are in swarming channel. If we are, we
   // need to use the view without the `Create Channel` button
@@ -119,6 +111,7 @@ const editIncidentModalCallback = async (
       updateIncidentBlocks,
     );
     await updateSalesforceIncident(incident, env, token);
+    await sendMessageClerk(incident, env, "edit");
   }
 };
 

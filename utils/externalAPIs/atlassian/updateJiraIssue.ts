@@ -19,7 +19,6 @@ export async function updateJiraIssue(
 
   const url = "https://" + instance + issueURL;
   const incidentID = incident.incident_id;
-  console.log(incidentID);
 
   //build the requestBody with our inputs from the UI
   const requestBody: any = {
@@ -47,7 +46,6 @@ export async function updateJiraIssue(
       body: JSON.stringify(requestBody),
     },
   );
-  console.log(updateTicketResp);
 
   return updateTicketResp;
 }
