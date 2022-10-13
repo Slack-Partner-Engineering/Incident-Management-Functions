@@ -30,21 +30,21 @@ export const createChannel = async (
 //This helper function constructs a channel name based on the description and ID.
 //input: incidentDescription, incident_id
 //output: channel name with the incident description and ID
-function createChannelName(
+export const createChannelName = (
   incidentDescription: string,
   incident_id: string,
-) {
+) => {
   const channelName = incident_id + "-" + incidentDescription;
   return channelName;
-}
+};
 
 //This helper function sanitizes the channel name. For example, a channel
 //name cannot have apostrophies or blank spaces, so we replace those.
 //input: channelName
 //output: sanitized channel name
-async function sanitizeChannelName(
+export const sanitizeChannelName = async (
   channelName: any,
-) {
+) => {
   let channelStr = await channelName.toString();
   channelStr = channelStr.toLowerCase();
   channelStr = channelStr.split("");
@@ -59,4 +59,4 @@ async function sanitizeChannelName(
   }
   channelStr = channelStr.join("");
   return channelStr;
-}
+};

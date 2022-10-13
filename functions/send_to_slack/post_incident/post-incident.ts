@@ -15,6 +15,7 @@ import { getSalesforceIncidentBlocks } from "../../../views/salesforce-new-incid
 import { closeIncidentModalCallback } from "../../../utils/view_callback_handlers/close-incident-modal-callback.ts";
 import { assignDRIModalCallback } from "../../../utils/view_callback_handlers/assign-dri-modal-callback.ts";
 import { sendUpdateModalCallback } from "../../../utils/view_callback_handlers/send-update-modal-callback.ts";
+import { editIncidentModalCallback } from "../../../utils/view_callback_handlers/edit-incident-modal-callback.ts";
 import { sendMessageClerk } from "../../../utils/externalAPIs/clerk/message-logic.ts";
 
 const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
@@ -28,7 +29,6 @@ const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
     incident.incident_id = "INC-" + (Date.now());
     const createIssueResp = await createJiraIssue(env, incident);
     incident.incident_jira_issue_key = createIssueResp.key;
-
 
     const sfIncident = <any> await createSalesforceIncident(
       incident,
@@ -107,5 +107,9 @@ export const viewSubmission = async (
 
   if (view.callback_id === "send_update_modal") {
     await sendUpdateModalCallback(view, token, env, body.user.id);
+  }
+
+  if (view.callback_id === "edit_incident_modal") {
+    await editIncidentModalCallback(view, token, env);
   }
 };

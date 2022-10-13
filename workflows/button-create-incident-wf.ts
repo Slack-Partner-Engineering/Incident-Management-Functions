@@ -82,7 +82,7 @@ const postIncidentStep1 = postIncidentFromButtonWF
             type: Schema.slack.types.user_id,
           },
         ],
-        required: ["short_description", "severity"],
+        required: ["short_description", "long_description", "severity"],
       },
     },
   );

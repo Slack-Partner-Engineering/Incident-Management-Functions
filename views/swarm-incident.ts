@@ -116,6 +116,16 @@ const swarmIncident = async (incidentObject: Incident) => {
           },
           "value": incidentStr,
         },
+        {
+          "type": "button",
+          "action_id": "edit",
+          "text": {
+            "type": "plain_text",
+            "text": "Edit",
+            "emoji": true,
+          },
+          "value": incidentStr,
+        },
       ],
     },
   ];
