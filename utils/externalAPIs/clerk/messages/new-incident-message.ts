@@ -4,7 +4,7 @@ const newIncidentClerk = (incident: Incident) => {
   console.log(incident.short_description);
 
   const message =
-    `A new Critical incident has been created.   Incident Id: ${incident.incident_id}.      ${incident.short_description}           ${incident.long_description}`;
+    `A new Critical incident has been created.\n\nIncident Id: ${incident.incident_id}\n\n${incident.short_description}\n\n${incident.long_description}`;
   return message;
 };
 
