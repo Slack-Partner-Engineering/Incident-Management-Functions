@@ -77,6 +77,9 @@ My URL happens to be: https://horeaporutiu.atlassian.net/jira/projects.
 
 ![JiraKey](https://user-images.githubusercontent.com/10428517/195177542-1fd06cf0-2170-4a26-a96b-eeb08b59c1a6.png)
 
+* `SALESFORCE_*` variables will need to be setup accourding to your Salesforce instance. The API calls are to the Salesforce Rest API and will need a connected app created against your Salesforce instance.
+
+
 * The rest of the env variables are to be retrieved from your Salesforce Developer account. To get a free Salesforce Developer account, follow this [link](https://developer.salesforce.com/signup). Next, follow the [Create a Connected App Trailhead Module](https://trailhead.salesforce.com/content/learn/projects/build-a-connected-app-for-api-integration/create-a-connected-app) to grab your developer credentials needed. Alternatively, you can review this [help documentation](https://help.salesforce.com/s/articleView?language=en_US&id=sf.connected_app_create.htm&type=5).
 
 ## Step 3. Deploy the App
