@@ -23,55 +23,41 @@ const sendMessageClerk = async (
     switch (status) {
       case "new": {
         message = await newIncidentClerk(incident);
-        const phoneNumbers = await generateNumbers(env);
-        sendMessageToClerkAPI(message, phoneNumbers, env);
         break;
       }
       case "escalated": {
         message = await escalateIncidentClerk(incident);
-        const phoneNumbers = await generateNumbers(env);
-        sendMessageToClerkAPI(message, phoneNumbers, env);
         break;
       }
       case "deescalated": {
         message = await deescalateIncidentClerk(incident);
-        const phoneNumbers = await generateNumbers(env);
-        sendMessageToClerkAPI(message, phoneNumbers, env);
         break;
       }
       case "swarm": {
         message = await swarmIncidentClerk(incident);
-        const phoneNumbers = await generateNumbers(env);
-        sendMessageToClerkAPI(message, phoneNumbers, env);
         break;
       }
       case "update": {
         message = await updateIncidentClerk(incident);
-        const phoneNumbers = await generateNumbers(env);
-        sendMessageToClerkAPI(message, phoneNumbers, env);
         break;
       }
       case "close": {
         message = await closeIncidentClerk(incident);
-        const phoneNumbers = await generateNumbers(env);
-        sendMessageToClerkAPI(message, phoneNumbers, env);
         break;
       }
       case "edit": {
         message = await editIncidentClerk(incident);
-        const phoneNumbers = await generateNumbers(env);
-        sendMessageToClerkAPI(message, phoneNumbers, env);
         break;
       }
       case "reopen": {
         message = await reopenIncidentClerk(incident);
-        const phoneNumbers = await generateNumbers(env);
-        sendMessageToClerkAPI(message, phoneNumbers, env);
         break;
       }
       default:
         break;
     }
+    const phoneNumbers = await generateNumbers(env);
+    sendMessageToClerkAPI(message, phoneNumbers, env);
     return true; //a page went out
   }
   return false; //no one was paged
