@@ -10,10 +10,8 @@ import { postReply } from "../../utils/slack_apis/post-message.ts";
 import { updateMessage } from "../../utils/slack_apis/update-message.ts";
 import { Incident } from "../../types/incident-object.ts";
 import { updateIncident } from "../../utils/database/update-incident.ts";
-import { getSeverityBlocks } from "../../views/get-severity-blocks.ts";
 import { getIncident } from "../../utils/database/get-incident.ts";
 import { newIncident } from "../../views/new-incident.ts";
-import { errorEscalate } from "../../views/error-escalate-blocks.ts";
 import { swarmIncidentOriginalMessageUpdate } from "../../views/swarm-incident-original-message-update.ts";
 import { swarmIncident } from "../../views/swarm-incident.ts";
 import { updateSalesforceIncident } from "../../salesforce/update-salesforce-incident.ts";
@@ -24,6 +22,8 @@ import { addCall } from "../../utils/slack_apis/add-call.ts";
 import { getZoomBlock } from "../../views/zoom-call-blocks.ts";
 import { sendMessageClerk } from "../../utils/externalAPIs/clerk/message-logic.ts";
 import { addBookmark } from "../../utils/slack_apis/add-bookmark.ts";
+import { removeBookmark } from "../../utils/slack_apis/remove-bookmark.ts";
+
 export const reOpen = async (
   incident: Incident,
   env: any,
@@ -76,6 +76,13 @@ export const reOpen = async (
     );
     incident.incident_call_id = callBlockId.call.id;
 
+    //remove the RCA bookmark, since if we don't it will keep adding multiple RCA docs
+    await removeBookmark(
+      token,
+      curIncident.incident_swarming_channel_id,
+      curIncident.rca_doc_bookmark_id,
+    );
+
     await postMessage(
       token,
       <string> curIncident.incident_swarming_channel_id,
@@ -89,7 +96,6 @@ export const reOpen = async (
       meetingResp.join_url,
       ":zoom:",
     );
-    console.log(zoomBookmark);
 
     incident.zoom_call_bookmark_id = zoomBookmark.bookmark.id;
     await updateIncident(token, incident);
