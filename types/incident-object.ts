@@ -26,4 +26,5 @@ export type Incident = {
   last_incident_update: string;
   last_incident_update_ts: string;
   leadership_paged: boolean;
+  rca_doc_bookmark_id: string;
 };

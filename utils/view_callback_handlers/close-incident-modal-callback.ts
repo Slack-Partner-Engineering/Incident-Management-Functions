@@ -40,7 +40,6 @@ const closeIncidentModalCallback = async (
   );
 
   await updateJiraPriorityToLow(env, incidentJiraKey);
-  await updateIncident(token, incident);
 
   const closeBlocks = await closeIncidentBlocks(incident);
 
@@ -77,7 +76,7 @@ const closeIncidentModalCallback = async (
       `CLOSED ${incident.long_description?.substring(0, 250)}`,
     );
 
-    await addBookmark(
+    const rca_bookmark = await addBookmark(
       token,
       incident.incident_swarming_channel_id,
       "RCA Template",
@@ -85,6 +84,10 @@ const closeIncidentModalCallback = async (
       `https://slack1.box.com/s/r783r9wafmts2ala656l82ol50vo8h2s`,
       ":boxcorp:",
     );
+    if (rca_bookmark != undefined) {
+      incident.rca_doc_bookmark_id = rca_bookmark.bookmark.id;
+    }
+    await updateIncident(token, incident);
 
     const incidentCloseDocumentBlocks = documentOnIncidentClose();
     await postMessage(

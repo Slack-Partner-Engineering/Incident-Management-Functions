@@ -88,6 +88,9 @@ const Incident = DefineDatastore({
     leadership_paged: {
       type: Schema.types.boolean,
     },
+    rca_doc_bookmark_id: {
+      type: Schema.types.string,
+    },
   },
 });
 
