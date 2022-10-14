@@ -10,16 +10,19 @@ const sendMessageToClerkAPI = async (
     message: message,
     recipients: phoneNumbers,
   };
-  const body = JSON.stringify(payload);
-  const req = new Request("https://api.clerk.chat/bulk", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "slack_api_key": env["CLERK_KEY"],
-    },
-    body,
-  });
-  await fetch(req);
+
+  if (phoneNumbers.length > 0) {
+    const body = JSON.stringify(payload);
+    const req = new Request("https://api.clerk.chat/bulk", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "slack_api_key": env["CLERK_KEY"],
+      },
+      body,
+    });
+    await fetch(req);
+  }
   return;
 };
 
