@@ -1,5 +1,6 @@
 //This function takes in the standard incident object from various triggers.
 //It should then create the incident channel and post into channel to kick off the swarming incident.
+//It will create a Zoom call, post it in channel, and add bookmarks to the Jira and Salesforce tickets created.
 
 import { postMessage } from "../../utils/slack_apis/post-message.ts";
 import { postReply } from "../../utils/slack_apis/post-message.ts";
@@ -38,6 +39,7 @@ export const newSwarmChannel = async (
   );
 
   const channelBlocks = await getIncidentChannelBlocks(createChannelResp);
+  // Add message to the original incident channel to notify others of the newly created swarming channel.
   await postReply(
     token,
     body.container.channel_id,

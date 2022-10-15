@@ -1,4 +1,8 @@
-//This function posts the details of a new incident in the incident channel.
+//This function posts the details of a new incident in the incident channel. This is the
+//bread and butter of this app. It will also create tickets in external systems such as
+//Jira Cloud and Salesforce to ensure that all details realted to the incident are updated
+//and tracked in external systems.
+
 import type { SlackFunctionHandler } from "deno-slack-sdk/types.ts";
 import type { postNewIncident } from "./definition.ts";
 import { newIncident } from "../../../views/new-incident.ts";

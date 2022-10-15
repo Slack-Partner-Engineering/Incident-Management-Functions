@@ -1,4 +1,6 @@
-//There is one custom type. The incident object.
+//There is one custom type. The incident object. The details of what each of these fields
+//mean can be found in the datastore/definition.ts file.
+
 export type Incident = {
   incident_id?: string | undefined;
   severity: string;

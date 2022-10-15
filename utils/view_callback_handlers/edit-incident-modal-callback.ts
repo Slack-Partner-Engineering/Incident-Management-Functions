@@ -1,3 +1,7 @@
+//This function will take the input from the modal for the edit interaction
+//and change the Jira and Salesforce summary / description. If there is a
+//swarming channel this will update that name as well.
+
 import { getIncident } from "../database/get-incident.ts";
 import { updateJiraIssue } from "../externalAPIs/atlassian/updateJiraIssue.ts";
 import { postMessage } from "../slack_apis/post-message.ts";
@@ -42,7 +46,7 @@ const editIncidentModalCallback = async (
   await updateJiraIssue(env, incident, newSummary, newLongDesc);
 
   //update Slack DataStore with new values
-  const dataStoreResp = await updateIncident(token, incident);
+  await updateIncident(token, incident);
 
   // check if we are in swarming channel. If we are, we
   // need to use the view without the `Create Channel` button

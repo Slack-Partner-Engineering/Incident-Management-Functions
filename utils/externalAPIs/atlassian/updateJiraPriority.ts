@@ -1,7 +1,7 @@
 //This function will set the priority on Jira to "Low" after an incident is closed
 //input: env, and the key of the issue to set to "Low" priority
 //output: API call response from PUT /issue
-// * @see https://docs.atlassian.com/software/jira/docs/api/REST/7.6.1/?_ga=2.226925854.2030217466.1525875113-593458345.1525875113#api/2/issue-editIssue
+//@see https://docs.atlassian.com/software/jira/docs/api/REST/7.6.1/?_ga=2.226925854.2030217466.1525875113-593458345.1525875113#api/2/issue-editIssue
 
 import { getBasicAuthJira } from "../../auth/getBasicAuthJira.ts";
 

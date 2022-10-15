@@ -1,3 +1,7 @@
+//This function will take the input from the modal for the close incident and execute the
+//needed backed updates (such as update to DB) once the view is submitted. This will
+//add a comment to Jira Cloud with the close notes that the user submitted with the closing of the incident.
+
 import { closeSalesforceIncident } from "../../salesforce/close-salesforce-incident.ts";
 import { closeIncidentBlocks } from "../../views/close-incident-blocks.ts";
 import { documentOnIncidentClose } from "../../views/doc-on-incident-close.ts";

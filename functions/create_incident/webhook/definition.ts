@@ -1,4 +1,4 @@
-//This is the definition file of a fucntion.
+//This is the definition file of a function.
 //The function takes incoming data from a webhook and forms it into what is needed
 //for the incident object.
 
@@ -41,10 +41,6 @@ export const parseWebhook = DefineFunction({
         type: Schema.types.string,
         description: "Long Description",
       },
-      // incident_participants: {
-      //   type: Schema.types.string,
-      //   description: "Incident Participants",
-      // },
       incident_dri: {
         type: Schema.types.string,
         description: "Incident DRI",
@@ -73,38 +69,3 @@ export const parseWebhook = DefineFunction({
     required: ["short_description", "severity", "incident_trigger"],
   },
 });
-
-//ideal input params but can't get hermes to work quite yet.
-// input_parameters: {
-//   properties: {
-//     short_description: {
-//       type: Schema.types.string,
-//       description: "Short Description",
-//     },
-//     severity: {
-//       type: Schema.types.string,
-//       description: "Severity",
-//     },
-//     long_description: {
-//       type: Schema.types.string,
-//       description: "Long Description",
-//     },
-//     incident_participants: {
-//       type: Schema.types.string,
-//       description: "Incident Participants",
-//     },
-//     incident_dri: {
-//       type: Schema.types.string,
-//       description: "Incident DRI",
-//     },
-//     incident_start_time: {
-//       type: Schema.types.string,
-//       description: "Start Time",
-//     },
-//external_incident_id: {
-//description: "External platform's ticket id",
-///type: Schema.types.string,
-//},
-//   },
-//   required: ["short_description", "severity"],
-// },
