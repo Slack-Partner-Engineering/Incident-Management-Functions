@@ -1,4 +1,7 @@
 //This function posts the details of a new incident report in the incident channel.
+//It will post an ephemeral message to the user to not spam the incident channel.
+//It will provide details such as how many open incidents there are, the percentage
+//of each type of incident, and the directly responsible individuals for the incident (DRI).
 
 import type { SlackFunctionHandler } from "deno-slack-sdk/types.ts";
 import type { postNewIncidentReport } from "./definition.ts";

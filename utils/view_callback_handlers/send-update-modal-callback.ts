@@ -1,3 +1,7 @@
+//This function will take the input from the modal for send update and
+//create a comment in Jira with the update. It will also send text messsages to
+//leadership about the incident if that is configured.
+
 import { getIncident } from "../database/get-incident.ts";
 import { updateIncident } from "../database/update-incident.ts";
 import { postMessage } from "../slack_apis/post-message.ts";

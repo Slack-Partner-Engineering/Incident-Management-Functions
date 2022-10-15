@@ -1,7 +1,6 @@
 //This function should reopen the incident. It will change the status from Closed to Open.
 //It should clear the end time of the incident, and update the database.
-//If there is a swarm, it should update incident message in swarm channel, and re open the call block , and set the topic again
-//It should then create the incident channel, etc... to kick off the process.
+//If there is a swarm, it should update incident message in swarm channel, and re open the call block, and set the topic again.
 //input: standard incident object, env, token
 //output: channel URL, channel_id, incident object.
 

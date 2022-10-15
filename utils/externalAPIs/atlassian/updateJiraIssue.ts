@@ -1,4 +1,6 @@
-//This function will make a call to Jira Cloud to create an issue
+//This function will make a call to Jira Cloud to update an issue. In our current
+//implementation, we just edit the summary and the description using this API call, since
+//updates are posted as comments.
 //input: env, and the standard incident object
 //output: API call response to /issue
 
@@ -11,7 +13,6 @@ export async function updateJiraIssue(
   newSummary: string,
   newLongDesc: string,
 ) {
-  const projectKey = env["JIRA_PROJECT"];
   const instance = env["JIRA_INSTANCE"];
   const basicAuth = await getBasicAuthJira(env);
   const jiraIssueKey = incident.incident_jira_issue_key;

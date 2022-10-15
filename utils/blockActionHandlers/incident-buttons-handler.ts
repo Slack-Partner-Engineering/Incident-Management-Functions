@@ -1,3 +1,7 @@
+//This function routes all button clicks from the incident object UI in Slack, to action handlers
+//This includes the following buttons: Close Incident, Escalate, Deescalate, Assign DRI, Add Members,
+// Send Update, Edit, and Re Open
+
 import { BlockActionsRouter } from "deno-slack-sdk/mod.ts";
 import { postNewIncident } from "../../functions/send_to_slack/post_incident/definition.ts";
 import { openView } from "../slack_apis/open-view.ts";

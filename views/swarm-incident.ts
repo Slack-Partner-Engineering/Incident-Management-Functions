@@ -18,9 +18,9 @@ const swarmIncident = async (incidentObject: Incident) => {
 
   const dateTime = new Date(<any> incidentObject.incident_start_time * 1000);
 
-  const externalId = incidentObject.external_incident_id
-    ? `*External Id*: ${incidentObject.external_incident_id} \n`
-    : "";
+  // const externalId = incidentObject.external_incident_id
+  //   ? `*External Id*: ${incidentObject.external_incident_id} \n`
+  //   : "";
 
   let incidentText = "";
   incidentText = incidentText

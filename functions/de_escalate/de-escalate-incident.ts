@@ -1,4 +1,5 @@
-//This function will take the previous priority and decrease it
+//This function will take the previous severity and decrease it. This means that this
+//incident is a lower priority than it was previously.
 //input: standard incident object, env, token
 //output: channel URL, channel_id, incident object.
 

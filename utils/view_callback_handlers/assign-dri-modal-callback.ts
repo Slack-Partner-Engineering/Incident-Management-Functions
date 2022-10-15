@@ -1,3 +1,6 @@
+//This function will take the input from the modal for the assignDRI and execute the
+//needed backed updates (such as update to DB) once the view is submitted.
+
 import { driUpdatedBlocks } from "../../views/dri-updated-blocks.ts";
 import { newIncident } from "../../views/new-incident.ts";
 import { swarmIncidentOriginalMessageUpdate } from "../../views/swarm-incident-original-message-update.ts";

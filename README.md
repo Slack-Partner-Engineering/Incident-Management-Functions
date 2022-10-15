@@ -138,6 +138,10 @@ Upload the emojis from [assets](./assets/):
 4. :clerk:
 5. :zoom:
 
+To do this, first go to the workspace where you plan to run this app. Next, go to the 
+composer where you would write a Slack message, and click on the `Emoji` button. Next,
+click on `Add Emoji`, and upload the emojis listed above.
+
 ## Step 6. Create the Triggers
 
 https://user-images.githubusercontent.com/10428517/195186528-43d81752-145c-4fd9-8a7f-cbc77cd36778.mp4
