@@ -1,0 +1,16 @@
+{
+  "type": "webhook",
+  "name": "Create Incident From External Source via Webhook",
+  "workflow": "#/workflows/createIncidentExternalWebhook",
+  "inputs": {
+    "short_description": {
+      "value": "{{data.short_description}}"
+    },
+    "severity": {
+      "value": "{{data.severity}}"
+    },
+    "external_incident_id": {
+      "value": "{{data.external_incident_id}}"
+    }
+  }
+}
