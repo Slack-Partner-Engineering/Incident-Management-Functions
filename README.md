@@ -272,45 +272,7 @@ slack trigger create --trigger-def triggers/create-new-report-button.json
 
 ## Conclusion
 
-Thanks for following, and we hope this was useful for you. Please send feedback in #feedback-hermes-incident-management.
-
-
-
-<!-- 
-## Using Webhook Triggers
-
-To run the external Webhook trigger you will need to create the trigger in the
-same way but pass in the JSON version of trigger creation. This can also be done
-with a Typescript file.
-
-```bash
-hermes trigger create --trigger-def  "./triggers/trigger_webhook.json"
-```
-
-You will see something like:
-
-```bash
-⚡ Trigger created
-   Trigger ID:   Ft03UTJ9BYBA
-   Trigger Type: webhook
-   Trigger Name: Create Incident From External Source via Webhook
-   Webhook URL:  https://hooks.slack.com/triggers/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
-```
-
-The `Webhook URL` is what you will want to use to trigger an incident from
-outside of Slack.
-
-Sample API Call
-
-```bash
-curl --location --request POST 'https://hooks.slack.com/triggers/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' \
---header 'Content-Type: application/json' \
---data-raw '{
-"short_description": "Many reports that site is down!",
-"severity": "High",
-"external_incident_id": "XX-2345"
-}'
-``` -->
+Thanks for following, and we hope this was useful for you. Please send feedback in this [Google Form](https://docs.google.com/forms/d/e/1FAIpQLSdwUK6ohBLc1EV3LCNwyO5QUr3_YNSyHRPBH-n46U_TsM9PfA/viewform).
 
 ## Building the App
 
