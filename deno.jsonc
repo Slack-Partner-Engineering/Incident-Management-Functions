@@ -1,0 +1,13 @@
+{
+  "importMap": "import_map.json",
+  "lint": {
+    "rules": {
+      "exclude": ["no-explicit-any"]
+    }
+  },
+  "fmt": {
+    "files": {
+      "exclude": ["README.md", ".slack/apps.json", ".slack/apps.dev.json"]
+    }
+  }
+}
