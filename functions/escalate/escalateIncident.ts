@@ -108,7 +108,7 @@ export const escalateIncident = async (
         updateIncidentBlocks,
       );
       await updateSalesforceIncident(curIncident, env, token);
-      await sendMessageClerk(curIncident, env, "escalated");
+      await sendMessageClerk(curIncident, env, "escalated", token);
     }
   }
 };

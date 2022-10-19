@@ -13,7 +13,7 @@ const sendMessageToClerkAPI = async (
 
   if (phoneNumbers.length > 0) {
     const body = JSON.stringify(payload);
-    const req = new Request("https://api.clerk.chat/bulk", {
+    const req = new Request(env["CLERK_API"], {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

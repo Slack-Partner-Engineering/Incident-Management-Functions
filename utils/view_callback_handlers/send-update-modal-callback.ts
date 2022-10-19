@@ -52,7 +52,7 @@ const sendUpdateModalCallback = async (
 
   //send an update to Salesforce all the time
   await updateSalesforceIncident(incident, env, token);
-  await sendMessageClerk(incident, env, "update");
+  await sendMessageClerk(incident, env, "update", token);
   //send update to jira all the time
 
   //check if incident is a swarm or it is critical, if so send an update to SMS via clerk

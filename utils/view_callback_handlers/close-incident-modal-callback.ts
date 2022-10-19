@@ -35,7 +35,7 @@ const closeIncidentModalCallback = async (
   incident.incident_closed_ts = incidentClosedTS;
   const incidentJiraKey = incident.incident_jira_issue_key;
   await closeSalesforceIncident(incident, env, token);
-  await sendMessageClerk(incident, env, "close");
+  await sendMessageClerk(incident, env, "close", token);
 
   await addJiraComment(
     env,

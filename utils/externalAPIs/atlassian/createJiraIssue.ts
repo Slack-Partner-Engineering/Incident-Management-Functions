@@ -13,7 +13,6 @@ export async function createJiraIssue(env: any, incident: Incident) {
 
   const url = "https://" + instance + issueURL;
   const incidentID = incident.incident_id;
-  console.log(incidentID);
 
   //build the requestBody with our inputs from the UI
   const requestBody: any = {

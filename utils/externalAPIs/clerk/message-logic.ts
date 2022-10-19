@@ -9,11 +9,13 @@ import { updateIncidentClerk } from "./messages/update-incident-message.ts";
 import { closeIncidentClerk } from "./messages/close-incident-message.ts";
 import { editIncidentClerk } from "./messages/edit-incident-message.ts";
 import { reopenIncidentClerk } from "./messages/reopen-incident-message.ts";
+import { notififySlackChannelClerk } from "./notify-slack-channel.ts";
 
 const sendMessageClerk = async (
   incident: Incident,
   env: any,
   status: string,
+  token: string,
 ) => {
   if (
     incident.severity === env["CLERK_NOTIFICATION_LEVEL"] ||
@@ -23,10 +25,18 @@ const sendMessageClerk = async (
     switch (status) {
       case "new": {
         message = await newIncidentClerk(incident);
+        notififySlackChannelClerk(
+          token,
+          incident,
+        );
         break;
       }
       case "escalated": {
         message = await escalateIncidentClerk(incident);
+        await notififySlackChannelClerk(
+          token,
+          incident,
+        );
         break;
       }
       case "deescalated": {
@@ -35,6 +45,10 @@ const sendMessageClerk = async (
       }
       case "swarm": {
         message = await swarmIncidentClerk(incident);
+        notififySlackChannelClerk(
+          token,
+          incident,
+        );
         break;
       }
       case "update": {

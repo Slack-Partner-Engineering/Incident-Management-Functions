@@ -116,5 +116,5 @@ export const reOpen = async (
     await updateSalesforceIncident(curIncident, env, token);
   }
   await updateSalesforceIncident(curIncident, env, token);
-  await sendMessageClerk(curIncident, env, "reopen");
+  await sendMessageClerk(curIncident, env, "reopen", token);
 };

@@ -115,7 +115,7 @@ const editIncidentModalCallback = async (
       updateIncidentBlocks,
     );
     await updateSalesforceIncident(incident, env, token);
-    await sendMessageClerk(incident, env, "edit");
+    await sendMessageClerk(incident, env, "edit", token);
   }
 };
 

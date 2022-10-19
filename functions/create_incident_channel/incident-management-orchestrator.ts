@@ -154,5 +154,5 @@ export const newSwarmChannel = async (
     `Major Incident Channel: ${incident.long_description?.substring(0, 250)}`,
   );
 
-  await sendMessageClerk(incident, env, "swarm");
+  await sendMessageClerk(incident, env, "swarm", token);
 };

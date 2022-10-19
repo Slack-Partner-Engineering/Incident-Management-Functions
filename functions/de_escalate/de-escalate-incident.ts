@@ -110,7 +110,7 @@ export const deEscalateIncident = async (
         updateIncidentBlocks,
       );
       await updateSalesforceIncident(curIncident, env, token);
-      await sendMessageClerk(incident, env, "deescalated");
+      await sendMessageClerk(incident, env, "deescalated", token);
     }
   }
 };

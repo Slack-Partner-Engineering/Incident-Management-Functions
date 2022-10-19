@@ -84,7 +84,12 @@ const postIncident: SlackFunctionHandler<typeof postNewIncident.definition> =
       postMsgResp.ts,
     );
 
-    incident.leadership_paged = await sendMessageClerk(incident, env, "new");
+    incident.leadership_paged = await sendMessageClerk(
+      incident,
+      env,
+      "new",
+      token,
+    );
 
     await updateIncident(token, incident);
 
