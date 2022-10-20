@@ -3,7 +3,9 @@
 The incident management functions are a set of functions used to optimize the process of incident management within Slack. This project utilizes 
 Jira, Salesforce, Zoom, Box, and other partners to save incident data. It utilizes the beta [Slack CLI](https://api.slack.com/future/tools/cli) to create functions.
 
-## Disclaimer
+## Known Issues & Disclaimer
+> 🚨 When running in dev mode (`slack run`) the app will get timeout errors and may retry adding incidents which didn't succeed because of the timeout. This may cause duplicate incidents and erratic behavior. We are working to fix this as soon as we can. This is not a problem if you run `slack deploy`. 🚨
+
 This project is built using pre-released features on the Slack Platform. It may contain bugs, performance issues, and isn't representative of the final product. The code in this project isn't meant to be a standard template. It may change or become legacy as updates are released to the Slack Beta Platform.
 
 https://user-images.githubusercontent.com/10428517/195149574-c8bb012e-f9d0-410d-b321-6151cd9e1ffe.mp4
