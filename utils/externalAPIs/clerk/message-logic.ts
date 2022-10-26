@@ -9,7 +9,6 @@ import { updateIncidentClerk } from "./messages/update-incident-message.ts";
 import { closeIncidentClerk } from "./messages/close-incident-message.ts";
 import { editIncidentClerk } from "./messages/edit-incident-message.ts";
 import { reopenIncidentClerk } from "./messages/reopen-incident-message.ts";
-import { notififySlackChannelClerk } from "./notify-slack-channel.ts";
 
 const sendMessageClerk = async (
   incident: Incident,
@@ -25,18 +24,10 @@ const sendMessageClerk = async (
     switch (status) {
       case "new": {
         message = await newIncidentClerk(incident);
-        notififySlackChannelClerk(
-          token,
-          incident,
-        );
         break;
       }
       case "escalated": {
         message = await escalateIncidentClerk(incident);
-        await notififySlackChannelClerk(
-          token,
-          incident,
-        );
         break;
       }
       case "deescalated": {
@@ -45,10 +36,6 @@ const sendMessageClerk = async (
       }
       case "swarm": {
         message = await swarmIncidentClerk(incident);
-        notififySlackChannelClerk(
-          token,
-          incident,
-        );
         break;
       }
       case "update": {
@@ -71,7 +58,7 @@ const sendMessageClerk = async (
         break;
     }
     const phoneNumbers = await generateNumbers(env);
-    sendMessageToClerkAPI(message, phoneNumbers, env);
+    sendMessageToClerkAPI(message, phoneNumbers, env, incident, token);
     return true; //a page went out
   }
   return false; //no one was paged
