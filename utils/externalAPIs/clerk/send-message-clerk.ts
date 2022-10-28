@@ -1,4 +1,3 @@
-import { notififySlackChannelClerk } from "./notify-slack-channel.ts";
 import type { Incident } from "../../../types/incident-object.ts";
 
 const sendMessageToClerkAPI = async (
@@ -27,10 +26,6 @@ const sendMessageToClerkAPI = async (
       body,
     });
     await fetch(req);
-    await notififySlackChannelClerk(
-      token,
-      incident,
-    );
   }
   return;
 };
