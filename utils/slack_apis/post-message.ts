@@ -4,6 +4,7 @@
 //@see https://api.slack.com/methods/chat.postMessage
 
 import { SlackAPI } from "deno-slack-api/mod.ts";
+import { authTest } from "./auth-test.ts";
 
 export async function postMessage(
   token: string,
@@ -11,6 +12,8 @@ export async function postMessage(
   blocks: any,
 ) {
   const client = SlackAPI(token, {});
+
+  await authTest(token);
 
   const resp = await client.apiCall("chat.postMessage", {
     channel: channel,
@@ -31,6 +34,8 @@ export async function postReply(
   thread_ts: any,
 ) {
   const client = SlackAPI(token, {});
+
+  await authTest(token);
 
   const resp = await client.apiCall("chat.postMessage", {
     channel: channel,
