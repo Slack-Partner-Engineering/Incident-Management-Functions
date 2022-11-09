@@ -8,7 +8,7 @@ Jira, Salesforce, Zoom, Box, and other partners to save incident data. It utiliz
 
 This project is built using pre-released features on the Slack Platform. It may contain bugs, performance issues, and isn't representative of the final product. The code in this project isn't meant to be a standard template. It may change or become legacy as updates are released to the Slack Beta Platform.
 
-https://user-images.githubusercontent.com/10428517/195149574-c8bb012e-f9d0-410d-b321-6151cd9e1ffe.mp4
+https://user-images.githubusercontent.com/10428517/200922003-058f6678-f672-406f-8465-d0e283774cf8.mp4
 
 # Steps 
 1. [Clone the repo](#step-1-clone-the-repo)
