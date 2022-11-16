@@ -10,7 +10,7 @@ import type { Incident } from "../../../types/incident-object.ts";
 import { postMessage } from "../../../utils/slack_apis/post-message.ts";
 import { incidentHandler } from "../../../utils/blockActionHandlers/incident-buttons-handler.ts";
 import { saveNewIncident } from "../../../utils/database/create-incident.ts";
-import { createJiraIssue } from "../../../utils/externalAPIs/atlassian/createJiraIssue.ts";
+import { createJiraIssue } from "../../../utils/externalAPIs/atlassian/jira/createJiraIssue.ts";
 import { postReply } from "../../../utils/slack_apis/post-message.ts";
 import { jiraIssueBlocks } from "../../../views/jira-issue-blocks.ts";
 import { updateIncident } from "../../../utils/database/update-incident.ts";

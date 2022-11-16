@@ -7,7 +7,7 @@ export function jiraIssueBlocks(
   const issueKey = issueInfo.key
     ? issueInfo.key
     : issueInfo.incident_jira_issue_key;
-  const instance = env["JIRA_INSTANCE"];
+  const instance = env["ATLASSIAN_INSTANCE"];
 
   const link = "https://" + instance + "/browse/" + issueKey;
 

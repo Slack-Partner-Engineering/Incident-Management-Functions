@@ -8,7 +8,7 @@ import { postMessage } from "../slack_apis/post-message.ts";
 import { postReply } from "../slack_apis/post-message.ts";
 import { sendUpdateMessageBlocks } from "../../views/send-update-message-blocks.ts";
 import { updateSalesforceIncident } from "../../salesforce/update-salesforce-incident.ts";
-import { addJiraComment } from "../externalAPIs/atlassian/addJiraComment.ts";
+import { addJiraComment } from "../externalAPIs/atlassian/jira/addJiraComment.ts";
 import { sendMessageClerk } from "../externalAPIs/clerk/message-logic.ts";
 
 const sendUpdateModalCallback = async (
