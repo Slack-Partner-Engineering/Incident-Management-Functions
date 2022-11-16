@@ -1,6 +1,6 @@
 //View to push in the root cause analysis document to be used in channel.
 
-export const documentOnIncidentClose = () => {
+export const documentOnIncidentClose = (docURL: string) => {
   return [
     {
       type: "section",
@@ -8,7 +8,7 @@ export const documentOnIncidentClose = () => {
       text: {
         type: "mrkdwn",
         text:
-          `*As this was a major incident, please use <https://slack1.box.com/s/r783r9wafmts2ala656l82ol50vo8h2s|this> template when creating the RCA document.*`,
+          `*As this was a major incident, we have auto created an RCA documents: <${docURL}|Start Working Here>*`,
       },
     },
   ];

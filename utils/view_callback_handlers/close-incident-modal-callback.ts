@@ -7,8 +7,9 @@ import { closeIncidentBlocks } from "../../views/close-incident-blocks.ts";
 import { documentOnIncidentClose } from "../../views/doc-on-incident-close.ts";
 import { getIncident } from "../database/get-incident.ts";
 import { updateIncident } from "../database/update-incident.ts";
-import { addJiraComment } from "../externalAPIs/atlassian/addJiraComment.ts";
-import { updateJiraPriorityToLow } from "../externalAPIs/atlassian/updateJiraPriority.ts";
+import { createConfluenceDoc } from "../externalAPIs/atlassian/confluence/create-confluence-page.ts";
+import { addJiraComment } from "../externalAPIs/atlassian/jira/addJiraComment.ts";
+import { updateJiraPriorityToLow } from "../externalAPIs/atlassian/jira/updateJiraPriority.ts";
 import { sendMessageClerk } from "../externalAPIs/clerk/message-logic.ts";
 import { addBookmark } from "../slack_apis/add-bookmark.ts";
 import { endCall } from "../slack_apis/end-call.ts";
@@ -80,20 +81,22 @@ const closeIncidentModalCallback = async (
       `CLOSED ${incident.long_description?.substring(0, 250)}`,
     );
 
+    const rcaURL = await createConfluenceDoc(env, incident);
+    const incidentCloseDocumentBlocks = documentOnIncidentClose(rcaURL);
+
     const rca_bookmark = await addBookmark(
       token,
       incident.incident_swarming_channel_id,
       "RCA Template",
       "link",
-      `https://slack1.box.com/s/r783r9wafmts2ala656l82ol50vo8h2s`,
-      ":boxcorp:",
+      rcaURL,
+      ":confluence:",
     );
     if (rca_bookmark != undefined) {
       incident.rca_doc_bookmark_id = rca_bookmark.bookmark.id;
     }
     await updateIncident(token, incident);
 
-    const incidentCloseDocumentBlocks = documentOnIncidentClose();
     await postMessage(
       token,
       incident.incident_swarming_channel_id,

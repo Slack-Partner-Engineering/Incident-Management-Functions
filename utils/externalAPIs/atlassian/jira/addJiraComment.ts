@@ -2,15 +2,15 @@
 //input: env, jiraIssueKey, closeNotes
 //output: API call response to /comment
 
-import { getBasicAuthJira } from "../../auth/getBasicAuthJira.ts";
+import { getBasicAuthAtlassian } from "../../auth/getBasicAuthAtlassian.ts";
 
 export async function addJiraComment(
   env: any,
   jiraIssueKey: string,
   closeNotes: string,
 ) {
-  const instance = env["JIRA_INSTANCE"];
-  const basicAuth = await getBasicAuthJira(env);
+  const instance = env["ATLASSIAN_INSTANCE"];
+  const basicAuth = await getBasicAuthAtlassian(env);
   const issueURL = "/rest/api/2/issue/";
 
   const url = "https://" + instance + issueURL + jiraIssueKey + "/comment";

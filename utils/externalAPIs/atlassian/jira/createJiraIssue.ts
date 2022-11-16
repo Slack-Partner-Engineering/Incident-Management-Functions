@@ -2,13 +2,13 @@
 //input: env, and the standard incident object
 //output: API call response to /issue
 
-import type { Incident } from "../../../types/incident-object.ts";
-import { getBasicAuthJira } from "../../auth/getBasicAuthJira.ts";
+import type { Incident } from "../../../../types/incident-object.ts";
+import { getBasicAuthAtlassian } from "../../auth/getBasicAuthAtlassian.ts";
 
 export async function createJiraIssue(env: any, incident: Incident) {
   const projectKey = env["JIRA_PROJECT"];
-  const instance = env["JIRA_INSTANCE"];
-  const basicAuth = await getBasicAuthJira(env);
+  const instance = env["ATLASSIAN_INSTANCE"];
+  const basicAuth = await getBasicAuthAtlassian(env);
   const issueURL = "/rest/api/2/issue/";
 
   const url = "https://" + instance + issueURL;
@@ -32,7 +32,6 @@ export async function createJiraIssue(env: any, incident: Incident) {
   if (incident.long_description !== "") {
     requestBody.fields.description = incident.long_description;
   }
-
   const createTicketResp: any = await fetch(
     url,
     {

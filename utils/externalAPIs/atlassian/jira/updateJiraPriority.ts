@@ -3,12 +3,12 @@
 //output: API call response from PUT /issue
 //@see https://docs.atlassian.com/software/jira/docs/api/REST/7.6.1/?_ga=2.226925854.2030217466.1525875113-593458345.1525875113#api/2/issue-editIssue
 
-import { getBasicAuthJira } from "../../auth/getBasicAuthJira.ts";
+import { getBasicAuthAtlassian } from "../../auth/getBasicAuthAtlassian.ts";
 
 export async function updateJiraPriorityToLow(env: any, issueKey: string) {
   console.log("updateStatus issue called");
-  const instance = env["JIRA_INSTANCE"];
-  const basicAuth = await getBasicAuthJira(env);
+  const instance = env["ATLASSIAN_INSTANCE"];
+  const basicAuth = await getBasicAuthAtlassian(env);
   const issueURL = "/rest/api/2/issue/";
 
   // URL to update an Issue via Jira Cloud API

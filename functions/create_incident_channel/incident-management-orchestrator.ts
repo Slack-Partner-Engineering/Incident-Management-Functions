@@ -115,7 +115,7 @@ export const newSwarmChannel = async (
     "Dev Ticket",
     "link",
     `https://${
-      env["JIRA_INSTANCE"]
+      env["ATLASSIAN_INSTANCE"]
     }/browse/${incident.incident_jira_issue_key}`,
     ":atlassian:",
   );

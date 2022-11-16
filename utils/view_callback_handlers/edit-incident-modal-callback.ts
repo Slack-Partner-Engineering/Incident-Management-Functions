@@ -3,7 +3,7 @@
 //swarming channel this will update that name as well.
 
 import { getIncident } from "../database/get-incident.ts";
-import { updateJiraIssue } from "../externalAPIs/atlassian/updateJiraIssue.ts";
+import { updateJiraIssue } from "../externalAPIs/atlassian/jira/updateJiraIssue.ts";
 import { postMessage } from "../slack_apis/post-message.ts";
 import { setTopic } from "../slack_apis/set-topic.ts";
 import { updateMessage } from "../slack_apis/update-message.ts";

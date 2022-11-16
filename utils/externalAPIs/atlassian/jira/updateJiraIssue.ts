@@ -4,8 +4,8 @@
 //input: env, and the standard incident object
 //output: API call response to /issue
 
-import type { Incident } from "../../../types/incident-object.ts";
-import { getBasicAuthJira } from "../../auth/getBasicAuthJira.ts";
+import type { Incident } from "../../../../types/incident-object.ts";
+import { getBasicAuthAtlassian } from "../../auth/getBasicAuthAtlassian.ts";
 
 export async function updateJiraIssue(
   env: any,
@@ -13,8 +13,8 @@ export async function updateJiraIssue(
   newSummary: string,
   newLongDesc: string,
 ) {
-  const instance = env["JIRA_INSTANCE"];
-  const basicAuth = await getBasicAuthJira(env);
+  const instance = env["ATLASSIAN_INSTANCE"];
+  const basicAuth = await getBasicAuthAtlassian(env);
   const jiraIssueKey = incident.incident_jira_issue_key;
   const issueURL = "/rest/api/2/issue/" + jiraIssueKey;
 
@@ -34,7 +34,6 @@ export async function updateJiraIssue(
   if (newSummary !== "") {
     requestBody.fields.summary = incidentID + ": " + newSummary;
   }
-  console.log(requestBody);
 
   const updateTicketResp: any = await fetch(
     url,
