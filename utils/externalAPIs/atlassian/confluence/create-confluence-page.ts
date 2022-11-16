@@ -8,11 +8,11 @@ export async function createConfluenceDoc(env: any, incident: Incident) {
 
   const url = "https://" + instance + "/wiki/rest/api/content";
 
-  const documentHTML = await getConfluenceCreateHTML(incident);
+  const documentHTML = await getConfluenceCreateHTML(incident, env);
 
   const requestBody = {
     "type": "page",
-    "title": `${incident.short_description} + ${incident.incident_id}`,
+    "title": `${incident.incident_id}`,
     "space": { "key": env["ATLASSIAN_SPACE"] },
     "body": {
       "storage": {
@@ -34,7 +34,6 @@ export async function createConfluenceDoc(env: any, incident: Incident) {
     },
   );
   const createPageJson = await createPageResp.json();
-  console.log(createPageJson);
 
   const docURL = createPageJson._links
     ? `https://${instance}/wiki${createPageJson._links.webui}`

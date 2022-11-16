@@ -34,7 +34,6 @@ export async function updateJiraIssue(
   if (newSummary !== "") {
     requestBody.fields.summary = incidentID + ": " + newSummary;
   }
-  console.log(requestBody);
 
   const updateTicketResp: any = await fetch(
     url,

@@ -81,21 +81,22 @@ const closeIncidentModalCallback = async (
       `CLOSED ${incident.long_description?.substring(0, 250)}`,
     );
 
+    const rcaURL = await createConfluenceDoc(env, incident);
+    const incidentCloseDocumentBlocks = documentOnIncidentClose(rcaURL);
+
     const rca_bookmark = await addBookmark(
       token,
       incident.incident_swarming_channel_id,
       "RCA Template",
       "link",
-      `https://slack1.box.com/s/r783r9wafmts2ala656l82ol50vo8h2s`,
-      ":boxcorp:",
+      rcaURL,
+      ":confluence:",
     );
     if (rca_bookmark != undefined) {
       incident.rca_doc_bookmark_id = rca_bookmark.bookmark.id;
     }
     await updateIncident(token, incident);
 
-    const rcaURL = await createConfluenceDoc(env, incident);
-    const incidentCloseDocumentBlocks = documentOnIncidentClose(rcaURL);
     await postMessage(
       token,
       incident.incident_swarming_channel_id,

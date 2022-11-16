@@ -34,7 +34,6 @@ export async function createJiraIssue(env: any, incident: Incident) {
   }
 
   console.log(requestBody);
-  console.log(url);
 
   console.log(basicAuth);
 
@@ -50,8 +49,6 @@ export async function createJiraIssue(env: any, incident: Incident) {
     },
   );
   const createTicketJson = await createTicketResp.json();
-
-  console.log(createTicketJson);
 
   return createTicketJson;
 }
