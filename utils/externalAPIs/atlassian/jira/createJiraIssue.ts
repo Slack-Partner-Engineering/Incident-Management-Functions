@@ -32,11 +32,6 @@ export async function createJiraIssue(env: any, incident: Incident) {
   if (incident.long_description !== "") {
     requestBody.fields.description = incident.long_description;
   }
-
-  console.log(requestBody);
-
-  console.log(basicAuth);
-
   const createTicketResp: any = await fetch(
     url,
     {
