@@ -22,7 +22,7 @@ This project is built using pre-released features on the Slack Platform. It may 
 3. [Deploy the App](#step-3-deploy-the-app)
 4. [Add Environmental Variables to Slack Cloud](#step-4-add-environmental-variables-to-slack-cloud)
 5. [Add Emojis](#step-5-add-emojis)
-6. [Create the Triggers](#step-5-Create-the-triggers)
+6. [Create the Triggers](#step-6-Create-the-triggers)
 7. [Run the Workflows and Create an Incident](#step-7-run-the-workflows-and-create-an-incident)
 8. [View Incident Details in Jira and Salesforce](#step-8-view-incident-details-in-jira-and-salesforce)
 9. [Create Swarming Channel](#step-9-create-swarming-channel)
@@ -42,24 +42,32 @@ Go ahead and open the `.sample.env` file.
 There you will find  the necessary environmental variables. A completed `.env` file should look like the following:
 
 ```
-INCIDENT_CHANNEL=C03V2ED7***
-ZOOM_JWT_TOKEN=eyJhbGciOiJIUzI1NiJ9.eyJhddkgzU1lDd0s5TXd1bDlQd3ciLCJleHAiOjE5ODgyMTU5MjAsImlh*************
-JIRA_USERNAME=testtiu@gmail.com
-JIRA_API_KEY=sPadwkkffh5u6Jk******
-JIRA_INSTANCE=test.atlassian.net
-JIRA_PROJECT=INC
-SALESFORCE_CLIENT_ID=3MVG9p1Q1BCe9fvF1KeDHqX9VV**********************
-SALESFORCE_CLIENT_SECRET=5BA53B4CBAA248F1D237************************
-SALESFORCE_INSTANCE_URL=https://{your-instance}.salesforce.com
-SALESFORCE_USER_EMAIL=****@gmail.com
-SALESFORCE_USERNAME=****@gmail.com
+INCIDENT_CHANNEL=C0422*****
+ZOOM_JWT_TOKEN=eyJhbGciOiJIUzI1NiJ9.*******AiOjE5ODgyMTU5MjAsImlhdCI6MTY2MTQ0NDI4Nn0.nSqPuhfrt47Gqln2bDj9CEnk-x7dxVMgQlOzYinL8Hk
+ATLASSIAN_USERNAME=test@gmail.com
+ATLASSIAN_API_KEY=dN5jz****aqBPymxJ772E
+ATLASSIAN_SPACE=OPERATIONS
+ATLASSIAN_PROJECT=INC
+ATLASSIAN_INSTANCE=slack****.atlassian.net
+SALESFORCE_CLIENT_ID=3MVG9p1Q1BCe9G****BYh9sCbgCPXbgfddA4wZl4DMC5IYFBa1A5VnV
+SALESFORCE_CLIENT_SECRET=5BA53B4CBAA248F****EE89278F3F73B9A6688303F
+SALESFORCE_INSTANCE_URL=https://*****.my.salesforce.com
+SALESFORCE_USER_EMAIL=test+1@gmail.com
+SALESFORCE_USERNAME=test+22@gmail.com
 SALESFORCE_REDIRECT_URL=http://localhost/redirect
-SALESFORCE_LOGIN_URL=https://{your-instance}.my.salesforce.com
-ACCESS_TOKEN=00D5f000005X2hB!**************************
-SALESFORCE_REFRESH_TOKEN=5Aep861F*********************
-SALESFORCE_USER_ID=0055f0*****
-SALESFORCE_ORG_ID=00D5f00*****
+SALESFORCE_LOGIN_URL=https://******.my.salesforce.com
+ACCESS_TOKEN=00D5f000005X2hB!AQ4AQK7RwdG*******m6xWQ0rR0SD.a8ir3LeULrNNZBvc2mqL18xgR9Okg_S4stp73
+SALESFORCE_REFRESH_TOKEN=5A******vYpULZ1ddCdnfHvpiFU7Jr95VBDX6KdVOMmpQkQuwG
+SALESFORCE_USER_ID=0055f000009E*****
+SALESFORCE_ORG_ID=00D5f000005*****
 SALESFORCE_API_VERSION=v55.0
+CLERK_KEY=ab*********
+CLERK_NOTIFICATION_METHOD=SMS
+CLERK_NOTIFICATION_LEVEL=Critical
+CLERK_NOTIFICATION_NUMBERS=+*********
+INCIDENT_LEADERSHIP_GROUP_NAME=incident-leadership
+CLERK_API=https://*******
+SLACK_URL=https://de*****.slack.com/archives/
 ```
 
 > If you want to run this in local mode, you will need to copy the `sample.env` file, rename it to `.env`, add your env variables, and then run `source .env` to set your variables. Next, run `slack run` to run the app in local mode.
@@ -74,12 +82,12 @@ permissions to create a JWT token, create a basic Zoom account with your persona
 
 ![ZoomToken](https://user-images.githubusercontent.com/10428517/195176403-1a2ee3c7-f423-4fb3-b177-a4bc2b49cb72.png)
 
-* `JIRA_USERNAME` is the email from your Jira Cloud developer account. This is needed to create Jira Issues. First, you will need to create a free Atlassian 
+* `ATLASSIAN_USERNAME` is the email from your Jira Cloud developer account. This is needed to create Jira Issues. First, you will need to create a free Atlassian 
 account. Next, sign up for the free [Cloud Developer Bundle](https://www.atlassian.com/try/cloud/signup?product=confluence.ondemand,jira-software.ondemand,jira-servicedesk.ondemand,jira-core.ondemand&developer=true) with Atlassian. 
 
-* `JIRA_API_KEY` can be managed from here: https://id.atlassian.com/manage-profile/security/api-tokens. Make sure to create one, and then save it in a safe place.
+* `ATLASSIAN_API_KEY` can be managed from here: https://id.atlassian.com/manage-profile/security/api-tokens. Make sure to create one, and then save it in a safe place.
 
-* `JIRA_PROJECT` This env variable is the project `Key` that you want to add issues to. It's usually a three letter upper case name, as shown in the screenshot below (My `JIRA_PROJECT` keys happen to be `INC` and `TEST`). To create a Jira Project, follow [these steps](https://support.atlassian.com/jira-software-cloud/docs/create-a-new-project/). After you've created a project, you can quickly find your projects, with their respective keys, here, under the `Key` field: 
+* `ATLASSIAN_PROJECT` This env variable is the project `Key` that you want to add issues to. It's usually a three letter upper case name, as shown in the screenshot below (My `JIRA_PROJECT` keys happen to be `INC` and `TEST`). To create a Jira Project, follow [these steps](https://support.atlassian.com/jira-software-cloud/docs/create-a-new-project/). After you've created a project, you can quickly find your projects, with their respective keys, here, under the `Key` field: 
 `https://add-your-domain-here.atlassian.net/jira/projects`. Note that you will have to replace the `add-your-domain-here` portion of the URL with your own domain.
 My URL happens to be: https://horeaporutiu.atlassian.net/jira/projects. 
 
@@ -145,6 +153,7 @@ Upload the emojis from [assets](./assets/):
 3. :boxcorp:
 4. :clerk:
 5. :zoom:
+6. :confluence:
 
 To do this, first go to the workspace where you plan to run this app. Next, go to the 
 composer where you would write a Slack message, and click on the `Emoji` button. Next,

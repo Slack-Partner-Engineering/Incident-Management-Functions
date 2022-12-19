@@ -142,6 +142,28 @@ export const newSwarmChannel = async (
   incident.zoom_call_bookmark_id = zoomBookmark.bookmark.id;
   await updateIncident(token, incident);
 
+  let participantsArr;
+  if (incident.incident_participants === undefined) {
+    participantsArr = [];
+  } else {
+    participantsArr = JSON.parse(incident.incident_participants);
+    for (let i = 0; i < participantsArr.length; i++) {
+      await inviteUserToChannel(
+        participantsArr[i],
+        createChannelResp.channel.id,
+        token,
+      );
+    }
+  }
+
+  if (incident.incident_dri !== undefined) {
+    await inviteUserToChannel(
+      incident.incident_dri,
+      createChannelResp.channel.id,
+      token,
+    );
+  }
+
   await inviteUserToChannel(
     body.user.id,
     createChannelResp.channel.id,

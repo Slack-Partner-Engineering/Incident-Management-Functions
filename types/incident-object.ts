@@ -6,8 +6,8 @@ export type Incident = {
   severity: string;
   short_description: string;
   long_description?: string;
-  incident_participants?: string | undefined;
-  incident_dri?: string | undefined;
+  incident_participants?: string;
+  incident_dri?: string;
   incident_start_time: string | undefined;
   incident_trigger?: string;
   external_incident_id?: string | undefined;

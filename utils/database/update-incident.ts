@@ -17,6 +17,7 @@ const updateIncident = async (token: string, incident: Incident) => {
 
   if (!response.ok) {
     console.log("Error calling apps.datastore.put:");
+    console.log(response.error);
     return {
       error: response.error,
     };

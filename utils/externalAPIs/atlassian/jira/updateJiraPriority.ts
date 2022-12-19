@@ -6,7 +6,6 @@
 import { getBasicAuthAtlassian } from "../../auth/getBasicAuthAtlassian.ts";
 
 export async function updateJiraPriorityToLow(env: any, issueKey: string) {
-  console.log("updateStatus issue called");
   const instance = env["ATLASSIAN_INSTANCE"];
   const basicAuth = await getBasicAuthAtlassian(env);
   const issueURL = "/rest/api/2/issue/";

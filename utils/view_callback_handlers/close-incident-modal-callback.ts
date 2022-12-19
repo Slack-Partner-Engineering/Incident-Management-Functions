@@ -14,6 +14,7 @@ import { sendMessageClerk } from "../externalAPIs/clerk/message-logic.ts";
 import { addBookmark } from "../slack_apis/add-bookmark.ts";
 import { endCall } from "../slack_apis/end-call.ts";
 import { postMessage } from "../slack_apis/post-message.ts";
+import { archiveChannel } from "../slack_apis/archive-channel.ts";
 import { removeBookmark } from "../slack_apis/remove-bookmark.ts";
 import { setTopic } from "../slack_apis/set-topic.ts";
 import { updateMessage } from "../slack_apis/update-message.ts";
@@ -74,6 +75,20 @@ const closeIncidentModalCallback = async (
       incident.incident_swarming_msg_ts,
       closeBlocks,
     );
+
+    // // send a message to the swarming channel saying that the issue has been called closed
+    // await postMessage(
+    //   token,
+    //   incident.incident_swarming_channel_id,
+    //   "Closing incident with the following close notes: " + comment,
+    // );
+
+    // // send a message to the main incidents channel saying that the issue has been called closed
+    // await postMessage(
+    //   token,
+    //   incident.incident_channel,
+    //   "Closing incident with the following close notes: " + comment,
+    // );
 
     await setTopic(
       token,

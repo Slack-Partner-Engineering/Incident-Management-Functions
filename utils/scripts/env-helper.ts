@@ -5,7 +5,6 @@ const env = config();
 
 for (const [key, value] of Object.entries(env)) {
   const cmd = ["hermes", "var", "add", key, value];
-  console.log(key);
   const p = Deno.run({
     cmd: cmd,
   });

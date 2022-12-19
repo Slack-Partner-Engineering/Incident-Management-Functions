@@ -1,6 +1,7 @@
 //This is the main incident view. It is what is shown when a new incident is created.
 //Same view used whether incident created via button click or webhook.
 import type { Incident } from "../types/incident-object.ts";
+import { parseParticipants } from "../utils/scripts/parse-participants.ts";
 
 const newIncident = async (incidentObject: Incident) => {
   //check whether it was triggered by a person or a service
@@ -16,11 +17,9 @@ const newIncident = async (incidentObject: Incident) => {
     ? `${incidentObject.long_description}`
     : "";
 
-  const dateTime = new Date(<any> incidentObject.incident_start_time * 1000);
+  const participants = await parseParticipants(incidentObject);
 
-  // const externalId = incidentObject.external_incident_id
-  //   ? `*External Id*: ${incidentObject.external_incident_id} \n`
-  //   : "";
+  const dateTime = new Date(<any> incidentObject.incident_start_time * 1000);
 
   let incidentText = "";
   incidentText = incidentText
@@ -54,6 +53,10 @@ const newIncident = async (incidentObject: Incident) => {
         },
         {
           "text": " 🙋🏽‍♀️ DRI: " + `*${incidentDRI}*`,
+          "type": "mrkdwn",
+        },
+        {
+          "text": " 🙋🏽 Participants: " + `${participants}`,
           "type": "mrkdwn",
         },
         {
@@ -122,6 +125,16 @@ const newIncident = async (incidentObject: Incident) => {
           "text": {
             "type": "plain_text",
             "text": "Assign DRI",
+            "emoji": true,
+          },
+          "value": incidentStr,
+        },
+        {
+          "type": "button",
+          "action_id": "add_participants",
+          "text": {
+            "type": "plain_text",
+            "text": "Add Participants",
             "emoji": true,
           },
           "value": incidentStr,
