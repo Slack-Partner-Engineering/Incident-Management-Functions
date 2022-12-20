@@ -140,6 +140,9 @@ hporutiu@hporuti-ltmkkef Incident-Management-Functions % slack env add INCIDENT_
 ✨  successfully added INCIDENT_CHANNEL to app environment variables
 ```
 
+> Use the `env-helper.ts` script to automate this process. This script will help deploy all of your 
+env variables to production without you having to do this manually. 
+
 Make sure to repeat that process for the rest of the variables.
 
 🎉 Awesome! You are one step away from running your app! 🎉
