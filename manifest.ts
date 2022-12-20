@@ -23,13 +23,7 @@ export default Manifest({
   ],
   //Add URLs from .env `ATLASSIAN_INSTANCE`, `SALESFORCE_INSTANCE_URL`, and "login.salesforce.com"
   //change these outgoingDomains to correspond with your own Atlassian / Salesforce instance
-  outgoingDomains: [
-    "horeaporutiu.atlassian.net",
-    "slack-5a-dev-ed.my.salesforce.com",
-    "login.salesforce.com",
-    "api.zoom.us",
-    "slackdaci.atlassian.net",
-  ],
+  outgoingDomains: [],
   datastores: [Incident, AuditIncidents, SalesforceAuth],
   //Scopes needed for app to update datastore, create channels, create calls (Zoom), and create bookmarks
   botScopes: [
