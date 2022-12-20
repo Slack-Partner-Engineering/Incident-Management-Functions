@@ -20,11 +20,16 @@ export const createChannel = async (
 
   const santizedChannelName = await sanitizeChannelName(channelName);
 
-  const resp = await client.apiCall("conversations.create", {
-    name: santizedChannelName,
-    is_private: false,
-  });
-  return resp;
+  try {
+    const resp = await client.apiCall("conversations.create", {
+      name: santizedChannelName,
+      is_private: false,
+    });
+    return resp;
+  } catch (error) {
+    console.log(error);
+    return (error);
+  }
 };
 
 //This helper function constructs a channel name based on the description and ID.

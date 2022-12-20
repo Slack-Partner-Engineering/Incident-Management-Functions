@@ -98,18 +98,18 @@ const closeIncidentModalCallback = async (
     }
     await updateIncident(token, incident);
 
-    await postMessage(
-      token,
-      incident.incident_swarming_channel_id,
-      incidentCloseDocumentBlocks,
-    );
-
     const closeNoteBlocks = await closeNotesBlocks(comment);
     // send a message to the swarming channel saying that the issue has been called closed
     await postMessage(
       token,
       incident.incident_swarming_channel_id,
       closeNoteBlocks,
+    );
+
+    await postMessage(
+      token,
+      incident.incident_swarming_channel_id,
+      incidentCloseDocumentBlocks,
     );
   } else {
     // send a message to the main incidents channel saying that the issue has been called closed
