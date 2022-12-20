@@ -141,7 +141,9 @@ hporutiu@hporuti-ltmkkef Incident-Management-Functions % slack env add INCIDENT_
 ```
 
 > Use the `env-helper.ts` script to automate this process. This script will help deploy all of your 
-env variables to production without you having to do this manually. 
+env variables to production without you having to do this manually. To run the script use 
+
+`deno run utils/scripts/env-helpers.ts` and type in `Y` when prompted in terminal to add the env variables.
 
 Make sure to repeat that process for the rest of the variables.
 
