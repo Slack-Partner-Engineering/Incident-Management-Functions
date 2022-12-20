@@ -6,7 +6,7 @@ import type { Incident } from "../../../../types/incident-object.ts";
 import { getBasicAuthAtlassian } from "../../auth/getBasicAuthAtlassian.ts";
 
 export async function createJiraIssue(env: any, incident: Incident) {
-  const projectKey = env["ATLASSIAN_PROJECT"];
+  const projectKey = env["JIRA_PROJECT"];
   const instance = env["ATLASSIAN_INSTANCE"];
   const basicAuth = await getBasicAuthAtlassian(env);
   const issueURL = "/rest/api/2/issue/";
