@@ -15,12 +15,17 @@ export async function postMessage(
 
   await authTest(token);
 
-  const resp = await client.apiCall("chat.postMessage", {
-    channel: channel,
-    blocks: blocks,
-    unfurl_links: true, //doesn't work, bug in hermes?
-  });
-  return resp;
+  try {
+    const resp = await client.apiCall("chat.postMessage", {
+      channel: channel,
+      blocks: blocks,
+      unfurl_links: true, //doesn't work, bug in hermes?
+    });
+    return resp;
+  } catch (error) {
+    console.log(error);
+    return (error);
+  }
 }
 
 //The functions below will post a thread reply.
@@ -37,14 +42,17 @@ export async function postReply(
 
   await authTest(token);
 
-  const resp = await client.apiCall("chat.postMessage", {
-    channel: channel,
-    blocks: blocks,
-    unfurl_links: false,
-    thread_ts: thread_ts,
-  });
-
-  return resp;
+  try {
+    const resp = await client.apiCall("chat.postMessage", {
+      channel: channel,
+      blocks: blocks,
+      unfurl_links: false,
+      thread_ts: thread_ts,
+    });
+    return resp;
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 //The functions below will post an ephemeral message.
@@ -59,11 +67,15 @@ export async function postEphemeralMessage(
 ) {
   const client = SlackAPI(token, {});
 
-  const resp = await client.apiCall("chat.postEphemeral", {
-    channel: channel_id,
-    blocks: blocks,
-    token: token,
-    user: user_id,
-  });
-  return resp;
+  try {
+    const resp = await client.apiCall("chat.postEphemeral", {
+      channel: channel_id,
+      blocks: blocks,
+      token: token,
+      user: user_id,
+    });
+    return resp;
+  } catch (error) {
+    console.log(error);
+  }
 }

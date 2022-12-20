@@ -6,8 +6,13 @@ export const archiveChannel = async (
 ) => {
   const client = SlackAPI(token, {});
 
-  const resp = await client.apiCall("conversations.archive", {
-    channel: channelID,
-  });
-  return resp;
+  try {
+    const resp = await client.apiCall("conversations.archive", {
+      channel: channelID,
+    });
+    return resp;
+  } catch (error) {
+    console.log(error);
+    return (error);
+  }
 };
