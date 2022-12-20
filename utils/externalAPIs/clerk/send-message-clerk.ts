@@ -1,11 +1,7 @@
-import type { Incident } from "../../../types/incident-object.ts";
-
 const sendMessageToClerkAPI = async (
   message: string,
   phoneNumbers: Array<string>,
   env: any,
-  incident: Incident,
-  token: string,
 ) => {
   //check for env variable switch to either send to whatsapp or sms in the future
   //call Clerk API

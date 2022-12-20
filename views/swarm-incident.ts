@@ -1,6 +1,7 @@
 //this view is for when an incident gets its own channel. The incident blocks should no longer have a create channel block and potentially there will
 //be different treatments also for this type of incident.
 import type { Incident } from "../types/incident-object.ts";
+import { parseParticipants } from "../utils/scripts/parse-participants.ts";
 
 const swarmIncident = async (incidentObject: Incident) => {
   //check whether it was triggered by a person or a service
@@ -16,11 +17,9 @@ const swarmIncident = async (incidentObject: Incident) => {
     ? `${incidentObject.long_description}`
     : "";
 
-  const dateTime = new Date(<any> incidentObject.incident_start_time * 1000);
+  const participants = await parseParticipants(incidentObject);
 
-  // const externalId = incidentObject.external_incident_id
-  //   ? `*External Id*: ${incidentObject.external_incident_id} \n`
-  //   : "";
+  const dateTime = new Date(<any> incidentObject.incident_start_time * 1000);
 
   let incidentText = "";
   incidentText = incidentText
@@ -54,6 +53,10 @@ const swarmIncident = async (incidentObject: Incident) => {
         },
         {
           "text": " 🙋🏽‍♀️ DRI: " + `*${incidentDRI}*`,
+          "type": "mrkdwn",
+        },
+        {
+          "text": " 🙋🏽 Participants: " + `${participants}`,
           "type": "mrkdwn",
         },
         {
@@ -112,6 +115,16 @@ const swarmIncident = async (incidentObject: Incident) => {
           "text": {
             "type": "plain_text",
             "text": "Assign DRI",
+            "emoji": true,
+          },
+          "value": incidentStr,
+        },
+        {
+          "type": "button",
+          "action_id": "add_participants",
+          "text": {
+            "type": "plain_text",
+            "text": "Add Participants",
             "emoji": true,
           },
           "value": incidentStr,

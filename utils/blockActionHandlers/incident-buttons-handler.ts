@@ -1,5 +1,5 @@
 //This function routes all button clicks from the incident object UI in Slack, to action handlers
-//This includes the following buttons: Close Incident, Escalate, Deescalate, Assign DRI, Add Members,
+//This includes the following buttons: Close Incident, Escalate, Deescalate, Assign DRI, Add Participants,
 // Send Update, Edit, and Re Open
 
 import { BlockActionsRouter } from "deno-slack-sdk/mod.ts";
@@ -10,6 +10,7 @@ import { newSwarmChannel } from "../../functions/create_incident_channel/inciden
 import { escalateIncident } from "../../functions/escalate/escalateIncident.ts";
 import { deEscalateIncident } from "../../functions/de_escalate/de-escalate-incident.ts";
 import { assignDRI } from "../../functions/assign_dri/assignDRI.ts";
+import { addParticipants } from "../../functions/add_participants/addParticipants.ts";
 import { reOpen } from "../../functions/re_open/re-open-incident.ts";
 import { sendUpdateModal } from "../../views/send-update-modal.ts";
 import { editIncidentModal } from "../../views/edit-incident-modal.ts";
@@ -22,7 +23,7 @@ export const incidentHandler = router.addHandler(
     "escalate",
     "de_escalate",
     "assign_dri",
-    "add_members",
+    "add_participants",
     "send_update",
     "edit",
     "re_open",
@@ -70,6 +71,10 @@ export const incidentHandler = router.addHandler(
 
       case "assign_dri":
         await assignDRI(incident, token, body);
+        break;
+
+      case "add_participants":
+        await addParticipants(incident, token, body);
         break;
 
       case "re_open":

@@ -4,6 +4,7 @@
 
 import { closeSalesforceIncident } from "../../salesforce/close-salesforce-incident.ts";
 import { closeIncidentBlocks } from "../../views/close-incident-blocks.ts";
+import { closeNotesBlocks } from "../../views/close-notes-blocks.ts";
 import { documentOnIncidentClose } from "../../views/doc-on-incident-close.ts";
 import { getIncident } from "../database/get-incident.ts";
 import { updateIncident } from "../database/update-incident.ts";
@@ -13,7 +14,7 @@ import { updateJiraPriorityToLow } from "../externalAPIs/atlassian/jira/updateJi
 import { sendMessageClerk } from "../externalAPIs/clerk/message-logic.ts";
 import { addBookmark } from "../slack_apis/add-bookmark.ts";
 import { endCall } from "../slack_apis/end-call.ts";
-import { postMessage } from "../slack_apis/post-message.ts";
+import { postMessage, postReply } from "../slack_apis/post-message.ts";
 import { removeBookmark } from "../slack_apis/remove-bookmark.ts";
 import { setTopic } from "../slack_apis/set-topic.ts";
 import { updateMessage } from "../slack_apis/update-message.ts";
@@ -101,6 +102,23 @@ const closeIncidentModalCallback = async (
       token,
       incident.incident_swarming_channel_id,
       incidentCloseDocumentBlocks,
+    );
+
+    const closeNoteBlocks = await closeNotesBlocks(comment);
+    // send a message to the swarming channel saying that the issue has been called closed
+    await postMessage(
+      token,
+      incident.incident_swarming_channel_id,
+      closeNoteBlocks,
+    );
+  } else {
+    // send a message to the main incidents channel saying that the issue has been called closed
+    const closeNoteBlocks = await closeNotesBlocks(comment);
+    await postReply(
+      token,
+      incident.incident_channel,
+      closeNoteBlocks,
+      incident.incident_channel_msg_ts,
     );
   }
 };

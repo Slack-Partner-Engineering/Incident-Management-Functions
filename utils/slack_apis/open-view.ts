@@ -12,6 +12,8 @@ export const openView = async (
 ) => {
   const client = SlackAPI(token);
   try {
+    // if view is not opening, make sure to log this views.open call since it may have an error
+    // even without going into the catch block
     await client.views.open({
       trigger_id: trigger_id,
       view: modalView,

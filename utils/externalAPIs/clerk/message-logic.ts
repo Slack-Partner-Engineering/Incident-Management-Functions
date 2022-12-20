@@ -71,7 +71,7 @@ const sendMessageClerk = async (
         break;
     }
     const phoneNumbers = await generateNumbers(env);
-    sendMessageToClerkAPI(message, phoneNumbers, env, incident, token);
+    sendMessageToClerkAPI(message, phoneNumbers, env);
     return true; //a page went out
   }
   return false; //no one was paged

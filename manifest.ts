@@ -21,6 +21,8 @@ export default Manifest({
     postIncidentFromButtonWF,
     getIncidentReportButtonWF,
   ],
+  //Add URLs from .env `ATLASSIAN_INSTANCE`, `SALESFORCE_INSTANCE_URL`, and "login.salesforce.com"
+  //change these outgoingDomains to correspond with your own Atlassian / Salesforce instance
   outgoingDomains: [],
   datastores: [Incident, AuditIncidents, SalesforceAuth],
   //Scopes needed for app to update datastore, create channels, create calls (Zoom), and create bookmarks
