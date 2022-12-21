@@ -91,10 +91,10 @@ const newIncident = async (incidentObject: Incident) => {
         },
         {
           "type": "button",
-          "action_id": "close_incident",
+          "action_id": "all_clear",
           "text": {
             "type": "plain_text",
-            "text": "Close Incident",
+            "text": "All Clear",
             "emoji": true,
           },
           "value": incidentStr,

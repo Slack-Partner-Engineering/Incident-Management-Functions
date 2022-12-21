@@ -16,7 +16,7 @@ import { jiraIssueBlocks } from "../../../views/jira-issue-blocks.ts";
 import { updateIncident } from "../../../utils/database/update-incident.ts";
 import { createSalesforceIncident } from "../../../salesforce/create-salesforce-incident.ts";
 import { getSalesforceIncidentBlocks } from "../../../views/salesforce-new-incident-created.ts";
-import { closeIncidentModalCallback } from "../../../utils/view_callback_handlers/close-incident-modal-callback.ts";
+import { allClearModalCallback } from "../../../utils/view_callback_handlers/all-clear-modal-callback.ts";
 import { assignDRIModalCallback } from "../../../utils/view_callback_handlers/assign-dri-modal-callback.ts";
 import { addParticipantsModalCallback } from "../../../utils/view_callback_handlers/add-participants-modal-callback.ts";
 import { sendUpdateModalCallback } from "../../../utils/view_callback_handlers/send-update-modal-callback.ts";
@@ -106,8 +106,8 @@ export const blockActions = incidentHandler;
 export const viewSubmission = async (
   { view, token, env, body }: any,
 ) => {
-  if (view.callback_id === "close_incident_modal") {
-    await closeIncidentModalCallback(view, token, env);
+  if (view.callback_id === "all_clear_modal") {
+    await allClearModalCallback(view, token, env);
   }
 
   if (view.callback_id === "assign_dri_modal") {

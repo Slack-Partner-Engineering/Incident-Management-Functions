@@ -3,7 +3,7 @@
 
 import type { Incident } from "../types/incident-object.ts";
 
-const closeIncidentBlocks = async (incidentObject: Incident) => {
+const afterArchiveBlocks = async (incidentObject: Incident) => {
   //check whether it was triggered by a person or a service
   const incident_creator = incidentObject.external_incident_id
     ? incidentObject.incident_trigger
@@ -78,20 +78,10 @@ const closeIncidentBlocks = async (incidentObject: Incident) => {
           },
           "value": incidentStr,
         },
-        {
-          "type": "button",
-          "action_id": "close_and_archive",
-          "text": {
-            "type": "plain_text",
-            "text": "Close and Archive",
-            "emoji": true,
-          },
-          "value": incidentStr,
-        },
       ],
     },
   ];
   return blocks;
 };
 
-export { closeIncidentBlocks };
+export { afterArchiveBlocks };

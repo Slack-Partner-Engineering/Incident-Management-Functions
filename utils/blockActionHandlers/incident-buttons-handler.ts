@@ -5,20 +5,21 @@
 import { BlockActionsRouter } from "deno-slack-sdk/mod.ts";
 import { postNewIncident } from "../../functions/send_to_slack/post_incident/definition.ts";
 import { openView } from "../slack_apis/open-view.ts";
-import { closeIncidentModal } from "../../views/close-incident-modal.ts";
+import { allClearModal } from "../../views/all-clear-modal.ts";
 import { newSwarmChannel } from "../../functions/create_incident_channel/incident-management-orchestrator.ts";
 import { escalateIncident } from "../../functions/escalate/escalateIncident.ts";
 import { deEscalateIncident } from "../../functions/de_escalate/de-escalate-incident.ts";
 import { assignDRI } from "../../functions/assign_dri/assignDRI.ts";
 import { addParticipants } from "../../functions/add_participants/addParticipants.ts";
 import { reOpen } from "../../functions/re_open/re-open-incident.ts";
+import { closeAndArchive } from "../../functions/close_and_archive/close-and-archive.ts";
 import { sendUpdateModal } from "../../views/send-update-modal.ts";
 import { editIncidentModal } from "../../views/edit-incident-modal.ts";
 const router = BlockActionsRouter(postNewIncident);
 
 export const incidentHandler = router.addHandler(
   [
-    "close_incident",
+    "all_clear",
     "create_channel",
     "escalate",
     "de_escalate",
@@ -27,6 +28,7 @@ export const incidentHandler = router.addHandler(
     "send_update",
     "edit",
     "re_open",
+    "close_and_archive",
   ],
   async ({ action, body, token, env }) => {
     const incident = JSON.parse(body.actions[0].value);
@@ -37,10 +39,10 @@ export const incidentHandler = router.addHandler(
         break;
       }
 
-      case "close_incident": {
+      case "all_clear": {
         //pass in whole incident obj to view, so we can update the original incident obj later
         const incident = action.value;
-        const ModalView = await closeIncidentModal(incident);
+        const ModalView = await allClearModal(incident);
         await openView(
           token,
           ModalView,
@@ -79,6 +81,10 @@ export const incidentHandler = router.addHandler(
 
       case "re_open":
         await reOpen(incident, env, token);
+        break;
+
+      case "close_and_archive":
+        await closeAndArchive(incident, env, token);
         break;
 
       case "edit": {

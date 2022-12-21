@@ -16,25 +16,25 @@ import { addBookmark } from "../slack_apis/add-bookmark.ts";
 import { endCall } from "../slack_apis/end-call.ts";
 import { postMessage, postReply } from "../slack_apis/post-message.ts";
 import { removeBookmark } from "../slack_apis/remove-bookmark.ts";
-import { setTopic } from "../slack_apis/set-topic.ts";
 import { updateMessage } from "../slack_apis/update-message.ts";
+import { setTopic } from "../slack_apis/set-topic.ts";
+import { updateSalesforceIncident } from "../../salesforce/update-salesforce-incident.ts";
 
-const closeIncidentModalCallback = async (
+const allClearModalCallback = async (
   view: any,
   token: string,
   env: any,
 ) => {
-  const incidentClosedTS = Date.now();
-
+  const allClearTS = ((Date.now()) / 1000);
   // save the currentTime so that we know what time the incident was closed
   const incidentID = await JSON.parse(view.private_metadata).incident_id;
   const incident = await getIncident(token, incidentID);
   const comment =
     view.state.values.add_comment_block.close_incident_action.value;
 
-  incident.incident_status = "CLOSED";
+  incident.incident_status = "ALL CLEAR";
   incident.incident_close_notes = comment;
-  incident.incident_closed_ts = incidentClosedTS;
+  incident.incident_closed_ts = allClearTS;
   const incidentJiraKey = incident.incident_jira_issue_key;
   await closeSalesforceIncident(incident, env, token);
   await sendMessageClerk(incident, env, "close", token);
@@ -69,17 +69,17 @@ const closeIncidentModalCallback = async (
       curIncident.zoom_call_bookmark_id,
     );
 
+    await setTopic(
+      token,
+      curIncident.incident_swarming_channel_id,
+      `ALL CLEAR ${incident.long_description?.substring(0, 250)}`,
+    );
+
     await updateMessage(
       token,
       incident.incident_swarming_channel_id,
       incident.incident_swarming_msg_ts,
       closeBlocks,
-    );
-
-    await setTopic(
-      token,
-      incident.incident_swarming_channel_id,
-      `CLOSED ${incident.long_description?.substring(0, 250)}`,
     );
 
     const rcaURL = await createConfluenceDoc(env, incident);
@@ -96,8 +96,6 @@ const closeIncidentModalCallback = async (
     if (rca_bookmark != undefined) {
       incident.rca_doc_bookmark_id = rca_bookmark.bookmark.id;
     }
-    await updateIncident(token, incident);
-
     const closeNoteBlocks = await closeNotesBlocks(comment);
     // send a message to the swarming channel saying that the issue has been called closed
     await postMessage(
@@ -121,6 +119,8 @@ const closeIncidentModalCallback = async (
       incident.incident_channel_msg_ts,
     );
   }
+  await updateIncident(token, incident);
+  await updateSalesforceIncident(incident, env, token);
 };
 
-export { closeIncidentModalCallback };
+export { allClearModalCallback };
