@@ -39,10 +39,10 @@ const getConfluenceCreateHTML = (incident: Incident, env: any) => {
     </tr>
     <tr>
       <td data-highlight-colour="#f4f5f7">
-        <p><strong>${incident.severity}</strong></p>
+        <p><strong>Severity</strong></p>
       </td>
       <td>
-        <p>Medium</p>
+        <p>${incident.severity}</p>
       </td>
     </tr>
     <tr>
