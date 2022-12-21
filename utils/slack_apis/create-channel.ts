@@ -50,34 +50,31 @@ export const createChannelName = (
 export const sanitizeChannelName = async (
   channelName: any,
 ) => {
-  // let channelStr = await channelName.toString();
-  // channelStr = channelStr.toLowerCase();
-  // let noSpecialChars = channelStr.replace(/[^a-zA-Z0-9-. ]/g, "");
-  // console.log(noSpecialChars);
-  // for (let i = 0; i < noSpecialChars.length; i++) {
-  //   if (noSpecialChars[i] === " ") {
-  //     (noSpecialChars[i] as any) = "-";
-  //   }
-  //   if (noSpecialChars[i] === "'") {
-  //     (noSpecialChars[i] as any) = "";
-  //   }
-  // }
-  // noSpecialChars = noSpecialChars.substring(0, 80),
-  //   console.log("noSpecialChars after 80 substrig");
-  // console.log(noSpecialChars);
-
   let channelStr = await channelName.toString();
   channelStr = channelStr.toLowerCase();
-  channelStr = channelStr.split("");
+  const noSpecialChars = channelStr.replace(/[^a-zA-Z0-9-.!'? ]/g, "");
+
+  channelStr = noSpecialChars.split("");
 
   for (let i = 0; i < channelStr.length; i++) {
     if (channelStr[i] === " ") {
       (channelStr[i] as any) = "-";
+    }
+    if (channelStr[i] === ".") {
+      (channelStr[i] as any) = "";
+    }
+    if (channelStr[i] === "!") {
+      (channelStr[i] as any) = "";
+    }
+    if (channelStr[i] === "?") {
+      (channelStr[i] as any) = "";
     }
     if (channelStr[i] === "'") {
       (channelStr[i] as any) = "";
     }
   }
   channelStr = channelStr.join("");
+  //max chars for a channel name is 80
+  channelStr = channelStr.substring(0, 80);
   return channelStr;
 };
