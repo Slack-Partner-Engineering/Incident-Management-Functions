@@ -4,7 +4,7 @@
 
 import { closeSalesforceIncident } from "../../salesforce/close-salesforce-incident.ts";
 import { closeIncidentBlocks } from "../../views/close-incident-blocks.ts";
-import { closeNotesBlocks } from "../../views/close-notes-blocks.ts";
+import { allClearNotesBlocks } from "../../views/all-clear-notes-blocks.ts";
 import { documentOnIncidentClose } from "../../views/doc-on-incident-close.ts";
 import { getIncident } from "../database/get-incident.ts";
 import { updateIncident } from "../database/update-incident.ts";
@@ -96,7 +96,7 @@ const allClearModalCallback = async (
     if (rca_bookmark != undefined) {
       incident.rca_doc_bookmark_id = rca_bookmark.bookmark.id;
     }
-    const closeNoteBlocks = await closeNotesBlocks(comment);
+    const closeNoteBlocks = await allClearNotesBlocks(comment);
     // send a message to the swarming channel saying that the issue has been called closed
     await postMessage(
       token,
@@ -111,7 +111,7 @@ const allClearModalCallback = async (
     );
   } else {
     // send a message to the main incidents channel saying that the issue has been called closed
-    const closeNoteBlocks = await closeNotesBlocks(comment);
+    const closeNoteBlocks = await allClearNotesBlocks(comment);
     await postReply(
       token,
       incident.incident_channel,
