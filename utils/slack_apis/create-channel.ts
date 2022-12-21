@@ -43,8 +43,8 @@ export const createChannelName = (
   return channelName;
 };
 
-//This helper function sanitizes the channel name. For example, a channel
-//name cannot have apostrophies or blank spaces, so we replace those.
+//This helper function sanitizes the channel name. Takes out all
+//special characters except for dashes.
 //input: channelName
 //output: sanitized channel name
 export const sanitizeChannelName = async (
@@ -52,16 +52,6 @@ export const sanitizeChannelName = async (
 ) => {
   let channelStr = await channelName.toString();
   channelStr = channelStr.toLowerCase();
-  channelStr = channelStr.split("");
-
-  for (let i = 0; i < channelStr.length; i++) {
-    if (channelStr[i] === " ") {
-      (channelStr[i] as any) = "-";
-    }
-    if (channelStr[i] === "'") {
-      (channelStr[i] as any) = "";
-    }
-  }
-  channelStr = channelStr.join("");
-  return channelStr;
+  const noSpecialChars = channelStr.replace(/[^a-zA-Z0-9- ]/g, "");
+  return noSpecialChars;
 };

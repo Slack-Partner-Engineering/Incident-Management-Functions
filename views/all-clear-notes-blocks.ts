@@ -1,6 +1,6 @@
 //Blocks to post a message to thread or channel when the DRI is updated.
 
-export function closeNotesBlocks(
+export function allClearNotesBlocks(
   comment: string,
 ) {
   const blocks = [
