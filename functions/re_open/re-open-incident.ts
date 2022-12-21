@@ -99,7 +99,6 @@ export const reOpen = async (
 
     incident.zoom_call_bookmark_id = zoomBookmark.bookmark.id;
     await updateIncident(token, incident);
-    await unarchiveChannel(token, curIncident.incident_swarming_channel_id);
 
     //not a swarm
   } else {
