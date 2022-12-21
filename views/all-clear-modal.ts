@@ -1,15 +1,15 @@
 //This view will generate the blocks to open a modal when closing an incident.
 
-export const closeIncidentModal = (
+export const allClearModal = (
   incident: string,
 ) => {
   const view = {
     "type": "modal",
-    "callback_id": "close_incident_modal",
+    "callback_id": "all_clear_modal",
     "private_metadata": incident,
     "title": {
       "type": "plain_text",
-      "text": "Close Incident",
+      "text": "Call All Clear",
       "emoji": true,
     },
     "submit": {
@@ -33,7 +33,7 @@ export const closeIncidentModal = (
         },
         "label": {
           "type": "plain_text",
-          "text": "Add Close Notes",
+          "text": "Add All Clear Notes",
           "emoji": true,
         },
       },

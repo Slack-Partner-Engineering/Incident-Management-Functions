@@ -9,7 +9,7 @@ export function closeNotesBlocks(
       text: {
         type: "mrkdwn",
         text:
-          `The incident has been closed with the following close notes: *${comment}*`,
+          `The incident has been called All Clear with the following notes: *${comment}*`,
       },
     },
   ];

@@ -22,6 +22,7 @@ import { getZoomBlock } from "../../views/zoom-call-blocks.ts";
 import { sendMessageClerk } from "../../utils/externalAPIs/clerk/message-logic.ts";
 import { addBookmark } from "../../utils/slack_apis/add-bookmark.ts";
 import { removeBookmark } from "../../utils/slack_apis/remove-bookmark.ts";
+import { unarchiveChannel } from "../../utils/slack_apis/unarchive-channel.ts";
 
 export const reOpen = async (
   incident: Incident,

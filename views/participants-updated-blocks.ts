@@ -2,10 +2,7 @@
 
 export function participantsUpdatedBlocks(participantsArray: any) {
   let participants = "";
-  console.log("participantsArray participantsUpdatedBlocks");
 
-  console.log(participantsArray);
-  console.log(typeof (participantsArray));
   for (let i = 0; i < participantsArray.length; i++) {
     participants += `<@${participantsArray[i]}> `;
   }
